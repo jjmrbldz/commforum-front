@@ -29,6 +29,23 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+
+## UI & State Libraries Used
+
+### 🌀 Tailwind CSS
+Tailwind is used for styling across the application. It enables utility-first, responsive design with minimal custom CSS.
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+
+### 💠 Shadcn UI
+This project integrates [Shadcn UI](https://ui.shadcn.com/) for accessible, customizable, and consistent UI components built on top of Radix UI and Tailwind CSS.
+- UI components are located in the `components/ui` directory and are fully themeable.
+
+### 🧠 Zustand
+Zustand is used for global state management across the application.
+- [Zustand Documentation](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- Stores are typically created in the `stores/` directory and follow composable patterns.
+
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
