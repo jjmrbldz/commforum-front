@@ -1,7 +1,8 @@
+import LoginForm from "@/components/forms/login-form";
 
 
 export default function UserSheet() {
   return (
-    <div className="">User</div>
+    <LoginForm />
   )
 }
