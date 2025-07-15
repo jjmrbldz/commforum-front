@@ -34,7 +34,7 @@ export default function BotHeader() {
           ))}
 
           <Link href={'/'} className="min-w-[125px]">
-            <Image width={125} height={105} src={logo} alt="Winner Bro Logo" style={{ width: "auto", height: "auto" }} />
+            <Image width={125} height={105} src={logo} alt="Winner Bro Logo" priority={true} style={{ width: "auto", height: "auto" }} />
           </Link>         
 
           {menuList.slice(4).map((item, index) => (

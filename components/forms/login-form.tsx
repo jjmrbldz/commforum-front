@@ -1,4 +1,6 @@
-import { Lock, User } from "lucide-react";
+"use client"
+
+import { Lock, LogIn, User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { LoginFormSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +11,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 
 export default function LoginForm() {
@@ -35,7 +38,7 @@ export default function LoginForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <FormField 
             control={form.control}
             name="username"
@@ -89,14 +92,20 @@ export default function LoginForm() {
                           : field.onChange(field.value = false)
                       }}
                     />
-                    <Label htmlFor="remember-me" className="text-xs font-light">자동로그인 및 로그인 상태 유지</Label>
+                    <Label htmlFor="remember-me" className="text-xs font-light">자동로그인</Label>
+                    <Link href={'/register'} className="text-xs font-light ml-auto">회원가입</Link>
+                    <span className="text-xs font-light">|</span>
+                    <Link href={'/forgot-password'} className="text-xs font-light">정보찾기</Link>
                   </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             ))}
           />
-          <Button size={'sm'} className="mt-2" type="submit" loading={form.formState.isLoading}>Login</Button>
+          <Button size={'sm'} className="mt-2" type="submit" loading={form.formState.isLoading}>
+            <LogIn />
+            <span>Login</span>
+          </Button>
         </div>
       </form>
     </Form>

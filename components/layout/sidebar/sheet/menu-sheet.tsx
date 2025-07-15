@@ -1,4 +1,4 @@
-import AuthFormButtons from "@/components/auth-buttons";
+import AuthUserButtons from "@/components/auth/auth-user-button";
 import { NumberFormatter } from "@/components/number-formatter";
 import SidebarTitle from "@/components/sidebar-title";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -6,10 +6,10 @@ import { menuList } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export default function MenuSheet() {
+export default function MenuSheet({isAuthenticated}: {isAuthenticated?: boolean}) {
   return (
     <>
-      <AuthFormButtons />
+      <AuthUserButtons />
       <SidebarTitle title="MENU" />
       <Accordion
         type="single"

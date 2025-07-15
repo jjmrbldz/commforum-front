@@ -9,7 +9,7 @@ export default function TopHeader() {
     toast("Ctrl+D 키를 눌러 즐겨찾기에 등록하실 수 있습니다.", { position: "top-center" })
   }
   return (
-    <div className="hidden lg:flex items-center text-xs px-2 pt-2 gap-3 text-neutral-900 font-light">
+    <div className="hidden lg:flex items-center text-xs pt-2 gap-3 text-neutral-900 font-light">
       <div 
         className="cursor-pointer"
         onClick={handleFaveClick}

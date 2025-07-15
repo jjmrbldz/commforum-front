@@ -1,5 +1,6 @@
 export const koreanWeekdays = ['일', '월', '화', '수', '목', '금', '토'];
 
+// MENU
 export const menuList: {
   title: string;
   href: string;
@@ -142,4 +143,51 @@ export const menuList: {
       },
     ]
   },
+]
+
+export const userMenuList: {
+  title: string;
+  href: string;
+  isModal?: boolean;
+}[] = [
+  { title: "내글반응", href: "/response", isModal: true },
+  { title: "쪽지함", href: "/memo", isModal: true },
+  { title: "팔로우", href: "/follow", isModal: true },
+  { title: "스크랩", href: "/scrap", isModal: true },
+  { title: "마이페이지", href: "/mypage", isModal: false },
+  { title: "내글관리", href: "/mypost", isModal: true },
+  { title: "사진등록", href: "/myphoto", isModal: true },
+  { title: "정보수정", href: "/memberconfirm/register", isModal: false },
+  { title: "탈퇴하기", href: "/memberconfirm/leave", isModal: false },
+]
+
+export const memberMenuList: {
+  title: string;
+  href: string;
+  isModal?: boolean;
+}[] = [
+  { title: "회원가입", href: "/register", isModal: false },
+  { title: "아이디/비밀번호 찾기", href: "/forgot-password", isModal: false },
+]
+
+export const serviceMenuList: {
+  title: string;
+  href: string;
+  isModal?: boolean;
+  requiresAuth?: boolean;
+}[] = [
+  { title: "자주하시는 질문(FAQ)", href: "/faq", isModal: false },
+  { title: "1:1 문의", href: "/inquiry", isModal: false, requiresAuth: true },
+  { title: "새글모음", href: "/post/new", isModal: false, },
+  { title: "현재접속자", href: "/online-users", isModal: false, requiresAuth: true },
+]
+
+// OPTIONS
+export const searchTypeOptions = [
+  { label: "게시물", value: "post"},
+  { label: "태그", value: "tag"},
+]
+export const searchOperatorOptions = [
+  { label: "또는", value: "or"},
+  { label: "그리고", value: "and"},
 ]

@@ -27,7 +27,9 @@ export default function RootLayout({
         className={`${notoSansKR.className} antialiased`}
       >
         <Header />
-        {children}
+        <div className="max-w-7xl m-auto">
+          {children}
+        </div>
         <Toaster position="top-right" />
         <Sidebar />
       </body>
