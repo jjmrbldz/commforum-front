@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import SidebarTitle from "../sidebar-title";
 import { Accordion, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import Link from "next/link";
-import { NumberFormatter } from "../number-formatter";
 import { serviceMenuList } from "@/lib/constants";
 
 export default function ServiceMenuList() {

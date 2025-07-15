@@ -1,12 +1,10 @@
-import { Lock, Search, User } from "lucide-react";
+import { Search } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { SearchFormSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { searchFormSchema } from "@/lib/schema/form";
 import { Input } from "../ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
-import { Checkbox } from "../ui/checkbox";
-import { Label } from "../ui/label";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import SearchTypeSelect from "../select/search-type-select";
