@@ -191,3 +191,27 @@ export const searchOperatorOptions = [
   { label: "또는", value: "or"},
   { label: "그리고", value: "and"},
 ]
+
+// SAMPLE DATA
+export const freeBoard = [
+  { "id": 1, "rank": 1, "title": "❤모아소프트❤ 구글", "date": "07.14", "img": "/images/4.png" },
+  { "id": 2, "rank": 2, "title": "🔯🔯 커뮤니티 자동", "date": "07.14", "img": "/images/5.png" },
+  { "id": 3, "rank": 3, "title": "●토토 홍보 프로그램", "date": "07.14", "img": "/images/12.png" },
+  { "id": 4, "rank": 4, "title": "●토토 홍보 프로그램", "date": "07.14", "img": "/images/4.png" },
+  { "id": 5, "rank": 5, "title": "왕관게임 미투벳 자본", "date": "07.13", "img": "/images/5.png" },
+  { "id": 6, "rank": 6, "title": "[헤이벳]카지노게임 최", "date": "07.14", "img": "/images/14.png" },
+  { "id": 7, "rank": 7, "title": "💓💓💓 구글 도배프로", "date": "07.14", "img": "/images/12.png" },
+  { "id": 8, "rank": 8, "title": "💓💓💓 사이트 자동", "date": "07.14", "img": "/images/16.png" },
+  { "id": 9, "rank": 9, "title": "●토토 홍보 프로그랩", "date": "07.14", "img": "/images/20.jpg" },
+  { "id": 10, "rank": 10, "title": "◎커뮤니티 자동 광고프", "date": "07.13", "img": "/images/16.png" },
+  { "id": 11, "rank": 11, "title": "●토토 홍보 프로그랩", "date": "07.14", "img": "/images/5.png" },
+  { "id": 12, "rank": 12, "title": "2025년 최신 파워볼오", "date": "07.15", "img": "/images/12.png" },
+  { "id": 13, "rank": 13, "title": "❤모아소프트❤ 구글", "date": "07.14", "img": "/images/20.jpg" },
+  { "id": 14, "rank": 14, "title": "🔯🔯 커뮤니티 자동", "date": "07.14", "img": "/images/14.png" },
+  { "id": 15, "rank": 15, "title": "●카지노사이트 홍보", "date": "07.15", "img": "/images/15.png" },
+  { "id": 16, "rank": 16, "title": "❤모아소프트❤백링크", "date": "07.13", "img": "/images/16.png" },
+  { "id": 17, "rank": 17, "title": "●토토 홍보 프로그램", "date": "07.14", "img": "/images/5.png" },
+  { "id": 18, "rank": 18, "title": "❤모아소프트❤ 구글", "date": "07.14", "img": "/images/18.png" },
+  { "id": 19, "rank": 19, "title": "🔯🔯 구글 도배 홍", "date": "07.13", "img": "/images/5.png" },
+  { "id": 20, "rank": 20, "title": "2025년 최신 파워볼오", "date": "07.13", "img": "/images/20.jpg" }
+]
