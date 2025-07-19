@@ -37,19 +37,19 @@ export function chunkWithRandomPrefixes<T extends ItemWithId>(
   chunkSize: number = 5,
   prefixCount: number = 2
 ): T[][] {
-  if (!Array.isArray(arr)) return [];
+  if (!Array.isArray(arr) || arr.length === 0) return [];
 
   const result: T[][] = [];
 
   for (let i = 0; i < arr.length; i += chunkSize) {
     const chunk = arr.slice(i, i + chunkSize);
 
-    // Exclude items already in the chunk to avoid duplication
-    const remaining = arr.filter((item) => !chunk.some((c) => c.id === item.id));
-
-    // Shuffle remaining
-    const shuffled = [...remaining].sort(() => Math.random() - 0.5);
-    const prefixes = shuffled.slice(0, Math.min(prefixCount, shuffled.length));
+    // Pick N random prefix items (with possible duplicates)
+    const prefixes: T[] = [];
+    for (let j = 0; j < prefixCount; j++) {
+      const randomIndex = Math.floor(Math.random() * arr.length);
+      prefixes.push(arr[randomIndex]);
+    }
 
     result.push([...prefixes, ...chunk]);
   }

@@ -6,14 +6,16 @@ export default function WidgetList({
   data,
   path,
   hasItemPrefix,
-  dataLimitPerList
+  dataLimitPerList,
+  isReviews
 }: WidgetListProps) {
   return (
     <div className="">
       {hasItemPrefix && (
         <WidgetItemPrefix {...{
             data,
-            path
+            path,
+            isReviews
           }}
         />
       )}
@@ -21,6 +23,7 @@ export default function WidgetList({
         <WidgetItem key={index} {...{
           item,
           path,
+          isReviews
         }} />
       ))}
     </div>

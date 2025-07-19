@@ -1,7 +1,7 @@
 import LoginForm from "@/components/forms/login-form";
 import Banner from "@/components/pages/home/banner";
 import Widget from "@/components/widget/widget";
-import { freeBoard } from "@/lib/constants";
+import { freeBoard, oReviewBoard } from "@/lib/constants";
 
 export default function HomePage() {
   return (
@@ -10,13 +10,14 @@ export default function HomePage() {
         <Banner />
         <div className="grid grid-cols-2 gap-4 mt-4">
           <Widget {...{
-            title: "자유게시판",
-            data: freeBoard,
+            title: "온카,슬롯 후기",
+            data: oReviewBoard,
             path: '/board', 
-            rootClassname: ''
+            rootClassname: '',
+            isReviews: true,
           }} />
           <Widget {...{
-            title: "온카,슬롯 후기",
+            title: "자유게시판",
             data: freeBoard,
             path: '/board', 
             rootClassname: ''

@@ -11,7 +11,8 @@ export default function Widget({
   carouselSize = 2,
   hasItemPrefix = true,
   path,
-  rootClassname = ""
+  rootClassname = "",
+  isReviews = false,
 } : WidgetProps) {
   return (
     <div className={cn("max-w-full", rootClassname)}>
@@ -22,7 +23,8 @@ export default function Widget({
           dataLimitPerList,
           carouselSize,
           hasItemPrefix,
-          path
+          path,
+          isReviews
         }} 
       />
     </div>

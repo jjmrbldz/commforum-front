@@ -9,7 +9,8 @@ export default function WidgetCarousel({
   dataLimitPerList,
   carouselSize,
   hasItemPrefix,
-  path
+  path,
+  isReviews
 } : WidgetCarouselProps) {
   return (
     <Carousel
@@ -25,7 +26,8 @@ export default function WidgetCarousel({
               data: item,
               path,
               hasItemPrefix,
-              dataLimitPerList
+              dataLimitPerList,
+              isReviews
             }} />
           </CarouselItem>
         ))}

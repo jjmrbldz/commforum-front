@@ -16,17 +16,21 @@ export type WidgetProps = {
   hasItemPrefix?: boolean;
   path: string;
   rootClassname?: string;
+  isReviews?: boolean;
 }
 
 export type WidgetCarouselProps = Omit<WidgetProps, "title" | "rootClassname">;
-export type WidgetListProps = Pick<WidgetCarouselProps, "data" | "path" | "hasItemPrefix" | "dataLimitPerList">;
-export type WidgetItemPrefixProps = Pick<WidgetCarouselProps, "data" | "path">;
+export type WidgetListProps = Pick<WidgetCarouselProps, "data" | "path" | "hasItemPrefix" | "dataLimitPerList" | "isReviews">;
+export type WidgetItemPrefixProps = Pick<WidgetCarouselProps, "data" | "path" | "isReviews">;
 
-export interface WidgetItemProps {
-  id: string | number;
-  rank: number;
-  title: string;
-  date: string;
+export interface WidgetItemProps extends Pick<WidgetCarouselProps, "path" | "isReviews"> {
+  item: {
+    id: string | number;
+    rank: number;
+    title: string;
+    date: string;
+    reviews: number;
+  }
 }
 
 export interface ItemWithId {

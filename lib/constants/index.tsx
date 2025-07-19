@@ -215,3 +215,9 @@ export const freeBoard = [
   { "id": 19, "rank": 19, "title": "🔯🔯 구글 도배 홍", "date": "07.13", "img": "/images/5.png" },
   { "id": 20, "rank": 20, "title": "2025년 최신 파워볼오", "date": "07.13", "img": "/images/20.jpg" }
 ]
+
+export const oReviewBoard = [
+  { "id": 1, "rank": 1, "title": "파라오카지노 후기", "date": "11.30", reviews: 4, "img": "/images/or1.jpg" },
+  { "id": 2, "rank": 2, "title": "아벤카지노 후기", "date": "11.30", reviews: 4, "img": "/images/or2.jpg" },
+  { "id": 3, "rank": 3, "title": "아벤카지노 후기", "date": "09.08", reviews: 4, "img": "/images/or2.jpg" },
+]
