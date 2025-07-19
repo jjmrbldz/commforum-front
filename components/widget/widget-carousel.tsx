@@ -10,28 +10,25 @@ export default function WidgetCarousel({
   carouselSize,
   hasItemPrefix,
   path,
-  isReviews
+  isReviews,
+  addCategory,
+  showRank
 } : WidgetCarouselProps) {
   return (
-    <Carousel
-      opts={{
-        align: "start",
-      }}
-      className="w-full"
-    >
-      <CarouselContent>
-        {data.map((item, index) => (
-          <CarouselItem key={index} className={cn("pl-4", carouselItemClass(carouselSize))}>
-            <WidgetList {...{
-              data: item,
-              path,
-              hasItemPrefix,
-              dataLimitPerList,
-              isReviews
-            }} />
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-    </Carousel>
+    <CarouselContent>
+      {data.map((item, index) => (
+        <CarouselItem key={index} className={cn("pl-4", carouselItemClass(carouselSize))}>
+          <WidgetList {...{
+            data: item,
+            path,
+            hasItemPrefix,
+            dataLimitPerList,
+            isReviews,
+            addCategory,
+            showRank
+          }} />
+        </CarouselItem>
+      ))}
+    </CarouselContent>
   )
 }

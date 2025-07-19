@@ -9,13 +9,21 @@ export default function WidgetItemPrefix({
   isReviews
 }: WidgetItemPrefixProps) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-2">
       {data.slice(0, 2).map((item, index) => (
-        <Link key={index} href={`${path}?id=${item.id}`} className="block hover:text-red-500">
-          <Image width={110} height={75} alt={item.content || ""} src={item.img} className="!w-[110px] !h-[75px] !max-w-[110px] !max-h-[75px] object-cover" style={{width: 'auto', height: 'auto'}} />
+        <Link key={index} href={`${path}?id=${item.id}`} className="block hover:text-red-500 flex-1">
+          <div className="relative w-full h-[75px]">
+            <Image
+              alt={item.content || ""} 
+              src={item.img} 
+              className="object-cover"
+              fill
+              sizes="110px"
+            />
+          </div>
           <div className="flex items-center justify-between mt-1">
-            <div className="whitespace-nowrap overflow-hidden text-ellipsis text-xs">{item.title}</div>
-            <div className="text-red-500 font-bold">+{item.reviews}</div>
+            <div className="whitespace-nowrap overflow-hidden text-ellipsis text-xs max-w-full">{item.title}</div>
+            {item.reviews && <div className="text-red-500 font-bold">+{item.reviews}</div>}
           </div>
         </Link>
       ))}

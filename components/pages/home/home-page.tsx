@@ -1,7 +1,8 @@
+import AdBoxImage from "@/components/ads/adbox-img";
 import LoginForm from "@/components/forms/login-form";
 import Banner from "@/components/pages/home/banner";
 import Widget from "@/components/widget/widget";
-import { freeBoard, oReviewBoard } from "@/lib/constants";
+import { freeBoard, noticeFreeBoard, oReviewBoard } from "@/lib/constants";
 
 export default function HomePage() {
   return (
@@ -26,6 +27,41 @@ export default function HomePage() {
       </div>
       <div className="col-span-3 py-4">
         <LoginForm />
+        <AdBoxImage 
+          href="https://t.me/winnerbrother"
+          target="_blank"
+          src={'/images/tg-ad1.png'}
+          alt="Telegram of Winner Brother"
+          className="w-full"
+        />
+          <Widget {...{
+            title: "알림장",
+            data: noticeFreeBoard,
+            path: '/board', 
+            rootClassname: '',
+            hasItemPrefix: false,
+            carouselSize: 1,
+            addCategory: true,
+          }} />
+          <AdBoxImage 
+            href="?hbw=3"
+            src={'/images/ad2.gif'}
+            alt="Some content"
+            className="w-full"
+          />
+          <AdBoxImage 
+            href="?hbw=4"
+            src={'/images/ad3.png'}
+            alt="Some content"
+            className="w-full"
+          />
+          <Widget {...{
+            title: "최근글",
+            data: freeBoard,
+            path: '/board', 
+            rootClassname: '',
+            carouselSize: 1,
+          }} />
       </div>
     </div>
   );
