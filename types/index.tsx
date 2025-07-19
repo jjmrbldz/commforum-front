@@ -7,7 +7,7 @@ import z from "zod";
 export type LoginFormSchema = z.infer<typeof loginFormSchema>;
 export type SearchFormSchema = z.infer<typeof searchFormSchema>;
 
-export type LayoutType = "default" | "gallery";
+export type LayoutType = "default" | "gallery" | "basic-gallery";
 
 export type WidgetProps = {
   layout?: LayoutType;
@@ -21,9 +21,10 @@ export type WidgetProps = {
   isReviews?: boolean;
   addCategory?: boolean;
   showRank?: boolean;
+  hasContentTitle?: boolean;
 }
 
-export type WidgetCarouselProps = Omit<WidgetProps, "title" | "rootClassname">;
+export type WidgetCarouselProps = Omit<WidgetProps, "title" | "rootClassname" | "hasContentTitle">;
 export type WidgetListProps = Pick<WidgetCarouselProps, "data" | "path" | "hasItemPrefix" | "dataLimitPerList" | "isReviews" | "addCategory" | "showRank">;
 export type WidgetItemPrefixProps = Pick<WidgetCarouselProps, "data" | "path" | "isReviews" | "showRank">;
 
@@ -50,3 +51,5 @@ export interface AdBoxImageProps
   className?: string;
   rootClassName?: string;
 }
+
+export interface WidgetBasicGalleryProps extends WidgetProps {}

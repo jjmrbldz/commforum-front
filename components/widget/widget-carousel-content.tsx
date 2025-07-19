@@ -2,8 +2,9 @@ import { WidgetCarouselProps } from "@/types"
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel"
 import { carouselItemClass, cn } from "@/lib/utils";
 import WidgetList from "./widget-list";
+import { cookies } from "next/headers";
 
-export default function WidgetCarousel({
+export default function WidgetCarouselContent({
   // layout,
   data,
   dataLimitPerList,

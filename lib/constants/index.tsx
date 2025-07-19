@@ -229,3 +229,10 @@ export const noticeFreeBoard = [
   { "id": 4, "rank": undefined, category: "자유", "title": "✡️✡️✡️구글 도배 홍보프로그램 / 토토/카지노 홍보프로그램 / 텔레그램 자동 홍보프로그램 / 카카오톡 파워볼 오토픽 / DB추출프로그램✡️✡️✡️ - #먹튀검증사이트 자동홍보", "img": "", "date": "01.22", },
   { "id": 5, "rank": undefined, category: "자유", "title": "❤️❤️❤️커뮤니티 자동글쓰기 프로그램 / 텔레그램 자동 홍보프로그램 / 카카오톡 파워볼 오토픽 / 구글 찌라시 홍보프로그램 / 구글 백링크 프로그램 / DB추출프로그램❤️❤️❤️", "img": "", "date": "01.22", },
 ]
+
+export const baccBoard = [
+  { "id": 1, "rank": undefined, category: "자유", "title": "파라오 보증금 5천만원", "img": "/images/baccBoard1.jpg", "date": "01.23", },
+  { "id": 2, "rank": undefined, category: "자유", "title": "스테이션 보증금 5천만원", "img": "/images/baccBoard2.jpg", "date": "01.23", },
+  { "id": 3, "rank": undefined, category: "자유", "title": "소울카지노 보증금 5천만원", "img": "/images/baccBoard3.jpg", "date": "01.22", },
+  { "id": 4, "rank": undefined, category: "자유", "title": "아벤카지노 보증금 5천만원", "img": "/images/baccBoard4.jpg", "date": "01.22", },
+]

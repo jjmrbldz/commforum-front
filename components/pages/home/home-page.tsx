@@ -2,14 +2,14 @@ import AdBoxImage from "@/components/ads/adbox-img";
 import LoginForm from "@/components/forms/login-form";
 import Banner from "@/components/pages/home/banner";
 import Widget from "@/components/widget/widget";
-import { freeBoard, noticeFreeBoard, oReviewBoard } from "@/lib/constants";
+import { baccBoard, freeBoard, noticeFreeBoard, oReviewBoard } from "@/lib/constants";
 
 export default function HomePage() {
   return (
     <div className="grid grid-cols-12 gap-4">
       <div className="col-span-9 py-4">
         <Banner />
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-2 gap-4 my-4">
           <Widget {...{
             title: "온카,슬롯 후기",
             data: oReviewBoard,
@@ -22,6 +22,15 @@ export default function HomePage() {
             data: freeBoard,
             path: '/board', 
             rootClassname: ''
+          }} />
+        </div>
+        <div className="my-4">
+          <Widget {...{
+            title: "보증 바카라 카지노",
+            data: baccBoard,
+            path: '/board', 
+            rootClassname: '',
+            layout: 'basic-gallery',
           }} />
         </div>
       </div>
