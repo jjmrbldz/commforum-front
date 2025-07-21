@@ -9,7 +9,7 @@ export default function WidgetBasicGallery(props: WidgetBasicGalleryProps) {
     <>
       <WidgetTitle title={props.title} />
       <div className="grid grid-cols-5 gap-3">
-        {props.data?.map((item, index) => (
+        {props.data && props.data.length > 0 ? props.data?.map((item, index) => (
           <Link key={index} href={`${props.path}?id=${item.id}`} className="block hover:text-red-500 flex-1">
             <div className="relative w-full h-[125px] shadow-[0px_9px_4px_-4px_rgba(0,0,0,0.8)]">
               <Image
@@ -24,7 +24,9 @@ export default function WidgetBasicGallery(props: WidgetBasicGalleryProps) {
               <div className="whitespace-nowrap overflow-hidden text-ellipsis text-xs max-w-full">{item.title}</div>
             </div>
           </Link>
-        ))}
+        )) : (
+          <div className="col-span-5 w-full text-center text-slate-400 p-12">등록된 글이 없습니다.</div>
+        )}
       </div>
     </>
   )

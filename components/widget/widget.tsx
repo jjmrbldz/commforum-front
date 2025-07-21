@@ -18,6 +18,9 @@ export default function Widget({
   addCategory = false,
   showRank = true,
   hasContentTitle = true,
+  chunkData = true,
+  loop = false,
+  showAuthor = false,
 } : WidgetProps) {
   return (
     <div className={cn("max-w-full", rootClassname)}>
@@ -32,13 +35,14 @@ export default function Widget({
         <Carousel
           opts={{
             align: "start",
+            loop,
           }}
           className="w-full"
         >
           <WidgetTitle title={title} isCarousel />
           <WidgetCarouselContent {...{
               layout,
-              data: chunkWithRandomPrefixes(data, hasItemPrefix ? dataLimitPerList + 2 : dataLimitPerList, hasItemPrefix ? 2 : 0),
+              data: chunkData ? chunkWithRandomPrefixes(data, hasItemPrefix ? dataLimitPerList + 2 : dataLimitPerList, hasItemPrefix ? 2 : 0) : data,
               dataLimitPerList,
               carouselSize,
               hasItemPrefix,
@@ -46,6 +50,8 @@ export default function Widget({
               isReviews,
               addCategory,
               showRank,
+              hasContentTitle,
+              showAuthor
             }} 
           />
         </Carousel>

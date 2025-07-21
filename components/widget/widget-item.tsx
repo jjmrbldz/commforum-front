@@ -6,7 +6,8 @@ export default function WidgetItem({
   path,
   isReviews,
   addCategory,
-  showRank
+  showRank,
+  showAuthor
 }: WidgetItemProps) {
   return (
     <Link href={`${path}?id=${item.id}`} className="flex items-center gap-1 text-xs hover:text-red-500 mt-1">
@@ -21,6 +22,7 @@ export default function WidgetItem({
       <div className="overflow-hidden whitespace-nowrap text-ellipsis max-w-full">{addCategory && (`${item.category} | `)}{item.title}</div>
       <div className="flex ml-auto">
         {isReviews && (<div className="text-red-500 mr-3">+{item.reviews}</div>)}
+        {showAuthor && (<div className="text-slate-500 text-nowrap mr-3">{item.author}</div>)}
         <div className="text-slate-500 text-right">{item.date}</div>
       </div>
     </Link>

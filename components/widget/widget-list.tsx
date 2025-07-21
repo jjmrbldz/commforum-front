@@ -10,7 +10,8 @@ export default function WidgetList({
   dataLimitPerList,
   isReviews,
   addCategory,
-  showRank
+  showRank,
+  showAuthor
 }: WidgetListProps) {
   return (
     <div className="">
@@ -31,7 +32,8 @@ export default function WidgetList({
           path,
           isReviews,
           addCategory,
-          showRank
+          showRank,
+          showAuthor
         }} />
       ))}
     </div>

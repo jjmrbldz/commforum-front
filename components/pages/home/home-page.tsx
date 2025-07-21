@@ -2,7 +2,7 @@ import AdBoxImage from "@/components/ads/adbox-img";
 import LoginForm from "@/components/forms/login-form";
 import Banner from "@/components/pages/home/banner";
 import Widget from "@/components/widget/widget";
-import { baccBoard, freeBoard, noticeFreeBoard, oReviewBoard } from "@/lib/constants";
+import { baccBoard, casinoBoard, freeBoard, noticeFreeBoard, oEventsBoard, oReviewBoard, slotsBoard, specialBoard, topComments } from "@/lib/constants";
 
 export default function HomePage() {
   return (
@@ -24,15 +24,82 @@ export default function HomePage() {
             rootClassname: ''
           }} />
         </div>
-        <div className="my-4">
+        <Widget {...{
+          title: "보증 바카라 카지노",
+          data: baccBoard,
+          path: '/board', 
+          rootClassname: 'my-4',
+          layout: 'basic-gallery',
+        }} />
+        <Widget {...{
+          title: "보증 슬롯 카지노",
+          data: slotsBoard,
+          path: '/board', 
+          rootClassname: 'my-4',
+          layout: 'basic-gallery',
+        }} />
+        <Widget {...{
+          title: "진행중 이벤트",
+          data: oEventsBoard,
+          path: '/board', 
+          rootClassname: 'my-4',
+          layout: 'basic-gallery',
+        }} />
+        <Widget {...{
+          title: "스페셜",
+          data: specialBoard,
+          path: '/board', 
+          rootClassname: 'my-4',
+          layout: 'gallery',
+          carouselSize: 3,
+          hasItemPrefix: false,
+          chunkData: false,
+          hasContentTitle: false,
+          loop: true
+        }} />
+        <div className="grid grid-cols-3 gap-4">  
           <Widget {...{
-            title: "보증 바카라 카지노",
-            data: baccBoard,
+            title: "베스트글",
+            data: noticeFreeBoard,
             path: '/board', 
             rootClassname: '',
-            layout: 'basic-gallery',
+            hasItemPrefix: false,
+            carouselSize: 1,
+            addCategory: true,
+          }} />
+          <Widget {...{
+            title: "공지사항",
+            data: noticeFreeBoard.slice(2, 4),
+            path: '/board', 
+            rootClassname: '',
+            hasItemPrefix: false,
+            carouselSize: 1,
+            addCategory: true,
+            showRank: false,
+          }} />
+          <Widget {...{
+            title: "명예의 전당",
+            data: noticeFreeBoard.slice(0, 1),
+            path: '/board', 
+            rootClassname: '',
+            hasItemPrefix: false,
+            carouselSize: 1,
+            addCategory: true,
+            showRank: false,
           }} />
         </div>
+        <Widget {...{
+          title: "먹튀 카지노",
+          data: casinoBoard,
+          path: '/board', 
+          rootClassname: 'my-4',
+          layout: 'gallery',
+          carouselSize: 3,
+          hasItemPrefix: false,
+          chunkData: false,
+          hasContentTitle: false,
+          loop: true
+        }} />
       </div>
       <div className="col-span-3 py-4">
         <LoginForm />
@@ -43,34 +110,43 @@ export default function HomePage() {
           alt="Telegram of Winner Brother"
           className="w-full"
         />
-          <Widget {...{
-            title: "알림장",
-            data: noticeFreeBoard,
-            path: '/board', 
-            rootClassname: '',
-            hasItemPrefix: false,
-            carouselSize: 1,
-            addCategory: true,
-          }} />
-          <AdBoxImage 
-            href="?hbw=3"
-            src={'/images/ad2.gif'}
-            alt="Some content"
-            className="w-full"
-          />
-          <AdBoxImage 
-            href="?hbw=4"
-            src={'/images/ad3.png'}
-            alt="Some content"
-            className="w-full"
-          />
-          <Widget {...{
-            title: "최근글",
-            data: freeBoard,
-            path: '/board', 
-            rootClassname: '',
-            carouselSize: 1,
-          }} />
+        <Widget {...{
+          title: "알림장",
+          data: noticeFreeBoard,
+          path: '/board', 
+          rootClassname: '',
+          hasItemPrefix: false,
+          carouselSize: 1,
+          addCategory: true,
+        }} />
+        <AdBoxImage 
+          href="?hbw=3"
+          src={'/images/ad2.gif'}
+          alt="Some content"
+          className="w-full"
+        />
+        <AdBoxImage 
+          href="?hbw=4"
+          src={'/images/ad3.png'}
+          alt="Some content"
+          className="w-full"
+        />
+        <Widget {...{
+          title: "최근글",
+          data: freeBoard,
+          path: '/board', 
+          rootClassname: 'my-4',
+          carouselSize: 1,
+        }} />
+        <Widget {...{
+          title: "댓글",
+          data: topComments,
+          path: '/board', 
+          rootClassname: '',
+          carouselSize: 1,
+          hasItemPrefix: false,
+          showAuthor: true,
+        }} />
       </div>
     </div>
   );

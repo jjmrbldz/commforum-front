@@ -16,6 +16,9 @@ export function carouselItemClass(size: WidgetCarouselProps['carouselSize']) {
     case 2:
       className = "!basis-1/2";
       break;
+    case 3:
+      className = "!basis-1/3";
+      break;
   
     default:
       break;

@@ -143,7 +143,7 @@ export const menuList: {
       },
     ]
   },
-]
+];
 
 export const userMenuList: {
   title: string;
@@ -159,7 +159,7 @@ export const userMenuList: {
   { title: "사진등록", href: "/myphoto", isModal: true },
   { title: "정보수정", href: "/memberconfirm/register", isModal: false },
   { title: "탈퇴하기", href: "/memberconfirm/leave", isModal: false },
-]
+];
 
 export const memberMenuList: {
   title: string;
@@ -168,7 +168,7 @@ export const memberMenuList: {
 }[] = [
   { title: "회원가입", href: "/register", isModal: false },
   { title: "아이디/비밀번호 찾기", href: "/forgot-password", isModal: false },
-]
+];
 
 export const serviceMenuList: {
   title: string;
@@ -180,17 +180,18 @@ export const serviceMenuList: {
   { title: "1:1 문의", href: "/inquiry", isModal: false, requiresAuth: true },
   { title: "새글모음", href: "/post/new", isModal: false, },
   { title: "현재접속자", href: "/online-users", isModal: false, requiresAuth: true },
-]
+];
 
 // OPTIONS
 export const searchTypeOptions = [
   { label: "게시물", value: "post"},
   { label: "태그", value: "tag"},
-]
+];
+
 export const searchOperatorOptions = [
   { label: "또는", value: "or"},
   { label: "그리고", value: "and"},
-]
+];
 
 // SAMPLE DATA
 export const freeBoard = [
@@ -214,13 +215,13 @@ export const freeBoard = [
   { "id": 18, "rank": 18, "title": "❤모아소프트❤ 구글", "date": "07.14", "img": "/images/18.png" },
   { "id": 19, "rank": 19, "title": "🔯🔯 구글 도배 홍", "date": "07.13", "img": "/images/5.png" },
   { "id": 20, "rank": 20, "title": "2025년 최신 파워볼오", "date": "07.13", "img": "/images/20.jpg" }
-]
+];
 
 export const oReviewBoard = [
   { "id": 1, "rank": 1, "title": "파라오카지노 후기", "date": "11.30", reviews: 4, "img": "/images/or1.jpg" },
   { "id": 2, "rank": 2, "title": "아벤카지노 후기", "date": "11.30", reviews: 4, "img": "/images/or2.jpg" },
   { "id": 3, "rank": 3, "title": "아벤카지노 후기", "date": "09.08", reviews: 4, "img": "/images/or2.jpg" },
-]
+];
 
 export const noticeFreeBoard = [
   { "id": 1, "rank": undefined, category: "자유", "title": "✡️✡️✡️커뮤니티 자동 홍보프로그램 / 구글 찌라시 프로그램 / 백링크 프로그램 / 텔레그램 자동 홍보프로그램 / 카카오톡 파워볼 오토픽 / DB추출프로그램✡️✡️✡️ - #텔레그램DB초대", "img": "", "date": "01.23", },
@@ -228,11 +229,49 @@ export const noticeFreeBoard = [
   { "id": 3, "rank": undefined, category: "자유", "title": "❤️❤️❤️커뮤니티 자동글쓰기 프로그램 / 텔레그램 자동 홍보프로그램 / 카카오톡 파워볼 오토픽 / 구글 찌라시 홍보프로그램 / 구글 백링크 프로그램 / DB추출프로그램❤️❤️❤️", "img": "", "date": "01.22", },
   { "id": 4, "rank": undefined, category: "자유", "title": "✡️✡️✡️구글 도배 홍보프로그램 / 토토/카지노 홍보프로그램 / 텔레그램 자동 홍보프로그램 / 카카오톡 파워볼 오토픽 / DB추출프로그램✡️✡️✡️ - #먹튀검증사이트 자동홍보", "img": "", "date": "01.22", },
   { "id": 5, "rank": undefined, category: "자유", "title": "❤️❤️❤️커뮤니티 자동글쓰기 프로그램 / 텔레그램 자동 홍보프로그램 / 카카오톡 파워볼 오토픽 / 구글 찌라시 홍보프로그램 / 구글 백링크 프로그램 / DB추출프로그램❤️❤️❤️", "img": "", "date": "01.22", },
-]
+  { "id": 6, "rank": undefined, category: "자유", "title": "✡️✡️✡️커뮤니티 자동 홍보프로그램 / 구글 찌라시 프로그램 / 백링크 프로그램 / 텔레그램 자동 홍보프로그램 / 카카오톡 파워볼 오토픽 / DB추출프로그램✡️✡️✡️ - #텔레그램DB초대", "img": "", "date": "01.23", },
+  { "id": 7, "rank": undefined, category: "자유", "title": "", "img": "", "date": "01.23", },
+  { "id": 8, "rank": undefined, category: "자유", "title": "❤️❤️❤️커뮤니티 자동글쓰기 프로그램 / 텔레그램 자동 홍보프로그램 / 카카오톡 파워볼 오토픽 / 구글 찌라시 홍보프로그램 / 구글 백링크 프로그램 / DB추출프로그램❤️❤️❤️", "img": "", "date": "01.22", },
+  { "id": 9, "rank": undefined, category: "자유", "title": "✡️✡️✡️구글 도배 홍보프로그램 / 토토/카지노 홍보프로그램 / 텔레그램 자동 홍보프로그램 / 카카오톡 파워볼 오토픽 / DB추출프로그램✡️✡️✡️ - #먹튀검증사이트 자동홍보", "img": "", "date": "01.22", },
+  { "id": 10, "rank": undefined, category: "자유", "title": "❤️❤️❤️커뮤니티 자동글쓰기 프로그램 / 텔레그램 자동 홍보프로그램 / 카카오톡 파워볼 오토픽 / 구글 찌라시 홍보프로그램 / 구글 백링크 프로그램 / DB추출프로그램❤️❤️❤️", "img": "", "date": "01.22", },
+];
 
 export const baccBoard = [
   { "id": 1, "rank": undefined, category: "자유", "title": "파라오 보증금 5천만원", "img": "/images/baccBoard1.jpg", "date": "01.23", },
   { "id": 2, "rank": undefined, category: "자유", "title": "스테이션 보증금 5천만원", "img": "/images/baccBoard2.jpg", "date": "01.23", },
   { "id": 3, "rank": undefined, category: "자유", "title": "소울카지노 보증금 5천만원", "img": "/images/baccBoard3.jpg", "date": "01.22", },
   { "id": 4, "rank": undefined, category: "자유", "title": "아벤카지노 보증금 5천만원", "img": "/images/baccBoard4.jpg", "date": "01.22", },
-]
+];
+
+export const slotsBoard = [
+  { "id": 1, "rank": undefined, category: "자유", "title": "빅2카지노 보증금 5,000만원", "img": "/images/slotBoard1.jpg", "date": "01.23", },
+];
+
+export const oEventsBoard = [];
+
+export const specialBoard = [
+  { "id": 1, "rank": undefined, category: "자유", "title": "파라오 보증금 5천만원", "img": "/images/special1.png", "date": "01.23", },
+  { "id": 2, "rank": undefined, category: "자유", "title": "스테이션 보증금 5천만원", "img": "/images/special2.png", "date": "01.23", },
+  { "id": 3, "rank": undefined, category: "자유", "title": "소울카지노 보증금 5천만원", "img": "/images/special3.png", "date": "01.22", },
+  { "id": 4, "rank": undefined, category: "자유", "title": "아벤카지노 보증금 5천만원", "img": "/images/special4.png", "date": "01.22", },
+];
+
+export const casinoBoard = [
+  { "id": 1, "rank": undefined, category: "자유", "title": "파라오 보증금 5천만원", "img": "/images/casinoBoard1.jpg", "date": "01.23", },
+  { "id": 2, "rank": undefined, category: "자유", "title": "스테이션 보증금 5천만원", "img": "/images/casinoBoard2.jpg", "date": "01.23", },
+  { "id": 3, "rank": undefined, category: "자유", "title": "소울카지노 보증금 5천만원", "img": "/images/casinoBoard3.jpg", "date": "01.22", },
+  { "id": 4, "rank": undefined, category: "자유", "title": "아벤카지노 보증금 5천만원", "img": "/images/casinoBoard4.jpg", "date": "01.22", },
+];
+
+export const topComments = [
+  { "id": 1, "rank": 1, "title": "음바페 나간다는데 이강인이 눈에 들어오겠냐", "author": "제니", "img": "", "date": "06.14", },
+  { "id": 2, "rank": 2, "title": "ㅋㅋㅋㅋ", "author": "푸키", "img": "", "date": "11.30", },
+  { "id": 3, "rank": 3, "title": "2023-05-20 11:06:57", "author": "읏짜아", "img": "", "date": "04.14", },
+  { "id": 4, "rank": 4, "title": "아!! 이런 지금 돈이 없는데..", "author": "킹놈은디프런", "img": "", "date": "04.14", },
+  { "id": 5, "rank": 5, "title": "나이스~", "author": "조디", "img": "", "date": "11.30", },
+  { "id": 6, "rank": 6, "title": "음바페 나간다는데 이강인이 눈에 들어오겠냐", "author": "제니", "img": "", "date": "06.14", },
+  { "id": 7, "rank": 7, "title": "ㅋㅋㅋㅋ", "author": "푸키", "img": "", "date": "11.30", },
+  { "id": 8, "rank": 8, "title": "2023-05-20 11:06:57", "author": "읏짜아", "img": "", "date": "04.14", },
+  { "id": 9, "rank": 9, "title": "아!! 이런 지금 돈이 없는데..", "author": "킹놈은디프런", "img": "", "date": "04.14", },
+  { "id": 10, "rank": 10, "title": "나이스~", "author": "조디", "img": "", "date": "11.30", },
+];
