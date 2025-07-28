@@ -11,7 +11,9 @@ export default function WidgetList({
   isReviews,
   addCategory,
   showRank,
-  showAuthor
+  showAuthor,
+  rankColor,
+  showPoints
 }: WidgetListProps) {
   return (
     <div className="">
@@ -33,7 +35,9 @@ export default function WidgetList({
           isReviews,
           addCategory,
           showRank,
-          showAuthor
+          showAuthor,
+          rankColor,
+          showPoints
         }} />
       ))}
     </div>

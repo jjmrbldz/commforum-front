@@ -2,7 +2,7 @@ import AdBoxImage from "@/components/ads/adbox-img";
 import LoginForm from "@/components/forms/login-form";
 import Banner from "@/components/pages/home/banner";
 import Widget from "@/components/widget/widget";
-import { baccBoard, casinoBoard, freeBoard, noticeFreeBoard, oEventsBoard, oReviewBoard, slotsBoard, specialBoard, topComments } from "@/lib/constants";
+import { baccBoard, casinoBoard, freeBoard, noticeFreeBoard, oEventsBoard, oReviewBoard, pointsTab, slotsBoard, specialBoard, topComments } from "@/lib/constants";
 
 export default function HomePage() {
   return (
@@ -142,10 +142,23 @@ export default function HomePage() {
           title: "댓글",
           data: topComments,
           path: '/board', 
-          rootClassname: '',
+          rootClassname: 'my-4',
           carouselSize: 1,
           hasItemPrefix: false,
           showAuthor: true,
+        }} />
+        <Widget {...{
+          layout: 'tab',
+          tabNames: pointsTab.tabNames,
+          data: pointsTab.data,
+          path: '/board', 
+          rootClassname: '',
+          carouselSize: 1,
+          hasItemPrefix: false,
+          showAuthor: false,
+          dataLimitPerList: 20,
+          showPoints: true,
+          // rankColor: 'bg-green-500'
         }} />
       </div>
     </div>

@@ -15,13 +15,15 @@ export default function WidgetCarouselContent({
   addCategory,
   showRank,
   hasContentTitle,
-  showAuthor
+  showAuthor,
+  rankColor,
+  showPoints
 } : WidgetCarouselProps) {
   return data && data.length > 0 ? (
     <CarouselContent>
       {data.map((item, index) => (
         <CarouselItem key={index} className={cn("pl-4", carouselItemClass(carouselSize))}>
-          {layout === 'default' ? (
+          {(layout === 'default' || layout === 'tab') ? (
             <WidgetList {...{
               data: item,
               path,
@@ -30,7 +32,9 @@ export default function WidgetCarouselContent({
               isReviews,
               addCategory,
               showRank,
-              showAuthor
+              showAuthor,
+              rankColor,
+              showPoints,
             }} />
           ) : (
             <WidgetCarouselGallery {...{

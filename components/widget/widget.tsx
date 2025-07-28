@@ -1,9 +1,8 @@
 import { chunkWithRandomPrefixes, cn } from "@/lib/utils";
-import WidgetTitle from "./widget-title";
-import { WidgetProps } from "@/types";
-import { Carousel } from "../ui/carousel";
-import WidgetCarouselContent from "./widget-carousel-content";
+import { NonWidgetTabProps, WidgetProps, WidgetTabProps } from "@/types";
 import WidgetBasicGallery from "./widget-basic-gallery";
+import WidgetCarousel from "./widget-carousel";
+import WidgetTab from "./widget-tab";
 
 export default function Widget({
   layout = "default",
@@ -14,6 +13,7 @@ export default function Widget({
   hasItemPrefix = true,
   path,
   rootClassname = "",
+  rankColor = "",
   isReviews = false,
   addCategory = false,
   showRank = true,
@@ -21,41 +21,80 @@ export default function Widget({
   chunkData = true,
   loop = false,
   showAuthor = false,
+  showPoints = false,
+  showTitle = true,
+  tabNames,
 } : WidgetProps) {
   return (
     <div className={cn("max-w-full", rootClassname)}>
-      {layout === "basic-gallery" ? (
+      {layout === "tab" && (
+        <WidgetTab {...{
+          layout,
+          tabNames,
+          title,
+          dataLimitPerList,
+          carouselSize,
+          hasItemPrefix,
+          path,
+          rootClassname,
+          isReviews,
+          addCategory,
+          showRank,
+          hasContentTitle,
+          chunkData,
+          loop,
+          showAuthor,
+          showTitle,
+          rankColor,
+          showPoints,
+          data: chunkData ? 
+            Object.fromEntries(
+              Object.entries(data).map(([key, value]) => [key, chunkWithRandomPrefixes(
+              value, 
+              hasItemPrefix ? dataLimitPerList + 2 : dataLimitPerList, 
+              hasItemPrefix ? 2 : 0
+            )])
+            ) : 
+            data,
+        } as WidgetTabProps} />
+      )}
+
+      {layout === "basic-gallery" && (
         <WidgetBasicGallery {...{
           title,
-          data,
+          data: data as NonWidgetTabProps['data'],
           path,
           hasContentTitle
         }} />
-      ) : (
-        <Carousel
-          opts={{
-            align: "start",
-            loop,
-          }}
-          className="w-full"
-        >
-          <WidgetTitle title={title} isCarousel />
-          <WidgetCarouselContent {...{
-              layout,
-              data: chunkData ? chunkWithRandomPrefixes(data, hasItemPrefix ? dataLimitPerList + 2 : dataLimitPerList, hasItemPrefix ? 2 : 0) : data,
-              dataLimitPerList,
-              carouselSize,
-              hasItemPrefix,
-              path,
-              isReviews,
-              addCategory,
-              showRank,
-              hasContentTitle,
-              showAuthor
-            }} 
-          />
-        </Carousel>
       )}
+
+      {(layout === "default" || layout === "gallery") && (
+        <WidgetCarousel {...{
+          layout,
+          title,
+          dataLimitPerList,
+          carouselSize,
+          hasItemPrefix,
+          path,
+          rootClassname,
+          isReviews,
+          addCategory,
+          showRank,
+          hasContentTitle,
+          chunkData,
+          loop,
+          showAuthor,
+          showTitle,
+          data: chunkData ? 
+            chunkWithRandomPrefixes(
+              data as NonWidgetTabProps['data'], 
+              hasItemPrefix ? dataLimitPerList + 2 : dataLimitPerList, 
+              hasItemPrefix ? 2 : 0) : 
+              data as NonWidgetTabProps['data'],
+        }} />
+      )}
+
+
     </div>
   )
 }

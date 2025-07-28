@@ -1,17 +1,26 @@
 import { ReactNode } from "react";
 import { CarouselNext, CarouselPrevious } from "../ui/carousel";
+import { cn } from "@/lib/utils";
 
 export default function WidgetTitle({
+  className = "",
   title,
-  isCarousel = false
+  isCarousel = false,
+  isTab = false
 } : {
+  className?: string;
   title: ReactNode;
   isCarousel?: boolean;
+  isTab?: boolean;
 }) {
   return (
     <div className="">
-      <div className="flex items-center justify-between">
-        <div className="text-lg font-bold">{title}</div>
+      <div className={cn("flex items-center justify-between", className)}>
+        {isTab ? (
+          title
+        ) : (
+          <div className="text-lg font-bold">{title}</div>
+        )}
         {isCarousel && (
           <div className="">
             <CarouselPrevious className="static translate-none rounded-none size-6 border border-slate-200" />

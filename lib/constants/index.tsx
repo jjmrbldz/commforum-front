@@ -275,3 +275,56 @@ export const topComments = [
   { "id": 9, "rank": 9, "title": "아!! 이런 지금 돈이 없는데..", "author": "킹놈은디프런", "img": "", "date": "04.14", },
   { "id": 10, "rank": 10, "title": "나이스~", "author": "조디", "img": "", "date": "11.30", },
 ];
+
+export const pointsTab = {
+  tabNames: [
+    { label: "활동포인트", value: "tab1"},
+    { label: "바카라 토너먼트 순위", value: "tab2"},
+  ],
+  data: {
+    "tab1": [
+      { "rank": 1, "name": "skqgzv", "points": 33701500 },
+      { "rank": 2, "name": "vdfbbfdv", "points": 1175200 },
+      { "rank": 3, "name": "zxvdsds", "points": 1130500 },
+      { "rank": 4, "name": "김현진", "points": 666000 },
+      { "rank": 5, "name": "cxvsdvds", "points": 494200 },
+      { "rank": 6, "name": "케이타", "points": 480039 },
+      { "rank": 7, "name": "나홀훈양", "points": 448000 },
+      { "rank": 8, "name": "충욱진구", "points": 441600 },
+      { "rank": 9, "name": "신손욱덕", "points": 378700 },
+      { "rank": 10, "name": "킹스맨", "points": 370300 },
+      { "rank": 11, "name": "톡격자", "points": 306664 },
+      { "rank": 12, "name": "기뻐아레스", "points": 304423 },
+      { "rank": 13, "name": "상큼한곰문자", "points": 304275 },
+      { "rank": 14, "name": "식섭빈력", "points": 296700 },
+      { "rank": 15, "name": "개오천양", "points": 294300 },
+      { "rank": 16, "name": "훌륭한차도남", "points": 287784 },
+      { "rank": 17, "name": "대챈파", "points": 277917 },
+      { "rank": 18, "name": "cocacola", "points": 267948 },
+      { "rank": 19, "name": "주사파파", "points": 265647 },
+      { "rank": 20, "name": "엉뚱한오마", "points": 263022 }
+    ],
+    "tab2": [
+      { "rank": 1, "name": "선킴", "points": 0 },
+      { "rank": 2, "name": "맨날이겨", "points": 0 },
+      { "rank": 3, "name": "서울9잡이", "points": 0 },
+      { "rank": 4, "name": "양타탁족", "points": 0 },
+      { "rank": 5, "name": "케이타", "points": 0 },
+      { "rank": 6, "name": "주사파파", "points": 0 },
+      { "rank": 7, "name": "가을빛", "points": 0 },
+      { "rank": 8, "name": "목격자", "points": 0 },
+      { "rank": 9, "name": "카코탁탁", "points": 0 },
+      { "rank": 10, "name": "대칭파", "points": 0 },
+      { "rank": 11, "name": "상큼한곰문자", "points": 0 },
+      { "rank": 12, "name": "기뻐아레스", "points": 0 },
+      { "rank": 13, "name": "훌륭한차도남", "points": 0 },
+      { "rank": 14, "name": "어지러운아무짝", "points": 0 },
+      { "rank": 15, "name": "진절한루카", "points": 0 },
+      { "rank": 16, "name": "서운한기가", "points": 0 },
+      { "rank": 17, "name": "의심스러운승카", "points": 0 },
+      { "rank": 18, "name": "겸손한피파", "points": 0 },
+      { "rank": 19, "name": "훌안한탱자", "points": 0 },
+      { "rank": 20, "name": "마르마크", "points": 0 }
+    ]
+  }
+}

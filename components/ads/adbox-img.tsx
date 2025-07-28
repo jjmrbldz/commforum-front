@@ -13,6 +13,7 @@ export default function AdBoxImage(props: AdBoxImageProps) {
           src={props.src} 
           alt={props.alt} 
           className={cn("object-cover", props.className)} 
+          unoptimized
         />
       </Link>
     </div>
