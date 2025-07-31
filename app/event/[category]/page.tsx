@@ -1,4 +1,4 @@
-import BoardCatPage from "@/components/pages/board/category/category-page";
+import EventCatPage from "@/components/pages/event/category/category-page";
 
 
 export default async function Page({
@@ -8,5 +8,5 @@ export default async function Page({
 }) {
   const {category} = await params;
   
-  return <BoardCatPage title={category?.toUpperCase()} />
+  return <EventCatPage title={category?.toUpperCase()} />
 }
