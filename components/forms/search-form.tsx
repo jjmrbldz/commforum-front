@@ -1,3 +1,5 @@
+"use client"
+
 import { Search } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { SearchFormSchema } from "@/types";
@@ -9,9 +11,10 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import SearchTypeSelect from "../select/search-type-select";
 import SearchOperatorSelect from "../select/search-operator-select";
+import { cn } from "@/lib/utils";
 
 
-export default function SearchForm() {
+export default function SearchForm({className = ""}: {className?: string}) {
   const form = useForm<SearchFormSchema>({
     resolver: zodResolver(searchFormSchema),
     defaultValues: {
@@ -35,7 +38,7 @@ export default function SearchForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className="grid grid-col-2 gap-2">
+        <div className={cn("grid grid-col-2 gap-2", className)}>
           <FormField 
             control={form.control}
             name="searchType"
