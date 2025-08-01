@@ -6,7 +6,7 @@ import { baccBoard, casinoBoard, freeBoard, noticeFreeBoard, oEventsBoard, oRevi
 
 export default function HomePage() {
   return (
-    <div className="grid grid-cols-12 gap-4">
+    <div className="grid md:grid-cols-12 gap-4 p-4 md:p-0">
       <div className="col-span-9 py-4">
         <Banner />
         <div className="grid grid-cols-2 gap-4 my-4">
@@ -101,7 +101,7 @@ export default function HomePage() {
           loop: true
         }} />
       </div>
-      <div className="col-span-3 py-4">
+      <div className="hidden md:block col-span-3 py-4">
         <LoginForm />
         <AdBoxImage 
           href="https://t.me/winnerbrother"

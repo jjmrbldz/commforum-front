@@ -16,10 +16,10 @@ export default function BotHeader() {
   return (
     <div className="-mt-2">
       <NavigationMenu viewport={false}>
-        <NavigationMenuList>
+        <NavigationMenuList className="flex-0 md:flex-1">
 
           {menuList.slice(0, 4).map((item, index) => (
-            <NavigationMenuItem key={index}>
+            <NavigationMenuItem className="hidden md:block" key={index}>
               <NavigationMenuTrigger className={item.triggerClassName}>
                 <Link href={item.href}>
                   {item.title}
@@ -33,12 +33,12 @@ export default function BotHeader() {
             </NavigationMenuItem>
           ))}
 
-          <Link href={'/'} className="min-w-[125px]">
+          <Link href={'/'} className="w-full max-w-[60px] md:max-w-[125px]">
             <Image width={125} height={105} src={logo} alt="Winner Bro Logo" priority={true} style={{ width: "auto", height: "auto" }} />
           </Link>         
 
           {menuList.slice(4).map((item, index) => (
-            <NavigationMenuItem key={index}>
+            <NavigationMenuItem className="hidden md:block" key={index}>
               <NavigationMenuTrigger className={item.triggerClassName}>
                 <Link href={item.href}>
                   {item.title}
@@ -52,7 +52,7 @@ export default function BotHeader() {
             </NavigationMenuItem>
           ))}
 
-          <div className="min-w-[120px] mt-6 text-center">
+          <div className="md:min-w-[120px] md:mt-6 text-center">
             <SearchButton />
           </div>
         </NavigationMenuList>

@@ -8,9 +8,9 @@ export default function WidgetBasicGallery(props: WidgetBasicGalleryProps) {
   return (
     <>
       <WidgetTitle title={props.title} />
-      <div className="grid grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
         {props.data && props.data.length > 0 ? props.data?.map((item, index) => (
-          <Link key={index} href={`${props.path}?id=${item.id}`} className="block hover:text-red-500 flex-1">
+          <Link key={index} href={`${props.path}/${item.category}/${item.id}`} className="block hover:text-red-500 flex-1">
             <div className="relative w-full h-[125px] shadow-[0px_9px_4px_-4px_rgba(0,0,0,0.8)]">
               <Image
                 alt={item.content || ""} 

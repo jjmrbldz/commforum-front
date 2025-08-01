@@ -2,6 +2,7 @@ import Widget from "@/components/widget/widget";
 import { baccBoard, casinoBoard, freeBoard, noticeFreeBoard, oEventsBoard, oReviewBoard, slotsBoard, specialBoard } from "@/lib/constants";
 
 export default function BoardPage() {
+  
   return (
     <>
       <div className="grid grid-cols-2 gap-4 my-4">

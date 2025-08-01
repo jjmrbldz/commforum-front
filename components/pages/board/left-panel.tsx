@@ -5,7 +5,7 @@ import { freeBoard, noticeFreeBoard, pointsTab, topComments } from "@/lib/consta
 
 export default function LeftPanel() {
   return (
-    <div className="col-span-3 py-4">
+    <div className="hidden md:block col-span-3 py-4">
       <LoginForm />
       <AdBoxImage 
         href="https://t.me/winnerbrother"

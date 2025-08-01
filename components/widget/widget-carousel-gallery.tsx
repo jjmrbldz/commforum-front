@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function WidgetCarouselGallery({item, path, hasContentTitle}: WidgetCarouselGalleryProps) {
   return (
-    <Link key={item.id} href={`${path}?id=${item.id}`} className="block hover:text-red-500 flex-1">
+    <Link key={item.id} href={`${path}/${item.category}/${item.id}`} className="block hover:text-red-500 flex-1">
       <div className="relative w-full h-[214px] shadow-[0px_9px_4px_-4px_rgba(0,0,0,0.8)]">
         <Image
           alt={item.content || ""} 

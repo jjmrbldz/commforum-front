@@ -11,7 +11,7 @@ export default function WidgetItemPrefix({
   return (
     <div className="flex items-center justify-between gap-2">
       {data.slice(0, 2).map((item, index) => (
-        <Link key={index} href={`${path}?id=${item.id}`} className="block hover:text-red-500 flex-1">
+        <Link key={index} href={`${path}/${item.category}/${item.id}`} className="block hover:text-red-500 flex-1">
           <div className="relative w-full h-[75px]">
             <Image
               alt={item.content || ""} 

@@ -14,7 +14,7 @@ export default function WidgetItem({
   showPoints
 }: WidgetItemProps) {
   return (
-    <Link href={`${path}?id=${item.id}`} className="flex items-center gap-1 text-xs hover:text-red-500 mt-1">
+    <Link href={`${path}/${item.category}/${item.id}`} className="flex items-center gap-1 text-xs hover:text-red-500 mt-1">
       {showRank && (
         item.rank > 0 ? (
           <div className={cn("bg-yellow-500 text-white py-[2px] w-6 min-w-6 text-center leading-none", rankColor)}>{item.rank}</div>

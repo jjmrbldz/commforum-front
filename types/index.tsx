@@ -109,5 +109,6 @@ export interface WidgetCarouselGalleryProps extends Pick<WidgetProps, "path" | "
     title: string;
     img: string;
     content: string;
+    category: string;
   }
 }
