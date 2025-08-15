@@ -1,10 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* @custom-variant dark (&:is(.dark *)); */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 /* :root {
-  --background: #ffffff;
+  --primary: #04121f;
+  --primary-foreground: #04121f;
   --foreground: #171717;
 } */
 
@@ -13,7 +15,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono); */
-  --text-base: 
+  /* --text-base:  */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -50,6 +52,13 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-input: oklch(0.90 0 0 / 1);
+  --color-header: var(--header-primary);
+  --color-footer: var(--footer-primary);
+  --color-footer-foreground: var(--footer-primary-foreground);
+  --breakpoint-md: 64rem;
+  --breakpoint-lg: 80rem;
+  --breakpoint-xl: 96rem;
+  --breakpoint-2xl: 100rem;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -98,6 +107,9 @@ body {
   --sidebar-accent-foreground: oklch(0.28 0.04 260);
   --sidebar-border: oklch(0.98 0.00 248);
   --sidebar-ring: oklch(0.708 0 0);
+  --header-primary: #04121f;
+  --footer-primary: #1e1d22;
+  --footer-primary-foreground: #adadab;
 }
 
 .dark {
@@ -132,6 +144,9 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --header-primary: #04121f;
+  --footer-primary: #1e1d22;
+  --footer-primary-foreground: #adadab;
 }
 
 @layer base {

@@ -4,6 +4,10 @@ import "./globals.css";
 import Header from "@/components/layout/header";
 import { Toaster } from "sonner";
 import Sidebar from "@/components/layout/sidebar";
+import { ThemeProvider } from "next-themes";
+import { ScrollToTopButton } from "@/components/scrolltop-button";
+import Footer from "@/components/layout/footer";
+// import { ThemeProvider } from "@/components/layout/theme-provider";
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -24,16 +28,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${notoSansKR.className} antialiased`}
       >
-        <Header />
-        <div className="max-w-7xl m-auto">
-          {children}
-        </div>
-        <Toaster position="top-right" />
-        <Sidebar />
+        <ThemeProvider attribute="class">
+          <Header />
+          <div className="max-w-7xl m-auto">
+            {children}
+          </div>
+          <Sidebar />
+          <ScrollToTopButton />
+          <Footer />
+          <Toaster position="top-right" />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -7,25 +7,26 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
-import logo from "@/assets/images/logo.jpg"
-import Image from "next/image"
 import { SearchButton } from "@/components/search-button"
 import { menuList } from "@/lib/constants"
+import { MenuButton } from "@/components/menu-button"
 
 export default function BotHeader() {
   return (
-    <div className="-mt-2">
+    <div className="max-w-7xl py-2 px-2 md:px-0 m-auto">
       <NavigationMenu viewport={false}>
         <NavigationMenuList className="flex-0 md:flex-1">
-
-          {menuList.slice(0, 4).map((item, index) => (
+          <div className="text-center">
+            <MenuButton />
+          </div>
+          {menuList.map((item, index) => (
             <NavigationMenuItem className="hidden md:block" key={index}>
-              <NavigationMenuTrigger className={item.triggerClassName}>
+              <NavigationMenuTrigger className={item.triggerClassName} hasChildren={!!item.children}>
                 <Link href={item.href}>
                   {item.title}
                 </Link>
               </NavigationMenuTrigger>
-              <NavigationMenuContent className={item.contentClassname}>
+              <NavigationMenuContent className={"min-w-[170px]"}>
                 {item.children && item.children.map((subLink, subIndex) => (
                   <NavigationMenuLink key={subIndex} href={subLink.href} className={item.linkClassName}>{subLink.title}</NavigationMenuLink>
                 ))}
@@ -33,26 +34,7 @@ export default function BotHeader() {
             </NavigationMenuItem>
           ))}
 
-          <Link href={'/'} className="w-full max-w-[60px] md:max-w-[125px]">
-            <Image width={125} height={105} src={logo} alt="Winner Bro Logo" priority={true} style={{ width: "auto", height: "auto" }} />
-          </Link>         
-
-          {menuList.slice(4).map((item, index) => (
-            <NavigationMenuItem className="hidden md:block" key={index}>
-              <NavigationMenuTrigger className={item.triggerClassName}>
-                <Link href={item.href}>
-                  {item.title}
-                </Link>
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className={item.contentClassname}>
-                {item.children && item.children.map((subLink, subIndex) => (
-                  <NavigationMenuLink key={subIndex} href={subLink.href} className={item.linkClassName}>{subLink.title}</NavigationMenuLink>
-                ))}
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          ))}
-
-          <div className="md:min-w-[120px] md:mt-6 text-center">
+          <div className="ml-auto text-center">
             <SearchButton />
           </div>
         </NavigationMenuList>

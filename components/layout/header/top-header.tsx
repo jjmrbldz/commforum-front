@@ -1,38 +1,49 @@
 "use client"
 
-import DateToday from "@/components/date-today";
+import { useSheetStore } from "@/store/use-sheet-store";
+import { PlusCircle, Unlock, User, UserPlus2 } from "lucide-react";
 import Link from "next/link";
-import { toast } from "sonner";
 
 export default function TopHeader() {
-  const handleFaveClick = () => {
-    toast("Ctrl+D 키를 눌러 즐겨찾기에 등록하실 수 있습니다.", { position: "top-center" })
-  }
+  const { setSheet } = useSheetStore();
+
   return (
-    <div className="hidden lg:flex items-center text-xs pt-2 gap-3 text-neutral-900 font-light">
-      <div 
-        className="cursor-pointer"
-        onClick={handleFaveClick}
-      >
-        즐겨찾기
+    <div className="border-b border-gray-700">
+      <div className="hidden lg:flex items-center max-w-7xl m-auto text-xs py-4 gap-4 text-white font-light">
+        <Link href={'/online-users'}>
+          <div className="flex items-center gap-1">
+            <User className="opacity-60" size={16} />
+            <span>
+              접속자 1
+            </span>
+          </div>
+        </Link>
+
+        <Link href={'/register'} className="ml-auto">
+          <div className="flex items-center gap-1">
+            <UserPlus2 className="opacity-60" size={16} />
+            <span>
+              회원가입
+            </span>
+          </div>
+        </Link>
+        <div className="cursor-pointer" onClick={() => setSheet("user")}>
+          <div className="flex items-center gap-1">
+            <Unlock className="opacity-60" size={16} />
+            <span>
+              로그인
+            </span>
+          </div>
+        </div>
+        <div className="cursor-pointer" onClick={() => setSheet("menu")}>
+          <div className="flex items-center gap-1">
+            <PlusCircle className="opacity-60" size={16} />
+            <span>
+              추가메뉴
+            </span>
+          </div>
+        </div>
       </div>
-      <span>|</span>
-      <Link href={'/rss'}>RSS 구독</Link>
-      <span>|</span>
-      <DateToday />
-      <Link href={'/login'} className="ml-auto">로그인</Link>
-      <span>|</span>
-      <Link href={'/register'} className="">회원가입</Link>
-      <span>|</span>
-      <Link href={'/forgot-password'} className="">정보찾기</Link>
-      <span>|</span>
-      <div className="cursor-pointer">검색하기</div> {/* Search */}
-      <span>|</span>
-      <Link href={'/online-users'} className="">
-       <span>접속자 </span>
-       <span>{455} </span>
-       <span className="text-orange-700">({22})</span>
-      </Link>
     </div>
   )
 }

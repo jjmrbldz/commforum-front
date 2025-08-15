@@ -7,8 +7,10 @@ import { baccBoard, casinoBoard, freeBoard, noticeFreeBoard, oEventsBoard, oRevi
 export default function HomePage() {
   return (
     <div className="grid md:grid-cols-12 gap-4 p-4 md:p-0">
-      <div className="col-span-9 py-4">
+      <div className="col-span-12">
         <Banner />
+      </div>
+      <div className="col-span-12 md:col-span-9 py-4">
         <div className="grid grid-cols-2 gap-4 my-4">
           <Widget {...{
             title: "온카,슬롯 후기",

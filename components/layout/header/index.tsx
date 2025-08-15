@@ -1,13 +1,17 @@
+import ThemeButton from "@/components/theme-button";
 import BotHeader from "./bot-header";
+import MidHeader from "./mid-header";
 import TopHeader from "./top-header";
 
 export default function Header() {
   return (
-    <div className="border-b-3 border-cyan-500 p-4 md:p-4 md:pb-2 relative z-5">
-      <div className="max-w-7xl m-auto">
+    <div className="relative z-5">
+      <div className="bg-header border-bottom">
         <TopHeader />
-        <BotHeader />
+        <MidHeader />
       </div>
+      <BotHeader />
+      <ThemeButton />
     </div>
   )
 }

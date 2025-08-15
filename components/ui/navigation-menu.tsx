@@ -3,6 +3,7 @@ import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { ChevronDownIcon } from "lucide-react"
 
 function NavigationMenu({
   className,
@@ -36,7 +37,7 @@ function NavigationMenuList({
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
       className={cn(
-        "group flex flex-1 list-none items-center justify-between gap-1",
+        "group flex flex-1 list-none items-center",
         className
       )}
       {...props}
@@ -58,14 +59,15 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-9 w-max items-center justify-center bg-background px-4 py-2 font-bold text-[16px] hover:bg-accent focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=open]:hover:bg-accent data-[state=open]:text-accent-foreground data-[state=open]:focus:bg-accent data-[state=open]:bg-accent/50 focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 hover:!text-white min-w-[120px] mt-6"
+  "group inline-flex h-9 w-max items-center justify-center bg-background px-4 py-2 text-[16px] hover:bg-accent focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=open]:hover:bg-accent data-[state=open]:text-accent-foreground data-[state=open]:focus:bg-accent data-[state=open]:bg-accent/50 focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1"
 )
 
 function NavigationMenuTrigger({
   className,
+  hasChildren,
   children,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Trigger>) {
+}: React.ComponentProps<typeof NavigationMenuPrimitive.Trigger> & { hasChildren?: boolean }) {
   return (
     <NavigationMenuPrimitive.Trigger
       data-slot="navigation-menu-trigger"
@@ -73,10 +75,12 @@ function NavigationMenuTrigger({
       {...props}
     >
       {children}{" "}
-      {/* <ChevronDownIcon
-        className="font-bold relative top-[1px] ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180"
-        aria-hidden="true"
-      /> */}
+      {hasChildren && (
+        <ChevronDownIcon
+          className="font-bold relative top-[1px] ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180"
+          aria-hidden="true"
+        />
+      )}
     </NavigationMenuPrimitive.Trigger>
   )
 }
@@ -89,7 +93,7 @@ function NavigationMenuContent({
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
       className={cn(
-        "absolute -translate-x-1/2 data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 top-[89px] left-1/2 w-full md:absolute md:w-auto",
+        "absolute data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 left-0 w-full md:absolute md:w-auto",
         "rounded-none group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground group-data-[viewport=false]/navigation-menu:data-[state=open]:animate-in group-data-[viewport=false]/navigation-menu:data-[state=closed]:animate-out group-data-[viewport=false]/navigation-menu:data-[state=closed]:zoom-out-95 group-data-[viewport=false]/navigation-menu:data-[state=open]:zoom-in-95 group-data-[viewport=false]/navigation-menu:data-[state=open]:fade-in-0 group-data-[viewport=false]/navigation-menu:data-[state=closed]:fade-out-0 group-data-[viewport=false]/navigation-menu:mt-1.5 group-data-[viewport=false]/navigation-menu:overflow-hidden group-data-[viewport=false]/navigation-menu:shadow group-data-[viewport=false]/navigation-menu:duration-200 **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none",
         className
       )}

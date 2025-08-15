@@ -9,7 +9,7 @@ export function SearchButton() {
 
   return (
     <Button variant={"ghost"} size="icon" className="size-8 hover:!bg-slate-700 hover:!text-white" onClick={() => setSheet("search")}>
-      <Search />
+      <Search className="size-6 md:size-4" />
     </Button>
   )
 }
