@@ -29,8 +29,8 @@ export default function WidgetTitle({
         )}
       </div>
       <div className="my-2 flex items-center">
-        <div className="h-[3px] bg-slate-700 w-[45px]"></div>
-        <div className="h-[1px] bg-slate-300 flex-1"></div>
+        <div className="h-[3px] bg-slate-700 dark:bg-red-500 w-[45px]"></div>
+        <div className="h-[1px] bg-slate-300 dark:bg-white/40 flex-1"></div>
       </div>
     </div>
   )

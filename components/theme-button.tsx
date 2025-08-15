@@ -4,6 +4,7 @@ import { useTheme } from "next-themes"
 import { Button } from "./ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export default function ThemeButton() {
   const {theme, setTheme, resolvedTheme} = useTheme();
@@ -15,9 +16,9 @@ export default function ThemeButton() {
   const isDark = (theme ?? resolvedTheme) === "dark";
 
   return (
-    <Button size={'icon'} className="absolute top-6 md:top-1/2 md:-translate-y-1/2 right-0" onClick={() => setTheme(!isDark  ? "dark" : "light")}>
-      <Moon className={isDark ? "hidden" : "block text-blue-500"} />
-      <Sun className={isDark ? "block" : "hidden"} />
+    <Button size={'icon'} className="fixed z-5 top-7 md:top-20 right-0 dark:bg-stone-800 dark:hover:bg-stone-700" onClick={() => setTheme(!isDark  ? "dark" : "light")}>
+      <Moon className={cn("text-blue-500", isDark ? "hidden" : "block")} />
+      <Sun className={cn("text-yellow-300", isDark ? "block" : "hidden")} />
     </Button>
   )
 }

@@ -2,11 +2,9 @@
 
 import Autoplay from "embla-carousel-autoplay"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import banner1 from "@/assets/images/banner/banner-1.png"
-import banner2 from "@/assets/images/banner/banner-2.png"
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
-export default function BannerCarousel() {
+export default function BannerCarousel({ images } : { images: string[] | StaticImageData[]}) {
   return (
     <Carousel 
       className="w-full"
@@ -31,12 +29,11 @@ export default function BannerCarousel() {
             </div>
           </CarouselItem>
         ))} */}
-        <CarouselItem>
-          <Image alt="banner 1" src={banner1} />
-        </CarouselItem>
-        <CarouselItem>
-          <Image alt="banner 2" src={banner2} />
-        </CarouselItem>
+        {images && images.length > 0 && images.map((item, index) => (
+          <CarouselItem key={index}>
+            <Image alt={`banner ${index}`} src={item} />
+          </CarouselItem>
+        ))}
       </CarouselContent>
       <CarouselPrevious 
         variant={"link"} 

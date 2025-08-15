@@ -112,3 +112,12 @@ export interface WidgetCarouselGalleryProps extends Pick<WidgetProps, "path" | "
     category: string;
   }
 }
+
+export type ArticleData = {
+  id: number;
+  title: string;
+  description: string;
+  author: string;
+  date: string;
+  rating?: number;
+}
