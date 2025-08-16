@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/header";
 import { Toaster } from "sonner";
-import Sidebar from "@/components/layout/sidebar";
-import { ScrollToTopButton } from "@/components/scrolltop-button";
-import Footer from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/layout/theme-provider";
-import ThemeButton from "@/components/theme-button";
+import LayoutWrapper from "@/components/layout";
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -38,14 +34,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <div className="max-w-7xl m-auto">
+          <LayoutWrapper>
             {children}
-          </div>
-          <Sidebar />
-          <ScrollToTopButton />
-          <ThemeButton />
-          <Footer />
+          </LayoutWrapper>
           <Toaster position="top-right" />
         </ThemeProvider>
       </body>
