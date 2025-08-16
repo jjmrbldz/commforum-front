@@ -68,7 +68,7 @@ export default function Widget({
         }} />
       )}
 
-      {(layout === "default" || layout === "gallery") && (
+      {(layout === "default" || layout === "gallery" || layout === "article") && (
         <WidgetCarousel {...{
           layout,
           title,

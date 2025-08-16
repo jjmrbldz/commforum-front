@@ -7,7 +7,7 @@ import z from "zod";
 export type LoginFormSchema = z.infer<typeof loginFormSchema>;
 export type SearchFormSchema = z.infer<typeof searchFormSchema>;
 
-export type LayoutType = "default" | "gallery" | "basic-gallery" | "tab";
+export type LayoutType = "default" | "gallery" | "basic-gallery" | "tab" | "article";
 
 export type CommonWidgetProps = {
   /** Widget's layout: `"default"` | `"gallery"` | `"basic-gallery"` | `"tab"` */
@@ -116,8 +116,9 @@ export interface WidgetCarouselGalleryProps extends Pick<WidgetProps, "path" | "
 export type ArticleData = {
   id: number;
   title: string;
-  description: string;
+  description?: string;
   author: string;
   date: string;
   rating?: number;
+  img?: string;
 }

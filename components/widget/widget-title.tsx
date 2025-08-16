@@ -4,11 +4,13 @@ import { cn } from "@/lib/utils";
 
 export default function WidgetTitle({
   className = "",
+  titleClass = "",
   title,
   isCarousel = false,
   isTab = false
 } : {
   className?: string;
+  titleClass?: string;
   title: ReactNode;
   isCarousel?: boolean;
   isTab?: boolean;
@@ -19,7 +21,7 @@ export default function WidgetTitle({
         {isTab ? (
           title
         ) : (
-          <div className="text-lg font-bold">{title}</div>
+          <div className={cn("text-lg font-bold", titleClass)}>{title}</div>
         )}
         {isCarousel && (
           <div className="">

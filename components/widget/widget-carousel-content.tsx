@@ -3,6 +3,7 @@ import { CarouselContent, CarouselItem } from "../ui/carousel"
 import { carouselItemClass, cn } from "@/lib/utils";
 import WidgetList from "./widget-list";
 import WidgetCarouselGallery from "./widget-carousel-gallery";
+import Article from "../article/article";
 
 export default function WidgetCarouselContent({
   layout,
@@ -20,10 +21,10 @@ export default function WidgetCarouselContent({
   showPoints
 } : WidgetCarouselProps) {
   return data && data.length > 0 ? (
-    <CarouselContent>
+    <CarouselContent className="min-h-[100px]">
       {data.map((item, index) => (
         <CarouselItem key={index} className={cn("pl-4", carouselItemClass(carouselSize))}>
-          {(layout === 'default' || layout === 'tab') ? (
+          {(layout === 'default' || layout === 'tab') && (
             <WidgetList {...{
               data: item,
               path,
@@ -36,12 +37,22 @@ export default function WidgetCarouselContent({
               rankColor,
               showPoints,
             }} />
-          ) : (
+          )}
+
+          {(layout === "gallery" || layout === "basic-gallery") && (
             <WidgetCarouselGallery {...{
               item,
               path,
               hasContentTitle,
             }} /> 
+          )}
+
+          {layout === "article" && (
+            <Article 
+              data={{
+                ...item
+              }}
+            />
           )}
         </CarouselItem>
       ))}

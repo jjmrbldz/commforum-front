@@ -11,15 +11,22 @@ import { SearchButton } from "@/components/search-button"
 import { menuList } from "@/lib/constants"
 import { MenuButton } from "@/components/menu-button"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
+import logo from "@/assets/images/eyoom-logo.png"
 
 export default function BotHeader() {
   return (
-    <div className="sticky top-0 z-2 bg-white/70 dark:bg-header/70 backdrop-blur-md">
+    <div className="sticky top-0 z-2 bg-header md:bg-white/70 dark:bg-header/70 backdrop-blur-md">
       <div className="max-w-7xl py-4 px-2 md:px-0 m-auto">
         <NavigationMenu viewport={false}>
           <NavigationMenuList className="flex-0 md:flex-1">
             <div className="text-center">
-              <MenuButton />
+              <MenuButton className="text-white md:text-black dark:text-white"/>
+            </div>
+            <div className="md:hidden ml-3">
+              <Link href={'/'}>
+                <Image width={78} height={40} src={logo} alt="Logo" />
+              </Link>
             </div>
             {menuList.map((item, index) => (
               <NavigationMenuItem className="hidden md:block" key={index}>
@@ -35,8 +42,8 @@ export default function BotHeader() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
             ))}
-            <div className="ml-auto text-center">
-              <SearchButton />
+            <div className="ml-auto mr-10 md:mr-0 text-center">
+              <SearchButton className="text-white md:text-black dark:text-white" />
             </div>
           </NavigationMenuList>
         </NavigationMenu>

@@ -243,6 +243,11 @@ export const searchOperatorOptions = [
 ];
 
 // SAMPLE DATA
+export const articleWidget = [
+  { "id": 1, "rank": 1, "title": "NORWAY 8K", "description": "크라우드 펀딩은 자금의 모집자와 제공자간 거래가 온라인상에서 소셜미디어에 의한 쌍방향 소통을 바탕으로 한 관계 지향적이고 …", "author": "겨울비", "date": "2022-03-22", "img": "/images/article-img1.jpg" },
+  { "id": 2, "rank": 2, "title": "NORWAY 8K", "description": "크라우드 펀딩은 자금의 모집자와 제공자간 거래가 온라인상에서 소셜미디어에 의한 쌍방향 소통을 바탕으로 한 관계 지향적이고 …", "author": "겨울비", "date": "2022-03-22", "img": "/images/article-img1.jpg" },
+];
+
 export const freeBoard = [
   { "id": 1, "rank": 1, "title": "❤모아소프트❤ 구글", "date": "07.14", "img": "/images/4.png" },
   { "id": 2, "rank": 2, "title": "🔯🔯 커뮤니티 자동", "date": "07.14", "img": "/images/5.png" },
