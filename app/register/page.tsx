@@ -1,6 +1,5 @@
 import RegisterAgreementForm from "@/components/forms/register-agreement-form";
 
-
-export default function Page() {
+export default async function Page() {
   return <RegisterAgreementForm />
 }

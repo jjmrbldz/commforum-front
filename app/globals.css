@@ -116,7 +116,7 @@ body {
 .dark {
   --background: #0d1116;
   --foreground: oklch(0.9 0 0);
-  --card: oklch(0.28 0.04 260);
+  --card: oklch(21.274% 0.00253 248.167);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.28 0.04 260);
   --popover-foreground: oklch(0.985 0 0);

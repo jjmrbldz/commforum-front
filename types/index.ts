@@ -122,3 +122,10 @@ export type ArticleData = {
   rating?: number;
   img?: string;
 }
+
+export type MySQLError = Error & {
+  code: string;
+  errno: number;
+  sqlState?: string;
+  sqlMessage?: string;
+};
