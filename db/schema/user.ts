@@ -24,7 +24,7 @@ export const users = mysqlTable('T_USER', {
   point: double("tu_point"),
   referralUsername: varchar("tu_referral_username", { length: 100 }),
   group: varchar("tu_group", { length: 100 }),
-  token: varchar("tu_token", { length: 100 }),
+  token: varchar("tu_token", { length: 255 }),
   exp: double("tu_exp"),
   emailOptin: boolean("tu_email_optin"),
 })

@@ -1,12 +1,12 @@
 import AdBoxImage from "@/components/ads/adbox-img";
-import LoginForm from "@/components/forms/login-form";
+import AuthBox from "@/components/auth/auth-box";
 import Widget from "@/components/widget/widget";
 import { freeBoard, noticeFreeBoard, pointsTab, topComments } from "@/lib/constants";
 
 export default function LeftPanel() {
   return (
     <div className="hidden md:block col-span-3 py-4">
-      <LoginForm />
+      <AuthBox />
       <AdBoxImage 
         href="https://t.me/winnerbrother"
         target="_blank"

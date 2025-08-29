@@ -1,6 +1,5 @@
 import AdBoxImage from "@/components/ads/adbox-img";
 import Article from "@/components/article/article";
-import LoginForm from "@/components/forms/login-form";
 import Banner from "@/components/pages/home/banner";
 import Widget from "@/components/widget/widget";
 import banner3 from "@/assets/images/banner/banner-3.jpg";
@@ -8,6 +7,7 @@ import { articleWidget, baccBoard, freeBoard, noticeFreeBoard, oEventsBoard, poi
 import BannerCarousel from "./banner-carousel";
 import WidgetTitle from "@/components/widget/widget-title";
 import BottomSection from "./bottom-section";
+import AuthBox from "@/components/auth/auth-box";
 
 export default function HomePage() {
   return (
@@ -147,7 +147,7 @@ export default function HomePage() {
             }} /> */}
           </div>
           <div className="hidden md:block col-span-3 py-4">
-            <LoginForm />
+            <AuthBox />
             <AdBoxImage 
               href="https://t.me/winnerbrother"
               target="_blank"

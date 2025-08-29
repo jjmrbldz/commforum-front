@@ -1,14 +1,17 @@
+"use client"
+
 import AuthUserButtons from "@/components/auth/auth-user-button";
 import SidebarTitle from "@/components/sidebar-title";
 import { MessageResponse, NotifResponse } from "./notif";
+import { useUserStore } from "@/store/use-user-store";
 
 export default function NotifSheet() {
-  const isAuthenticated = false;
+  const user = useUserStore();
   return (
     <>
       <AuthUserButtons />
       
-      {isAuthenticated ? (
+      {user ? (
         <>
           <NotifResponse />
           <MessageResponse />

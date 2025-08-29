@@ -2,9 +2,7 @@
 
 import { Lock, LogIn, User } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { LoginFormSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginFormSchema } from "@/lib/schema/form";
 import { Input } from "../ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { Checkbox } from "../ui/checkbox";
@@ -12,32 +10,49 @@ import { Label } from "../ui/label";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import Link from "next/link";
-
+import { LoginData, loginSchema } from "@/db/validations/login";
+import { useTransition } from "react";
+import loginAction from "@/app/actions";
 
 export default function LoginForm() {
-  const form = useForm<LoginFormSchema>({
-    resolver: zodResolver(loginFormSchema),
+  const [isPending, startTransition] = useTransition();
+  const form = useForm<LoginData>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       username: "",
       password: "",
-      isKeepSigednIn: false,
+      isKeepSignedIn: false,
     },
   });
 
-  function onSubmit(data: LoginFormSchema) {
-    toast("You submitted the following values", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-      position: "bottom-right"
+  function onSubmit(data: LoginData) {
+    startTransition(async () => {
+      const res = await loginAction(data);
+      console.log('', res)
+      if (!res.ok) {
+        if (res.fieldErrors) {
+          Object.entries(res.fieldErrors).forEach(([name, message]) => {
+            form.setError(name as keyof LoginData, { message: message[0] });
+          });
+        } else {
+          toast.error(res.message, {
+            position: "bottom-right",
+          });
+        }
+        return;
+      }
+      toast.success(res.message, {
+        position: "bottom-right",
+      });
     })
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form 
+        onSubmit={form.handleSubmit(onSubmit)} 
+        className="space-y-8"
+      >
         <div className="flex flex-col gap-3">
           <FormField 
             control={form.control}
@@ -78,10 +93,10 @@ export default function LoginForm() {
           />
           <FormField 
             control={form.control}
-            name="isKeepSigednIn"
+            name="isKeepSignedIn"
             render={(({field}) => (
-              <FormItem  id="isKeepSigednIn" className="col-span-12">
-                <FormControl id="isKeepSigednIn">
+              <FormItem  id="isKeepSignedIn" className="col-span-12">
+                <FormControl id="isKeepSignedIn">
                   <div className="flex items-center gap-2">
                     <Checkbox 
                       id="remember-me"
@@ -102,7 +117,7 @@ export default function LoginForm() {
               </FormItem>
             ))}
           />
-          <Button size={'sm'} className="mt-2" type="submit" loading={form.formState.isLoading}>
+          <Button size={'sm'} className="mt-2" type="submit" loading={isPending}>
             <LogIn />
             <span>Login</span>
           </Button>

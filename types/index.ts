@@ -1,3 +1,5 @@
+import { User } from "@/db/schema/user";
+import { LoginData } from "@/db/validations/login";
 import { loginFormSchema, searchFormSchema } from "@/lib/schema/form";
 import { ImageProps } from "next/image";
 import { HTMLAttributeAnchorTarget, ReactNode } from "react";
@@ -128,4 +130,25 @@ export type MySQLError = Error & {
   errno: number;
   sqlState?: string;
   sqlMessage?: string;
+};
+
+export type UserSession = Pick<User,
+"id" |
+"username" |
+"email" |
+"level" |
+"group" |
+"balance" |
+"status" |
+"name" |
+"nickname" |
+"point" |
+"exp"
+> | undefined;
+
+
+export type LoginFormState = {
+  ok: boolean;
+  message: string;
+  fieldErrors?: Partial<Record<keyof LoginData, string[]>>;
 };

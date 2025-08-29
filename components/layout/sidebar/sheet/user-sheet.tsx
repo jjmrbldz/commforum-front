@@ -1,14 +1,15 @@
-import LoginForm from "@/components/forms/login-form";
+"use client"
+
 import MemberMenuList from "@/components/menu/member-menu-list";
 import ServiceMenuList from "@/components/menu/service-menu-list";
 import UserMenuList from "@/components/menu/user-menu-list";
+import { useUserStore } from "@/store/use-user-store";
 
 export default function UserSheet() {
-  const isAuthenticated = false;
+  const user = useUserStore(state => state.user);
   return (
     <>
-      <LoginForm />
-      {isAuthenticated ? (
+      {user ? (
         <UserMenuList />
       ) : (
         <MemberMenuList />

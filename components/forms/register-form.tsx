@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { toast } from "sonner";
 import { startTransition, useState } from "react";
-import registerAction from "@/app/register/action";
+import registerAction from "@/app/register/actions";
 import { Alert, AlertTitle } from "../ui/alert";
 import { useRouter } from "next/navigation";
 import { useSheetStore } from "@/store/use-sheet-store";
@@ -50,7 +50,7 @@ export default function RegisterForm() {
         if (res.message) setServerError(res.message);
         return;
       }
-      toast(res.message, {
+      toast.success(res.message, {
         position: "top-right"
       });
       router.push('/');
