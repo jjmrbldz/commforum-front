@@ -59,6 +59,8 @@ export default function ImageUpload({onChange, ...props}: Prop & DropzoneProps) 
                 "aspect-video !h-full !w-auto object-cover",
                 props.multiple && "aspect-square"
               )}
+              width={150}
+              height={150}
               src={`${process.env.NEXT_PUBLIC_MEDIA_PATH}${src}`}
               style={{
                 width: 'auto',

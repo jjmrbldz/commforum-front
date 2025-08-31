@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'http',
         hostname: 'tazza365.com',
       },
       {
