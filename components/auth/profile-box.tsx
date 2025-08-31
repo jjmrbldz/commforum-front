@@ -8,18 +8,9 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import LogoutButton from "./logout-button";
-import { useEffect } from "react";
-import { UserSession } from "@/types";
 
-export default function ProfileBox({user}:{user: UserSession}) {
-  // const user = useUserStore(state => state.user);
-  const setUserSession = useUserStore(state => state.setUserSession);
-
-  useEffect(() => {
-    if (user) {
-      setUserSession(user);
-    }
-  }, [user, setUserSession]);
+export default function ProfileBox() {
+  const user = useUserStore(state => state.user);
 
   return !user ? (
     <LoginForm />

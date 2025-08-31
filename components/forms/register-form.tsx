@@ -10,13 +10,14 @@ import { RegisterData, registerSchema } from "@/db/validations/register";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { toast } from "sonner";
-import { startTransition, useState } from "react";
+import { useState, useTransition } from "react";
 import registerAction from "@/app/register/actions";
 import { Alert, AlertTitle } from "../ui/alert";
 import { useRouter } from "next/navigation";
 import { useSheetStore } from "@/store/use-sheet-store";
 
 export default function RegisterForm() {
+  const [isPending, startTransition] = useTransition();
   const [serverError, setServerError] = useState<string | null>(null);
   const router = useRouter();
   const setSheet = useSheetStore(state => state.setSheet);
@@ -37,6 +38,7 @@ export default function RegisterForm() {
   });
 
   async function onSubmit(data: RegisterData) {
+    if (isPending) return;
     setServerError(null);
     startTransition(async () => {
       const res = await registerAction(data);
@@ -279,7 +281,7 @@ export default function RegisterForm() {
         </Card>
 
         <div className="flex justify-center gap-4">
-          <Button type="submit" className="bg-green-700 hover:bg-red-700 text-white" loading={form.formState.isSubmitting}>회원가입</Button>
+          <Button type="submit" className="bg-green-700 hover:bg-red-700 text-white" loading={isPending}>회원가입</Button>
           <Button variant="outline" type="button">취소</Button>
         </div>
       </form>

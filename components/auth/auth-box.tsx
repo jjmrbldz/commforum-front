@@ -1,7 +1,11 @@
+import { Suspense } from "react";
 import ProfileBox from "./profile-box";
-import { getUserSession } from "@/lib/session";
+import ProfileSkeleton from "../skeletons/profile-skeleton";
 
 export default async function AuthBox() {
-  const user = await getUserSession();
-  return <ProfileBox user={user} />;
+  return (
+    <Suspense fallback={<ProfileSkeleton />}>
+      <ProfileBox />
+    </Suspense>
+  );
 }

@@ -12,7 +12,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { LoginData, loginSchema } from "@/db/validations/login";
 import { useTransition } from "react";
-import loginAction from "@/app/actions";
+import {loginAction} from "@/app/actions";
 
 export default function LoginForm() {
   const [isPending, startTransition] = useTransition();

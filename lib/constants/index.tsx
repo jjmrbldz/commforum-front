@@ -242,6 +242,15 @@ export const searchOperatorOptions = [
   { label: "그리고", value: "and"},
 ];
 
+export const categoryTypeOptions = [
+  { label: "Slot", value: "1"},
+  { label: "Casino", value: "2"},
+  { label: "Minigames", value: "3"},
+  { label: "Sports", value: "4"},
+  { label: "Free Board", value: "5"},
+  { label: "Review Board", value: "6"},
+];
+
 // SAMPLE DATA
 export const articleWidget = [
   { "id": 1, "rank": 1, "title": "NORWAY 8K", "description": "크라우드 펀딩은 자금의 모집자와 제공자간 거래가 온라인상에서 소셜미디어에 의한 쌍방향 소통을 바탕으로 한 관계 지향적이고 …", "author": "겨울비", "date": "2022-03-22", "img": "/images/article-img1.jpg" },

@@ -9,7 +9,7 @@ import bcrypt from "bcrypt";
 import { headers } from "next/headers";
 import { MySQLError } from "@/types";
 
-export default async function registerAction(input: RegisterData) {
+export default async function registerAction(payload: RegisterData) {
   try {
     const { defaultSignupLevel, userGroup } = await getConfig();
 
@@ -18,7 +18,7 @@ export default async function registerAction(input: RegisterData) {
     const splitUserGroup = userGroup.split(",");
     const randUserGroup = splitUserGroup[Math.floor(Math.random() * userGroup.length)];
 
-    const data = registerSchema.parse(input);    
+    const data = registerSchema.parse(payload);    
     
     const existing = await db.select({ id: users.id })
     .from(users)

@@ -1,0 +1,48 @@
+import { InferInsertModel, InferSelectModel, sql } from "drizzle-orm";
+import { datetime, index, int, longtext, mysqlTable } from "drizzle-orm/mysql-core";
+import { Categories } from "./category";
+
+function createPostTable(name: `T_POST_${Categories}`) {
+  return mysqlTable(
+    name.toUpperCase(),
+    {
+      id: int("id", { unsigned: true }).autoincrement().notNull().primaryKey(),
+      userId: int("tu_id"),
+      title: longtext("tp_title").notNull(),
+      content: longtext("tp_content").notNull(),
+      thumbnail: longtext("tp_thumbnail"),
+      media: longtext("tp_media"),
+      commentCount: int("tp_comment_count").default(0),
+      likeCount: int("tp_like_count").default(0),
+      dislikeCount: int("tp_dislike_count").default(0),
+      status: int("tp_status").default(1),
+      regDatetime: datetime("tp_reg_datetime").default(sql`CURRENT_TIMESTAMP`),
+      updateDatetime: datetime("tp_update_datetime"),
+      viewCount: int("tp_view_count").notNull().default(0),
+    },
+    (t) => ([
+      index(`${name}_IdxUser`).on(t.userId),
+      index(`${name}_IdxStatus`).on(t.status),
+      index(`${name}_IdxRegtime`).on(t.regDatetime),
+      index(`${name}_IdxUpdtime`).on(t.updateDatetime),
+      index(`${name}_IdxViews`).on(t.viewCount),
+      index(`${name}_IdxLikeCount`).on(t.likeCount),
+      index(`${name}_IdxDislikeCount`).on(t.dislikeCount),
+      index(`${name}_IdxCommentCount`).on(t.commentCount),
+      index(`${name}_IdxId`).on(t.id),
+    ])
+  );
+}
+
+export const postTables = {
+  casino: createPostTable("T_POST_CASINO"),
+  freeboard: createPostTable("T_POST_FREEBOARD"),
+  minigames: createPostTable("T_POST_MINIGAMES"),
+  reviewboard: createPostTable("T_POST_REVIEWBOARD"),
+  slot: createPostTable("T_POST_SLOT"),
+  sports: createPostTable("T_POST_SPORTS"),
+} as const;
+
+export type PostCategory = keyof typeof postTables;
+
+export type PostRow<C extends PostCategory> = InferSelectModel<typeof postTables[C]>;

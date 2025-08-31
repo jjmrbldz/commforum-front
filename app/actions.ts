@@ -10,8 +10,21 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import z, { ZodError } from "zod";
 import { LoginFormState } from "@/types";
+import getCategories from "@/db/query/categories";
+import getConfig from "@/db/query/config";
 
-export default async function loginAction(payload: LoginData): Promise<LoginFormState> {
+export async function getSiteData() {
+  try {
+    const categories = await getCategories();
+    const config = await getConfig();
+    return { categories, config };
+  } catch (error) {
+    console.error("Error fetching site data:", error);
+    return undefined;
+  }
+}
+
+export async function loginAction(payload: LoginData): Promise<LoginFormState> {
   try {
 
     const data = loginSchema.parse(payload);
