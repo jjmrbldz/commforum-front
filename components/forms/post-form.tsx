@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import PostEditor from "../pages/profile/posts/editor";
 import { PostData, postSchema } from "@/db/validations/posts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useTransition } from "react";
+import { useTransition } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import ImageUpload from "../image-upload";
@@ -49,9 +49,9 @@ export default function PostForm() {
     });
   }
 
-  useEffect(() => {
-    console.log('FORM VALUES', form.watch());
-  }, [form.watch()])
+  // useEffect(() => {
+  //   console.log('FORM VALUES', form.watch());
+  // }, [form.watch()])
 
   return (
     <Form {...form}>
