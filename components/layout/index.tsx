@@ -21,8 +21,6 @@ export default function LayoutWrapper({ children, siteData, user }: Props) {
   const setUserSession = useUserStore(state => state.setUserSession);
 
   useEffect(() => {
-    console.log("Site Data:", siteData);
-    console.log("User Session:", user);
     setSiteData(siteData);
     setUserSession(user);
   }, [siteData, user])

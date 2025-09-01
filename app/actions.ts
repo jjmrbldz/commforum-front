@@ -64,7 +64,6 @@ export async function loginAction(payload: LoginData): Promise<LoginFormState> {
     if (e instanceof ZodError) {
       // const fieldErrors = e.issues;
       const fieldErrors = z.flattenError(e).fieldErrors;
-      console.log("Field errors", fieldErrors);
       return { ok: false, fieldErrors, message: "Login failed." } as const;
     }
     return { ok: false, message: "Login failed." } as const;

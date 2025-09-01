@@ -12,5 +12,5 @@ const pool = mysql.createPool({
   // charset: 'utf8mb4',
 });
 
-export const db = drizzle(pool, { logger: true });
+export const db = drizzle(pool, { logger: process.env.NODE_ENV === "development" });
 export { pool };

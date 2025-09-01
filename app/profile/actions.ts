@@ -68,7 +68,7 @@ export async function insertPost(payload: PostData) {
     if (!user) {
       throw new Error("User not authenticated");
     }
-    console.log("USER:", user);
+    // console.log("USER:", user);
     const data = postSchema.parse(payload);
 
     const category = await db
@@ -81,7 +81,7 @@ export async function insertPost(payload: PostData) {
       )
     )
     .limit(1);
-    console.log("CATEGORY:", category);
+    // console.log("CATEGORY:", category);
     if (!category[0]) {
       return { ok: false, fieldErrors: { category: ["Category not available"] }, message: "Category not available." } as const;
     }
@@ -123,7 +123,7 @@ export async function insertPost(payload: PostData) {
     .where(eq(levelSettings.level, String(prevLevel + 1)))
     .limit(1);
 
-    console.log("LEVEL:", levels);
+    // console.log("LEVEL:", levels);
 
     const { totalExp: requiredExpToLevelUp } = levels[0];
 
@@ -140,18 +140,18 @@ export async function insertPost(payload: PostData) {
     const gainedUserBalance = prevBalance + (postPts || 0);
     const isLevelup = gainedUserExp >= (requiredExpToLevelUp || 0);
 
-    console.log({
-      prevExp,
-      prevBalance,
-      prevLevel,
-      postExp,
-      postPts,
-      allowedUserLevel,
-      gainedUserExp,
-      gainedUserBalance,
-      requiredExpToLevelUp,
-      isLevelup
-    });
+    // console.log({
+    //   prevExp,
+    //   prevBalance,
+    //   prevLevel,
+    //   postExp,
+    //   postPts,
+    //   allowedUserLevel,
+    //   gainedUserExp,
+    //   gainedUserBalance,
+    //   requiredExpToLevelUp,
+    //   isLevelup
+    // });
 
     const afterLevel = isLevelup ? prevLevel + 1 : prevLevel
 
@@ -165,7 +165,7 @@ export async function insertPost(payload: PostData) {
         media: data.media || null,
       }).$returningId();
 
-      console.log("POST INSERT:", postInsert);
+      // console.log("POST INSERT:", postInsert);
 
       const referenceTable = `T_POST_${categoryValue.toUpperCase()}`;
       const referenceId = postInsert[0].id;

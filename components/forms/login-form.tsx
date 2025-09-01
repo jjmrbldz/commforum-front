@@ -28,7 +28,7 @@ export default function LoginForm() {
   function onSubmit(data: LoginData) {
     startTransition(async () => {
       const res = await loginAction(data);
-      console.log('', res)
+      // console.log('', res)
       if (!res.ok) {
         if (res.fieldErrors) {
           Object.entries(res.fieldErrors).forEach(([name, message]) => {

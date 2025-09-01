@@ -30,7 +30,7 @@ export default function PostForm() {
   })
 
   function onSubmit(data: PostData) {
-    console.log('POST DATA', data);
+    // console.log('POST DATA', data);
     if (isPending) return;
     startTransition(async () => {
       const res = await insertPost(data);
