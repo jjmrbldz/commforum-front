@@ -82,9 +82,13 @@ export function isValidJSON(str: string): boolean {
 }
 
 
-export function parseImage(str: string, isSingle = false) {
+export function parseImage(str: string, isSingle = true) {
   if (isValidJSON(str)) {
-    return JSON.parse(str)[0]
+    if (isSingle) {
+      return JSON.parse(str)[0]
+    } else {
+      return JSON.parse(str)
+    }
   } else {
     return null;
   }

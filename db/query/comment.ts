@@ -236,7 +236,7 @@ export async function insertComment(payload: CommentData) {
 
 
     revalidatePath(`/posts/${categoryValue}/${data.postId}`);
-    return { ok: true, message: `Comment submitted. ${shouldAwardLuckyPoints && `Congrats! You've earned ${luckyPts} points!`}` };
+    return { ok: true, message: `Comment submitted. ${shouldAwardLuckyPoints ? `Congrats! You've earned ${luckyPts} points!` : ""}` };
   } catch (e) {
     console.error(e);
     if (e instanceof Error) {

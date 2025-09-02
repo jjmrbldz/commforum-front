@@ -47,7 +47,7 @@ export default function PostInteraction({
         {commentLength > 0 ? (
           userComments.map((item, index) =><Comment key={index} {...item} />)
         ) : (
-          <NotOkMessage message="No comments found." />
+          <NotOkMessage variant={"info"} title="" message="No comments found." />
         )}
       </div>
     </>

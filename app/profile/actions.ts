@@ -154,6 +154,7 @@ export async function insertPost(payload: PostData) {
         content: data.content,
         thumbnail: data.thumbnail || null,
         media: data.media || null,
+        categoryId: data.categoryId
       }).$returningId();
 
       // console.log("POST INSERT:", postInsert);

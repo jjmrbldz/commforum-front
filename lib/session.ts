@@ -48,7 +48,7 @@ export async function createSession({ id, username, level, expiresAt }: SessionP
   const cookieStore = await cookies();
   cookieStore.set('session', session, {
     httpOnly: true,
-    secure: true,
+    secure: false, // ibalik sa true pag may SSL na hahah
     expires: expiresAt,
     sameSite: 'lax',
     path: '/',
