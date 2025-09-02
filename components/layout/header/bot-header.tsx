@@ -1,20 +1,19 @@
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
 import { SearchButton } from "@/components/search-button"
 import { menuList } from "@/lib/constants"
 import { MenuButton } from "@/components/menu-button"
-import { cn } from "@/lib/utils"
 import Image from "next/image"
 import logo from "@/assets/images/eyoom-logo.png"
+import { useSiteDataStore } from "@/store/use-sitedata-store"
+import HeaderMenu from "./header-menu"
 
 export default function BotHeader() {
+  const categories = useSiteDataStore(state => state.siteData?.categories);
+
   return (
     <div className="sticky top-0 z-2 bg-header md:bg-white/70 dark:bg-header/70 backdrop-blur-md">
       <div className="max-w-7xl py-4 px-2 md:px-0 m-auto">
@@ -28,20 +27,9 @@ export default function BotHeader() {
                 <Image width={78} height={40} src={logo} alt="Logo" />
               </Link>
             </div>
-            {menuList.map((item, index) => (
-              <NavigationMenuItem className="hidden md:block" key={index}>
-                <NavigationMenuTrigger className={cn(item.triggerClassName, "bg-transparent")} hasChildren={!!item.children}>
-                  <Link href={item.href}>
-                    {item.title}
-                  </Link>
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className={"min-w-[170px]"}>
-                  {item.children && item.children.map((subLink, subIndex) => (
-                    <NavigationMenuLink key={subIndex} href={subLink.href} className={item.linkClassName}>{subLink.title}</NavigationMenuLink>
-                  ))}
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            ))}
+            {menuList.slice(0, 2).map((item, index) => <HeaderMenu key={index} path={item.href} title={item.title || ""} sublinks={item.children} />)}
+            {categories?.map((item, index) => <HeaderMenu key={index} path={`/posts/${item.value}`} title={item.title || ""} />)}
+            {menuList.slice(2, 3).map((item, index) => <HeaderMenu key={index} path={item.href} title={item.title || ""} sublinks={item.children} />)}
             <div className="ml-auto mr-10 md:mr-0 text-center">
               <SearchButton className="text-white md:text-black dark:text-white" />
             </div>

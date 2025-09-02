@@ -1,6 +1,8 @@
 "use server"
 
 import { db } from "@/db";
+import getCategories from "@/db/query/categories";
+import { getUserExpLevel } from "@/db/query/user-level-exp";
 import { balanceLogTables } from "@/db/schema/balance-log";
 import { categories } from "@/db/schema/category";
 import { ExpLogGroup, expLogTables } from "@/db/schema/exp-log";
@@ -71,16 +73,8 @@ export async function insertPost(payload: PostData) {
     // console.log("USER:", user);
     const data = postSchema.parse(payload);
 
-    const category = await db
-    .select()
-    .from(categories)
-    .where(
-      and(
-        eq(categories.id, parseInt(data.category)),
-        eq(categories.status, 1),
-      )
-    )
-    .limit(1);
+    const category = await getCategories({categoryId: parseInt(data.category)});
+    
     // console.log("CATEGORY:", category);
     if (!category[0]) {
       return { ok: false, fieldErrors: { category: ["Category not available"] }, message: "Category not available." } as const;
@@ -98,20 +92,20 @@ export async function insertPost(payload: PostData) {
     const posts = postTables[categoryValue];
     const balanceLogs = balanceLogTables[userGroup];
 
-    const realExpLevelLog = await db
-      .select({
-        afterExp: expLogs.afterExp,
-        afterLevel: expLogs.afterLevel,
-      })
-      .from(expLogs)
-      .where(eq(expLogs.userId, userId))
-      .orderBy(desc(expLogs.regDatetime))
-      .limit(1);
+    // const realExpLevelLog = await db
+    //   .select({
+    //     afterExp: expLogs.afterExp,
+    //     afterLevel: expLogs.afterLevel,
+    //   })
+    //   .from(expLogs)
+    //   .where(eq(expLogs.userId, userId))
+    //   .orderBy(desc(expLogs.regDatetime))
+    //   .limit(1);
 
-    if (realExpLevelLog[0]) {
-      prevExp = realExpLevelLog[0].afterExp || 0;
-      prevLevel = realExpLevelLog[0].afterLevel || 0;
-    }
+    const realExpLevelLog  = await getUserExpLevel(userId, userGroup);
+
+    prevExp = realExpLevelLog.userExp;
+    prevLevel = realExpLevelLog.userLevel;
 
     if (prevLevel < allowedUserLevel) {
       return { ok: false, fieldErrors: { category: ["Level requirement for this category is not met"] }, message: "Level requirement for this category is not met." } as const;

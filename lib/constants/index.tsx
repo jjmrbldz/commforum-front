@@ -20,22 +20,22 @@ export const menuList: {
     title: "타짜365",
     href: "/tazza",
   },
-  {
-    title: "보증사이트",
-    href: "/verified",
-  },
-  {
-    title: "미니게임",
-    href: "/minigame",
-  },
-  {
-    title: "연예",
-    href: "/entertainment",
-  },
-  {
-    title: "스포츠",
-    href: "/sports",
-  },
+  // {
+  //   title: "보증사이트",
+  //   href: "/verified",
+  // },
+  // {
+  //   title: "미니게임",
+  //   href: "/minigame",
+  // },
+  // {
+  //   title: "연예",
+  //   href: "/entertainment",
+  // },
+  // {
+  //   title: "스포츠",
+  //   href: "/sports",
+  // },
   // {
   //   title: "위너브라더",
   //   href: "/board/notice",
@@ -135,49 +135,49 @@ export const menuList: {
   //     },
   //   ]
   // },
-  {
-    title: "커뮤니티",
-    href: "/board/free",
-    // triggerClassName: "hover:!bg-indigo-500",
-    // contentClassname: "min-w-[170px] border-t-3 border-indigo-500",
-    // linkClassName: "hover:!bg-indigo-500 hover:!text-white hover:!font-bold",
-    children: [
-      {
-        title: "자유게시판",
-        href: "/board/free",
-      },
-      {
-        title: "온카 후기 게시판",
-        href: "/board/onca",
-      },
-      {
-        title: "슬롯 후기 게시판",
-        href: "/board/slot",
-      },
-      {
-        title: "가입인사",
-        href: "/board/signup",
-      },
-      {
-        title: "출석체크",
-        href: "/board/attendance",
-      },
-      {
-        title: "카지노 노하우",
-        href: "/board/gambling-tip",
-      },
-    ]
-  },
-  {
-    title: "갤러리",
-    href: "/board/gallery",
-    children: [
-      {
-        title: "Gallery 1",
-        href: "/board/gallery/1",
-      },
-    ]
-  },
+  // {
+  //   title: "커뮤니티",
+  //   href: "/board/free",
+  //   // triggerClassName: "hover:!bg-indigo-500",
+  //   // contentClassname: "min-w-[170px] border-t-3 border-indigo-500",
+  //   // linkClassName: "hover:!bg-indigo-500 hover:!text-white hover:!font-bold",
+  //   children: [
+  //     {
+  //       title: "자유게시판",
+  //       href: "/board/free",
+  //     },
+  //     {
+  //       title: "온카 후기 게시판",
+  //       href: "/board/onca",
+  //     },
+  //     {
+  //       title: "슬롯 후기 게시판",
+  //       href: "/board/slot",
+  //     },
+  //     {
+  //       title: "가입인사",
+  //       href: "/board/signup",
+  //     },
+  //     {
+  //       title: "출석체크",
+  //       href: "/board/attendance",
+  //     },
+  //     {
+  //       title: "카지노 노하우",
+  //       href: "/board/gambling-tip",
+  //     },
+  //   ]
+  // },
+  // {
+  //   title: "갤러리",
+  //   href: "/board/gallery",
+  //   children: [
+  //     {
+  //       title: "Gallery 1",
+  //       href: "/board/gallery/1",
+  //     },
+  //   ]
+  // },
   {
     title: "고객지원",
     href: "/support",

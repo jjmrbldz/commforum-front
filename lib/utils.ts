@@ -1,5 +1,6 @@
 import { ItemWithId, WidgetCarouselProps } from "@/types";
 import { clsx, type ClassValue } from "clsx"
+import dayjs from "dayjs";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -58,4 +59,14 @@ export function chunkWithRandomPrefixes<T extends ItemWithId>(
   }
 
   return result;
+}
+
+export function formatDate(date: Date | string, format: string = "YYYY-MM-DD HH:mm:ss") {
+  if (!date) return '-';
+  
+  const newDate = dayjs(date);
+
+  if (!newDate.isValid()) return '-';
+
+  return newDate.format(format)
 }

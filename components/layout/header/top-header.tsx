@@ -1,8 +1,9 @@
 "use client"
 
+import { logoutAction } from "@/app/actions";
 import { useSheetStore } from "@/store/use-sheet-store";
 import { useUserStore } from "@/store/use-user-store";
-import { PlusCircle, Unlock, User, UserPlus2 } from "lucide-react";
+import { LogOut, PlusCircle, Unlock, User, UserPlus2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -24,7 +25,7 @@ export default function TopHeader() {
         </Link>
         <div className="ml-auto flex items-center gap-4">
 
-          {!user && (
+          {!user ? (
             <>
               <Link href={'/register'}>
                 <div className="flex items-center gap-1">
@@ -39,6 +40,25 @@ export default function TopHeader() {
                   <Unlock className="opacity-60" size={16} />
                   <span>
                     로그인
+                  </span>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <Link href={'/profile'}>
+                <div className="flex items-center gap-1">
+                  <User className="opacity-60" size={16} />
+                  <span>
+                    마이페이지
+                  </span>
+                </div>
+              </Link>
+              <div className="cursor-pointer" onClick={async () => await logoutAction()}>
+                <div className="flex items-center gap-1">
+                  <LogOut className="opacity-60" size={16} />
+                  <span>
+                    로그아웃
                   </span>
                 </div>
               </div>

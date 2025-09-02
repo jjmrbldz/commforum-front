@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/layout/theme-provider";
 import LayoutWrapper from "@/components/layout";
 import { getUserSession } from "@/lib/session";
 import { getSiteData } from "./actions";
+import { use } from "react";
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -20,13 +21,12 @@ export const metadata: Metadata = {
   publisher: "위너브로-카지노커뮤니티 온라인카지노 먹튀검증 카지노사이트",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const siteData = await getSiteData();
-  const user = await getUserSession();
+  const siteData = use(getSiteData());
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -39,7 +39,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LayoutWrapper siteData={siteData} user={user}>
+          <LayoutWrapper siteData={siteData} user={siteData?.user}>
             {children}
           </LayoutWrapper>
           <Toaster position="top-right" richColors />

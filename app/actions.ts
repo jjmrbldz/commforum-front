@@ -5,7 +5,7 @@ import { users } from "@/db/schema/user";
 import { LoginData, loginSchema } from "@/db/validations/login";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
-import { createSession } from "@/lib/session";
+import { createSession, getUserSession } from "@/lib/session";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import z, { ZodError } from "zod";
@@ -15,9 +15,10 @@ import getConfig from "@/db/query/config";
 
 export async function getSiteData() {
   try {
-    const categories = await getCategories();
+    const user = await getUserSession();
+    const categories = await getCategories({hasSession: !!user});
     const config = await getConfig();
-    return { categories, config };
+    return { categories, config, user };
   } catch (error) {
     console.error("Error fetching site data:", error);
     return undefined;

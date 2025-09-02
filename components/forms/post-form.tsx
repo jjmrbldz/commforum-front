@@ -118,6 +118,8 @@ export default function PostForm() {
                     onChange={(val) => {
                       //@ts-ignore
                       const newIsEmpty = val?.toJSON()?.root?.children[0]?.children?.length === 0;
+                      console.log("", val.clone());
+                      val.toJSON()
                       field.onChange( !newIsEmpty ? JSON.stringify(val.toJSON()) : null);
                       if (newIsEmpty) {
                         form.setError("content", { message: "Content is required" });

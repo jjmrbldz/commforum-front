@@ -152,3 +152,49 @@ export type LoginFormState = {
   message: string;
   fieldErrors?: Partial<Record<keyof LoginData, string[]>>;
 };
+
+export interface PagePanelProps {
+  isPanelLeft?: boolean;
+  children?: React.ReactNode;
+}
+
+type FieldErrors<F> =
+  [F] extends [undefined] ? never : Partial<Record<keyof F, string[]>>;
+
+export type ServerActionResponse<T = undefined, F = undefined> = Promise<
+  | {
+      ok: true;
+      message: string;
+      data: T;                    // required on success
+      fieldErrors?: undefined;
+    }
+  | {
+      ok: false;
+      message: string;
+      data?: undefined;           // not required on failure
+      fieldErrors?: FieldErrors<F>;
+    }
+>;
+
+export type PostData = {
+  id: number;
+  title: string;
+  content: string;
+  thumbnail: string | null;
+  media: string | null;
+  likeCount: number | null;
+  dislikeCount: number | null;
+  commentCount: number | null;
+  viewCount: number;
+  categoryId: number | null;
+  category: "casino" | "freeboard" | "minigames" | "reviewboard" | "slot" | "sports" | null;
+  allowedViewLevel: number | null;
+  allowedCommentLevel: number | null;
+  allowedUserLevel: number | null;
+  authorUsername: string | null;
+  authorId: number | null;
+  authorName: string | null;
+  authorGroup: string | null;
+  regDatetime: Date | null;
+  updateDateTime: Date | null;
+}

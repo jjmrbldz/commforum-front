@@ -1,6 +1,6 @@
 import ProfileSkeleton from "@/components/skeletons/profile-skeleton";
+import SidePanelSkeleton from "@/components/skeletons/sidepanel-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
-
 
 export default function Loading() {
 
@@ -17,10 +17,7 @@ export default function Loading() {
             <Skeleton className="h-[360px] w-full" />
           </div>
         </div>
-        <div className="hidden md:block col-span-3 py-4 space-y-4">
-          <ProfileSkeleton />
-          <Skeleton className="h-[152px] w-full" />
-        </div>
+        <SidePanelSkeleton />
       </div>
     </div>
   )

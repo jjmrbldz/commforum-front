@@ -8,7 +8,7 @@ export const users = mysqlTable('T_USER', {
   name: varchar("tu_real_name", { length: 100 }).notNull(),
   nickname: varchar("tu_nickname", { length: 100 }).notNull(),
   email: varchar("tu_email", { length: 100 }),
-  level: varchar("tu_level", { length: 100 }),
+  level: varchar("tu_level", { length: 100 }).notNull(),
   status: varchar("tu_status", { length: 100 }),
   phone: varchar("tu_phone", { length: 100 }),
   accountNumber: varchar("tu_account_number", { length: 100 }),

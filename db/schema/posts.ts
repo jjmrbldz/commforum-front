@@ -19,6 +19,7 @@ function createPostTable(name: `T_POST_${Categories}`) {
       regDatetime: datetime("tp_reg_datetime").default(sql`CURRENT_TIMESTAMP`),
       updateDatetime: datetime("tp_update_datetime"),
       viewCount: int("tp_view_count").notNull().default(0),
+      categoryId: int("tc_id").notNull().default(0),
     },
     (t) => ([
       index(`${name}_IdxUser`).on(t.userId),

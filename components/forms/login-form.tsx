@@ -13,8 +13,10 @@ import Link from "next/link";
 import { LoginData, loginSchema } from "@/db/validations/login";
 import { useTransition } from "react";
 import {loginAction} from "@/app/actions";
+import { useRouter } from "next/navigation";
 
-export default function LoginForm() {
+export default function LoginForm({shouldRedirect = false}:{shouldRedirect?: boolean}) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const form = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
@@ -44,6 +46,7 @@ export default function LoginForm() {
       toast.success(res.message, {
         position: "bottom-right",
       });
+      if (shouldRedirect) router.push("/");
     })
   }
 

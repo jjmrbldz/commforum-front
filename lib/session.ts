@@ -27,7 +27,7 @@ export async function decrypt(session: string | undefined = '') {
     });
     return payload as SessionPayload;
   } catch (error) {
-    console.log('Failed to verify session', error);
+    console.error('Failed to verify session', error);
     return undefined;
   }
 }
@@ -55,16 +55,22 @@ export async function createSession({ id, username, level, expiresAt }: SessionP
   });
 }
 
-export async function getUserSession() {
+export async function getUserSession(noRedirect = true) {
   try {
     
     const cookieStore = await cookies();
     const token = cookieStore.get('session')?.value;
   
-    if (!token) return undefined;
+    if (!token) {
+      if (!noRedirect) redirect('/');
+      return undefined;
+    }
   
     const payload = await decrypt(token);
-    if (!payload) return redirect('/');
+    if (!payload) {
+      if (!noRedirect) redirect('/');
+      return undefined;
+    }
   
     const user = await db.select({
       id: users.id,
@@ -82,12 +88,14 @@ export async function getUserSession() {
 
     if (!user[0]) {
       revalidatePath('/');
-      redirect('/');
+      if (!noRedirect) redirect('/');
+      return undefined;
     }
 
     return user[0];
   } catch (error) {
-    console.log('Error getting user session', error);
+    console.error('Error getting user session', error);
+    if (!noRedirect) redirect('/');
     return undefined;
   }
 }
