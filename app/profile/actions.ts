@@ -67,6 +67,7 @@ export async function uploadImages(files: File[]) {
 
 export async function insertPost(payload: PostData) {
   try {
+    console.log("POST PAYLOAD", payload)
     const user = await getUserSession();
     if (!user) {
       throw new Error("User not authenticated");
@@ -74,9 +75,12 @@ export async function insertPost(payload: PostData) {
     // console.log("USER:", user);
     const data = postSchema.parse(payload);
 
-    const category = await getCategories({categoryId: parseInt(data.category), hasSession: !!user});
+    console.log("POST PARSED",data)
+    console.log("POST CATEGORY ID", payload.categoryId)
+
+    const category = await getCategories({categoryId: parseInt(data.categoryId), hasSession: !!user});
     
-    // console.log("CATEGORY:", category);
+    console.log("CATEGORY:", category);
     if (!category[0]) {
       return { ok: false, fieldErrors: { category: ["Category not available"] }, message: "Category not available." } as const;
     }
@@ -154,10 +158,10 @@ export async function insertPost(payload: PostData) {
         content: data.content,
         thumbnail: data.thumbnail || null,
         media: data.media || null,
-        categoryId: data.categoryId
+        categoryId: parseInt(data.categoryId)
       }).$returningId();
 
-      // console.log("POST INSERT:", postInsert);
+      console.log("POST INSERT:", postInsert);
 
       const referenceTable = `T_POST_${categoryValue.toUpperCase()}`;
       const referenceId = postInsert[0].id;

@@ -10,7 +10,7 @@ const basePostSchema = createInsertSchema(postTables.freeboard, {
 });
 
 export const postSchema = basePostSchema.extend({
-  category: z.string().min(1, "Category is required"),
+  categoryId: z.string().min(1, "Category is required"),
 });
 
 export type PostData = z.infer<typeof postSchema>;

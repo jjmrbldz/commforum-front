@@ -24,13 +24,13 @@ export default function PostForm() {
       content: "",
       thumbnail: "",
       media: "",
-      category: "",
+      categoryId: "",
     },
     mode: "onBlur",
   })
 
   function onSubmit(data: PostData) {
-    // console.log('POST DATA', data);
+    console.log('POST FORM DATA', data);
     if (isPending) return;
     startTransition(async () => {
       const res = await insertPost(data);
@@ -79,10 +79,10 @@ export default function PostForm() {
           />
           <FormField 
             control={form.control}
-            name="category"
+            name="categoryId"
             render={(({field}) => (
               <FormItem className="col-span-12">
-                <FormLabel htmlFor="category">범주</FormLabel>
+                <FormLabel htmlFor="categoryId">범주</FormLabel>
                 <FormControl>
                   <CategorySelect field={field} />
                 </FormControl>
