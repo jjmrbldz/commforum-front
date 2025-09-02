@@ -71,7 +71,7 @@ export async function getPosts({category, id}: FilterData): ServerActionResponse
       )
     )
     .innerJoin(categories, eq(categories.id, postTable.categoryId))
-    .leftJoin(users, eq(users.id, postTable.userId))
+    .innerJoin(users, eq(users.id, postTable.userId))
     .orderBy(asc(postTable.viewCount));
 
     

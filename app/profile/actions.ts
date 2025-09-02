@@ -2,6 +2,7 @@
 
 import { db } from "@/db";
 import getCategories from "@/db/query/categories";
+import { getLevelSettings } from "@/db/query/level";
 import { getUserExpLevel } from "@/db/query/user-level-exp";
 import { balanceLogTables } from "@/db/schema/balance-log";
 import { categories } from "@/db/schema/category";
@@ -60,7 +61,7 @@ export async function uploadImages(files: File[]) {
     if (error instanceof Error) {
       return {ok: false, message: error.message}
     }
-    return {ok: false, message: "Something went wrong."}
+    return {ok: false, message: "Something went wrong while uploading your image"}
   }
 }
 
@@ -73,7 +74,7 @@ export async function insertPost(payload: PostData) {
     // console.log("USER:", user);
     const data = postSchema.parse(payload);
 
-    const category = await getCategories({categoryId: parseInt(data.category)});
+    const category = await getCategories({categoryId: parseInt(data.category), hasSession: !!user});
     
     // console.log("CATEGORY:", category);
     if (!category[0]) {
@@ -111,11 +112,7 @@ export async function insertPost(payload: PostData) {
       return { ok: false, fieldErrors: { category: ["Level requirement for this category is not met"] }, message: "Level requirement for this category is not met." } as const;
     }    
 
-    const levels = await db
-    .select()
-    .from(levelSettings)
-    .where(eq(levelSettings.level, String(prevLevel + 1)))
-    .limit(1);
+    const levels = await getLevelSettings(prevLevel);
 
     // console.log("LEVEL:", levels);
 

@@ -28,7 +28,7 @@ export default function BotHeader() {
               </Link>
             </div>
             {menuList.slice(0, 2).map((item, index) => <HeaderMenu key={index} path={item.href} title={item.title || ""} sublinks={item.children} />)}
-            {categories?.map((item, index) => <HeaderMenu key={index} path={`/posts/${item.value}`} title={item.title || ""} />)}
+            {categories?.map((item, index) => <HeaderMenu key={index} path={`/posts/${item.value}`} title={item.titleKr || ""} />)}
             {menuList.slice(2, 3).map((item, index) => <HeaderMenu key={index} path={item.href} title={item.title || ""} sublinks={item.children} />)}
             <div className="ml-auto mr-10 md:mr-0 text-center">
               <SearchButton className="text-white md:text-black dark:text-white" />

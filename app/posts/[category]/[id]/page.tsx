@@ -1,7 +1,8 @@
 import NotOkMessage from "@/components/not-ok-message";
+import PostSinglePagePage from "@/components/pages/posts/post-single-page";
 import { getPosts } from "@/db/query/posts";
 import { PostCategory } from "@/db/schema/posts";
-
+import { JSDOM } from "jsdom"
 
 export default async function Page({
   params,
@@ -12,9 +13,12 @@ export default async function Page({
   const postRes = await getPosts({category, id: parseInt(id)});
 
   if (!postRes.ok) return <NotOkMessage message={postRes.message} />;
-  
-  return (
-    <div className="">{JSON.stringify(postRes)}</div>
-  )
 
+  const dom = new JSDOM();
+
+  // @ts-ignore
+  global.window = dom.window;
+  global.document = dom.window.document;
+
+  return <PostSinglePagePage data={postRes.data[0]} title={postRes.data[0].title} />
 }

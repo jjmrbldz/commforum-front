@@ -38,11 +38,19 @@ export default function ImageUpload({onChange, ...props}: Prop & DropzoneProps) 
       toast.success(res.message);
     }
   };
+
+  const handleError = (error: Error) => {
+    if (onChange !== undefined) {
+      onChange("");
+    }
+    setFilePreview([]);
+    toast.error(error.message);
+  }
   return (
     <Dropzone
       accept={{ 'image/*': ['.png', '.jpg', '.jpeg', '.webp', '.gif'] }}
       onDrop={handleDrop}
-      onError={console.error}
+      onError={handleError}
       src={files}
       maxSize={5 * 1024 * 1024}
       className={filePreview.length > 0 ? "p-2" : ""}

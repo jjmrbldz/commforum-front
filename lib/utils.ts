@@ -1,6 +1,7 @@
 import { ItemWithId, WidgetCarouselProps } from "@/types";
 import { clsx, type ClassValue } from "clsx"
 import dayjs from "dayjs";
+import DOMPurify from "dompurify";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -69,4 +70,36 @@ export function formatDate(date: Date | string, format: string = "YYYY-MM-DD HH:
   if (!newDate.isValid()) return '-';
 
   return newDate.format(format)
+}
+
+export function isValidJSON(str: string): boolean {
+  try {
+      JSON.parse(str);
+      return true;
+  } catch {
+      return false;
+  }
+}
+
+
+export function parseImage(str: string, isSingle = false) {
+  if (isValidJSON(str)) {
+    return JSON.parse(str)[0]
+  } else {
+    return null;
+  }
+}
+
+export function isValidUrl(url: string | null): boolean {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url);
+    return ['http:', 'https:'].includes(parsed.protocol);
+  } catch (_) {
+    return false;
+  }
+}
+
+export function sanitizeHTML(html: string) {
+  return DOMPurify.sanitize(html);
 }

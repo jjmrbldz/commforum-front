@@ -187,14 +187,28 @@ export type PostData = {
   commentCount: number | null;
   viewCount: number;
   categoryId: number | null;
-  category: "casino" | "freeboard" | "minigames" | "reviewboard" | "slot" | "sports" | null;
+  category: "casino" | "freeboard" | "minigames" | "reviewboard" | "slot" | "sports";
   allowedViewLevel: number | null;
   allowedCommentLevel: number | null;
   allowedUserLevel: number | null;
-  authorUsername: string | null;
-  authorId: number | null;
-  authorName: string | null;
+  authorUsername: string;
+  authorId: number;
+  authorName: string;
   authorGroup: string | null;
   regDatetime: Date | null;
   updateDateTime: Date | null;
+}
+
+export type UserCommentData = {
+  id: number;
+  postId: string | null;
+  categoryId: number | null;
+  content: string;
+  level: number | null;
+  regDatetime: Date | null;
+  userId: number;
+  like: number | null;
+  dislike: number | null;
+  username: string;
+  name: string;
 }

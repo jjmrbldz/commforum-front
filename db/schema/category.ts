@@ -52,6 +52,7 @@ export const categories = mysqlTable("T_CATEGORY", {
       "slot",
       "sports",
     ]).notNull(),
+    titleKr: varchar("tc_title_kor", { length: 255 }).default(sql`NULL`),
   },
   (t) => ([
     index("tc_status_idx").on(t.status),

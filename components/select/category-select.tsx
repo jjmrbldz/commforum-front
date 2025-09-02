@@ -24,7 +24,7 @@ export default function CategorySelect({
 
     return categories.filter(item => item.allowedUserLevel <= parseInt(user?.level || "1")).map(item => ({
       value: String(item.id),
-      label: item.title || ""
+      label: item.titleKr || ""
     })) || [];
   }, [siteData, user]);
 
