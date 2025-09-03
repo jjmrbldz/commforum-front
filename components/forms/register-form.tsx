@@ -14,13 +14,13 @@ import { useState, useTransition } from "react";
 import registerAction from "@/app/register/actions";
 import { Alert, AlertTitle } from "../ui/alert";
 import { useRouter } from "next/navigation";
-import { useSheetStore } from "@/store/use-sheet-store";
+// import { useSheetStore } from "@/store/use-sheet-store";
 
 export default function RegisterForm() {
   const [isPending, startTransition] = useTransition();
   const [serverError, setServerError] = useState<string | null>(null);
   const router = useRouter();
-  const setSheet = useSheetStore(state => state.setSheet);
+  // const setSheet = useSheetStore(state => state.setSheet);
   const form = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -55,8 +55,8 @@ export default function RegisterForm() {
       toast.success(res.message, {
         position: "top-right"
       });
-      router.push('/');
-      setSheet("user");
+      router.push('/login');
+      // setSheet("user");
     })
   }
 

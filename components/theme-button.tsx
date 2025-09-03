@@ -16,7 +16,7 @@ export default function ThemeButton() {
   const isDark = (theme ?? resolvedTheme) === "dark";
 
   return (
-    <Button size={'icon'} className="fixed z-5 top-4 md:top-20 right-0 dark:bg-stone-800 dark:hover:bg-stone-700" onClick={() => setTheme(!isDark  ? "dark" : "light")}>
+    <Button size={'icon'} className="fixed z-5 top-16 md:top-20 right-0 dark:bg-stone-800 dark:hover:bg-stone-700" onClick={() => setTheme(!isDark  ? "dark" : "light")}>
       <Moon className={cn("text-blue-500", isDark ? "hidden" : "block")} />
       <Sun className={cn("text-yellow-300", isDark ? "block" : "hidden")} />
     </Button>

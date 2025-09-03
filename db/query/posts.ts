@@ -77,7 +77,7 @@ export async function getPosts({category, id}: FilterData): ServerActionResponse
     
     if (postTableRows.length === 0) return { ok: true, data: postTableRows, message: "No available posts for this category." };
 
-    const isAllowed = isLoggedIn && (parseInt(user.level) >= postTableRows[0].allowedViewLevel)
+    const isAllowed = isLoggedIn && (parseInt(user.level || "1") >= postTableRows[0].allowedViewLevel)
 
     if (id && isLoggedIn && !isAllowed) return { ok: false, message: "Your level is not enough to view this content" };
     if (id && !isLoggedIn && postTableRows[0].visibility === "private") return { ok: false, message: "You need to login to view this content" };

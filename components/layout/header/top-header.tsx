@@ -14,7 +14,7 @@ export default function TopHeader() {
 
   return (
     <div className="border-b border-gray-700">
-      <div className="hidden lg:flex items-center max-w-7xl m-auto text-xs py-4 gap-4 text-white font-light">
+      <div className="flex items-center max-w-7xl m-auto text-xs py-4 px-4 md:px-0 gap-4 text-white font-light">
         <Link href={'/online-users'}>
           <div className="flex items-center gap-1">
             <User className="opacity-60" size={16} />
@@ -64,7 +64,7 @@ export default function TopHeader() {
               </div>
             </>
           )}
-          <div className="cursor-pointer" onClick={() => setSheet("menu")}>
+          <div className="cursor-pointer hidden md:block" onClick={() => setSheet("menu")}>
             <div className="flex items-center gap-1">
               <PlusCircle className="opacity-60" size={16} />
               <span>

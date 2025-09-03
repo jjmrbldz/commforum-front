@@ -11,12 +11,14 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { LoginData, loginSchema } from "@/db/validations/login";
-import { useTransition } from "react";
+import { useMemo, useTransition } from "react";
 import {loginAction} from "@/app/actions";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function LoginForm({shouldRedirect = false}:{shouldRedirect?: boolean}) {
   const router = useRouter();
+  const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
   const form = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
@@ -26,6 +28,8 @@ export default function LoginForm({shouldRedirect = false}:{shouldRedirect?: boo
       isKeepSignedIn: false,
     },
   });
+
+  const isLoginPage = useMemo(() => pathname === "/login", [pathname]);
 
   function onSubmit(data: LoginData) {
     startTransition(async () => {
@@ -54,9 +58,11 @@ export default function LoginForm({shouldRedirect = false}:{shouldRedirect?: boo
     <Form {...form}>
       <form 
         onSubmit={form.handleSubmit(onSubmit)} 
-        className="space-y-8"
       >
-        <div className="flex flex-col gap-3">
+        <div className={cn("flex flex-col gap-3", isLoginPage && "px-4")}>
+          {isLoginPage && (
+            <div className="font-bold text-lg mb-2">Login</div>
+          )}
           <FormField 
             control={form.control}
             name="username"
