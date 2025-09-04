@@ -195,6 +195,7 @@ export type PostData = {
   authorId: number;
   authorName: string;
   authorGroup: string | null;
+  likeDislikeType?: string | null;
   regDatetime: Date | null;
   updateDateTime: Date | null;
 }

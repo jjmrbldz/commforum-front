@@ -1,19 +1,22 @@
 "use server"
 
-import { and, asc, eq, inArray, SQL } from "drizzle-orm";
+import { and, desc, eq, inArray, SQL } from "drizzle-orm";
 import { db } from "..";
-import { PostCategory, PostRow, postTables } from "../schema/posts";
+import { PostCategory, postTables } from "../schema/posts";
 import { PostData, ServerActionResponse } from "@/types";
 import { categories } from "../schema/category";
 import { users } from "../schema/user";
 import { getUserSession } from "@/lib/session";
+import { likeDislikeTables } from "../schema/like-dislike";
+import { viewPost } from "./view-post";
 
 interface FilterData  {
   category: PostCategory;
   id?: number;
+  logView?: boolean;
 }
 
-export async function getPosts({category, id}: FilterData): ServerActionResponse<PostData[]> {
+export async function getPostsByCategory({category, id, logView}: FilterData): ServerActionResponse<PostData[]> {
   try {
     
     if (!category) return { ok: false, message: "Choose a category first." };
@@ -21,6 +24,7 @@ export async function getPosts({category, id}: FilterData): ServerActionResponse
     const filters: SQL[] = [];
       
     const postTable = postTables[category];
+    const likeDislikeTable = likeDislikeTables[category];
     if (!postTable) return { ok: false, message: "No available posts for this category." };
 
     if(id && typeof id !== "number") return { ok: false, message: "Post not found." };
@@ -29,7 +33,7 @@ export async function getPosts({category, id}: FilterData): ServerActionResponse
     const user = await getUserSession();
     const isLoggedIn = !!user;
 
-    if (user) {
+    if (isLoggedIn) {
       filters.push(inArray(categories.visibility, ["public", "private"]));
     } else {
       if (id) {
@@ -39,7 +43,7 @@ export async function getPosts({category, id}: FilterData): ServerActionResponse
       }
     }
   
-    const postTableRows = await db
+    let basePostTableRows = db
     .select({
       id: postTable.id,
       title: postTable.title,
@@ -62,18 +66,30 @@ export async function getPosts({category, id}: FilterData): ServerActionResponse
       authorGroup: users.group,
       regDatetime: postTable.regDatetime,
       updateDateTime: postTable.updateDatetime,
+      ...(isLoggedIn && id ? { likeDislikeType: likeDislikeTable.type } : {})
     })
     .from(postTable)
+    .innerJoin(categories, eq(categories.id, postTable.categoryId))
+    .innerJoin(users, eq(users.id, postTable.userId))
     .where(
       and(
         eq(postTable.status, 1),
         ...filters
       )
     )
-    .innerJoin(categories, eq(categories.id, postTable.categoryId))
-    .innerJoin(users, eq(users.id, postTable.userId))
-    .orderBy(asc(postTable.viewCount));
+    .orderBy(desc(postTable.viewCount));
 
+    if (isLoggedIn && id) {
+      basePostTableRows = basePostTableRows.leftJoin(
+        likeDislikeTable,
+        and(
+          eq(likeDislikeTable.postId, postTable.id),
+          eq(likeDislikeTable.userId, user!.id)
+        )
+      );
+    }
+
+    const postTableRows = await basePostTableRows;
     
     if (postTableRows.length === 0) return { ok: true, data: postTableRows, message: "No available posts for this category." };
 
@@ -81,6 +97,8 @@ export async function getPosts({category, id}: FilterData): ServerActionResponse
 
     if (id && isLoggedIn && !isAllowed) return { ok: false, message: "Your level is not enough to view this content" };
     if (id && !isLoggedIn && postTableRows[0].visibility === "private") return { ok: false, message: "You need to login to view this content" };
+
+    if (logView && isLoggedIn && id) await viewPost({userId: user.id, postId: id, currViewCount: (postTableRows[0].viewCount || 0), category})
   
     return { ok: true, data: postTableRows, message: "Posts successfully retreived." };
   } catch (error) {

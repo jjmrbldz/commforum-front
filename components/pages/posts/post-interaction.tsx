@@ -6,8 +6,12 @@ import { Button } from "@/components/ui/button";
 import { PostData, UserCommentData } from "@/types";
 import { MessageCircle, ThumbsDown, ThumbsUp } from "lucide-react";
 import Comment from "./comment";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import NotOkMessage from "@/components/not-ok-message";
+import PostLikeDisLike from "./post-like-dislike";
+import { useForm } from "react-hook-form";
+import { CommentData, commentSchema } from "@/db/validations/comment";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 
 export default function PostInteraction({
@@ -17,31 +21,24 @@ export default function PostInteraction({
   data: PostData,
   userComments: UserCommentData[]
  }) {
+  const form = useForm<CommentData>({
+    resolver: zodResolver(commentSchema),
+    defaultValues: {
+      postId: String(data.id),
+      content: "",
+      categoryId: data.categoryId,
+      level: 1
+    },
+  });
 
   const commentLength = useMemo(() => userComments ? userComments.length : 0, [userComments]);
 
   return (
     <>
-      <div className="flex">
-        <Button variant={"secondary"} className="flex-1">
-          <ThumbsUp />
-          <span>Like</span>
-          <span>(<NumberFormatter value={data.likeCount} />)</span>
-        </Button>
-        <Button variant={"secondary"} className="flex-1">
-          <MessageCircle />
-          <span>Comment</span>
-          <span>(<NumberFormatter value={data.commentCount} />)</span>
-        </Button>
-        <Button variant={"secondary"} className="flex-1">
-          <ThumbsDown />
-          <span>Dislike</span>
-          <span>(<NumberFormatter value={data.dislikeCount} />)</span>
-        </Button>
-      </div>
+      <PostLikeDisLike form={form} data={data} />
       <div className="space-y-3">
         <div className="">
-          <CommentForm data={data} level={1} />
+          <CommentForm form={form} />
         </div>
         <div className="font-bold text-base">Comments ({commentLength})</div>
         {commentLength > 0 ? (

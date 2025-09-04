@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -11,21 +11,11 @@ import { Textarea } from "../ui/textarea";
 import { insertComment } from "@/db/query/comment";
 
 interface Props {
-  level: number;
-  data: PostData;
+  form: UseFormReturn<CommentData>
 }
 
-export default function CommentForm({data, level}: Props) {
-  const [isPending, startTransition] = useTransition();
-  const form = useForm<CommentData>({
-    resolver: zodResolver(commentSchema),
-    defaultValues: {
-      postId: String(data.id),
-      content: "",
-      categoryId: data.categoryId,
-      level
-    },
-  });
+export default function CommentForm({form}: Props) {
+  const [isPending, startTransition] = useTransition();  
 
   function onSubmit(data: CommentData) {
     startTransition(async () => {
