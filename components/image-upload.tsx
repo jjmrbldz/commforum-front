@@ -15,7 +15,7 @@ export default function ImageUpload({onChange, ...props}: Prop & DropzoneProps) 
   const [files, setFiles] = useState<File[] | undefined>();
   const [filePreview, setFilePreview] = useState<string[]>([]);
   const handleDrop = async (files: File[]) => {
-    // console.log(files);
+    
     setFiles(files);
     if (files.length > 0) {
       const res = await uploadImages(files);

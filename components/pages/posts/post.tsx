@@ -1,16 +1,12 @@
-"use client"
-
-import useLexicalHTML from "@/hooks/use-lexical-html";
+import { getHtml } from "@/app/posts/[category]/[id]/actions";
 import { parseImage } from "@/lib/utils";
 import { PostData } from "@/types";
 import Image from "next/image";
-import { useMemo } from "react";
 
-export default function Post({ data } : { data: PostData }) {
-  const htmlString = useLexicalHTML(data.content);
-  const media = useMemo(() => data.media ? parseImage(data.media, false) as string[] : [], []);
-  console.log("post", data)
-  console.log("media", media)
+export default async function Post({ data } : { data: PostData }) {
+  const html = await getHtml(data.content);
+  const media = parseImage(data.media || "", false) as string[];
+
   return (
     <div className="space-y-4">
       <div className="aspect-video">
@@ -23,11 +19,11 @@ export default function Post({ data } : { data: PostData }) {
         />
       </div>
       <article 
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{__html: htmlString}}
+        // suppressHydrationWarning
+        dangerouslySetInnerHTML={{__html: html}}
       />
       <div className="flex items-center justify-center flex-wrap gap-4">
-        {(media || []).map((item, index) => (
+        {media?.map((item, index) => (
           <Image 
             key={index}
             width={300}

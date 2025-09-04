@@ -20,7 +20,7 @@ export default function CommentForm({form}: Props) {
   function onSubmit(data: CommentData) {
     startTransition(async () => {
       const res = await insertComment(data);
-      console.log('INSERT COMMENT RES', res)
+      
       if (!res.ok) {
         if (res.fieldErrors) {
           Object.entries(res.fieldErrors).forEach(([name, message]) => {

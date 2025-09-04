@@ -67,20 +67,17 @@ export async function uploadImages(files: File[]) {
 
 export async function insertPost(payload: PostData) {
   try {
-    console.log("POST PAYLOAD", payload)
+    console.log("INSERT POST PAYLOAD", payload)
     const user = await getUserSession();
     if (!user) {
       throw new Error("User not authenticated");
     }
-    // console.log("USER:", user);
+
     const data = postSchema.parse(payload);
 
-    console.log("POST PARSED",data)
-    console.log("POST CATEGORY ID", payload.categoryId)
 
     const category = await getCategories({categoryId: parseInt(data.categoryId), hasSession: !!user});
     
-    console.log("CATEGORY:", category);
     if (!category[0]) {
       return { ok: false, fieldErrors: { category: ["Category not available"] }, message: "Category not available." } as const;
     }
@@ -118,8 +115,6 @@ export async function insertPost(payload: PostData) {
 
     const levels = await getLevelSettings(prevLevel);
 
-    // console.log("LEVEL:", levels);
-
     const { totalExp: requiredExpToLevelUp } = levels[0];
 
     const realBalanceLog = await db
@@ -135,18 +130,18 @@ export async function insertPost(payload: PostData) {
     const gainedUserBalance = prevBalance + (postPts || 0);
     const isLevelup = gainedUserExp >= (requiredExpToLevelUp || 0);
 
-    // console.log({
-    //   prevExp,
-    //   prevBalance,
-    //   prevLevel,
-    //   postExp,
-    //   postPts,
-    //   allowedUserLevel,
-    //   gainedUserExp,
-    //   gainedUserBalance,
-    //   requiredExpToLevelUp,
-    //   isLevelup
-    // });
+    console.log({
+      prevExp,
+      prevBalance,
+      prevLevel,
+      postExp,
+      postPts,
+      allowedUserLevel,
+      gainedUserExp,
+      gainedUserBalance,
+      requiredExpToLevelUp,
+      isLevelup
+    });
 
     const afterLevel = isLevelup ? prevLevel + 1 : prevLevel
 

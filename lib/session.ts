@@ -33,9 +33,10 @@ export async function decrypt(session: string | undefined = '') {
 }
 
 export async function createSession({ id, username, level, expiresAt }: SessionPayload) {
- 
   const session = await encrypt({ id, username, level, expiresAt })
   const ip = (await headers()).get("x-forwarded-for");
+  const cookieStore = await cookies();
+ 
   await db
     .update(users)
     .set({
@@ -45,7 +46,6 @@ export async function createSession({ id, username, level, expiresAt }: SessionP
     })
     .where(eq(users.id, id));
 
-  const cookieStore = await cookies();
   cookieStore.set('session', session, {
     httpOnly: true,
     secure: false, // ibalik sa true pag may SSL na hahah
@@ -56,9 +56,9 @@ export async function createSession({ id, username, level, expiresAt }: SessionP
 }
 
 export async function getUserSession(noRedirect = true) {
+  const cookieStore = await cookies();
   try {
     
-    const cookieStore = await cookies();
     const token = cookieStore.get('session')?.value;
   
     if (!token) {

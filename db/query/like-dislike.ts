@@ -186,7 +186,7 @@ export async function likeDislikeAction({postId, category, actionType}: Payload)
     revalidatePath(`/posts/${category}/${postId}`, "page")
     return { ok: true, message: `Post ${queryAction.action}ed` };
   } catch (error) {
-    console.error(error);
+    console.error("LIKE DISLIKE ERROR", error);
     return { ok: false, message: "Something went wrong" };
   }
 }

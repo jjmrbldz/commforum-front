@@ -36,6 +36,6 @@ export async function viewPost({
         .where(eq(postTable.id, postId));
     });
   } catch (error) {
-    
+    console.error("LOG VIEW POST ERROR", error);
   }
 }

@@ -1,9 +1,7 @@
 import NotOkMessage from "@/components/not-ok-message";
 import PostSinglePagePage from "@/components/pages/posts/post-single-page";
 import { getPostsByCategory } from "@/db/query/posts";
-import { viewPost } from "@/db/query/view-post";
 import { PostCategory } from "@/db/schema/posts";
-import { JSDOM } from "jsdom"
 
 export default async function Page({
   params,

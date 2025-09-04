@@ -7,8 +7,7 @@ import { CommentData } from "@/db/validations/comment";
 import { useUserStore } from "@/store/use-user-store";
 import { PostData } from "@/types";
 import { MessageCircle, ThumbsDown, ThumbsUp } from "lucide-react";
-// import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -78,14 +77,9 @@ export default function PostLikeDisLike({
         category: data.category,
         actionType: type
       })
-      // router.refresh();
       if (res.message) toast[res.ok ? "success" : "warning"](res.message);
     })
   }
-
-  useEffect(() => {
-    console.log(likeDislike)
-  }, [likeDislike])
 
   return (
     <div className="flex">

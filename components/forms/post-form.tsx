@@ -30,7 +30,7 @@ export default function PostForm() {
   })
 
   function onSubmit(data: PostData) {
-    console.log('POST FORM DATA', data);
+    
     if (isPending) return;
     startTransition(async () => {
       const res = await insertPost(data);
@@ -48,10 +48,6 @@ export default function PostForm() {
       toast.success(res.message);
     });
   }
-
-  // useEffect(() => {
-  //   console.log('FORM VALUES', form.watch());
-  // }, [form.watch()])
 
   return (
     <Form {...form}>

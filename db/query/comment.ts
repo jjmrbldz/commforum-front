@@ -14,7 +14,7 @@ import { CommentRow, commentTables } from "../schema/comment";
 import { users } from "../schema/user";
 import { getLevelSettings } from "./level";
 import { getUserBalance } from "./user-balance";
-import { PostCategory } from "../schema/posts";
+import { PostCategory, postTables } from "../schema/posts";
 import { ServerActionResponse, UserCommentData } from "@/types";
 
 interface FilterData  {
@@ -96,7 +96,7 @@ export async function insertComment(payload: CommentData) {
     if (!user) {
       return { ok: false, message: "You need to login first." } as const; 
     }
-    console.log("INSERT PAYLOAD", payload)
+    console.log("INSERT COMMENT PAYLOAD", payload)
     const data = commentSchema.parse(payload);
 
     if (!data.categoryId || !data.postId || !data.level) return { ok: false, message: "Post details are required" } as const; 
@@ -127,6 +127,22 @@ export async function insertComment(payload: CommentData) {
     const expLogs = expLogTables[userGroup];
     const comments = commentTables[categoryValue];
     const balanceLogs = balanceLogTables[userGroup];
+    const postTable = postTables[categoryValue];
+
+    const postRows = await db
+      .select({
+        postId: postTable.id,
+        prevCommnentCount: postTable.commentCount
+      })
+      .from(postTable)
+      .where(and(
+        eq(postTable.id, parseInt(data.postId)),
+        eq(postTable.status,  1)
+      ))
+
+    if (!postRows[0]) return { ok: false, message: "Post not available." } as const;
+
+    const { prevCommnentCount, postId } = postRows[0];
 
     const realExpLevelLog  = await getUserExpLevel(userId, userGroup);
 
@@ -181,15 +197,21 @@ export async function insertComment(payload: CommentData) {
     
       const commentInsert = await tx.insert(comments).values({
         userId,
-        postId: data.postId,
+        postId: String(postId),
         categoryId: data.categoryId,
         content: data.content,
         level: data.level,
       }).$returningId();
 
-      console.log("comment INSERT:", commentInsert);
-
       const returningId = commentInsert[0].id;
+
+      await tx.update(postTable)
+        .set({
+          commentCount: (prevCommnentCount || 0) + 1
+        })
+        .where(
+          eq(postTable.id, postId)
+        );
 
       await tx.insert(expLogs).values({
         userId,
@@ -238,7 +260,7 @@ export async function insertComment(payload: CommentData) {
     revalidatePath(`/posts/${categoryValue}/${data.postId}`);
     return { ok: true, message: `Comment submitted. ${shouldAwardLuckyPoints ? `Congrats! You've earned ${luckyPts} points!` : ""}` };
   } catch (e) {
-    console.error(e);
+    console.error("COMMENT ERROR", e);
     if (e instanceof Error) {
       return { ok: false, message: e.message };
     }

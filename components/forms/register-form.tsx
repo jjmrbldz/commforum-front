@@ -42,7 +42,7 @@ export default function RegisterForm() {
     setServerError(null);
     startTransition(async () => {
       const res = await registerAction(data);
-      // console.log('', res)
+      
       if (!res.ok) {
         if (res.fieldErrors) {
           Object.entries(res.fieldErrors).forEach(([name, message]) => {
