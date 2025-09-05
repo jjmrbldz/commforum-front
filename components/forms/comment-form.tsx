@@ -1,4 +1,6 @@
-import { useForm, UseFormReturn } from "react-hook-form";
+"use client"
+
+import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -11,15 +13,33 @@ import { Textarea } from "../ui/textarea";
 import { insertComment } from "@/db/query/comment";
 
 interface Props {
-  form: UseFormReturn<CommentData>
+  level: number;
+  commentId: number | null;
+  postId: PostData['id'];
+  categoryId: number;
+  isReplying?: boolean;
+  setIsReplying?: (val?: number | undefined) => void;
+  getReplyComments?: () => void;
 }
 
-export default function CommentForm({form}: Props) {
-  const [isPending, startTransition] = useTransition();  
+export default function CommentForm({postId, level, commentId, categoryId, isReplying, setIsReplying, getReplyComments}: Props) {
+  const [isPending, startTransition] = useTransition();
+  const form = useForm<CommentData>({
+      resolver: zodResolver(commentSchema),
+      defaultValues: {
+        postId: String(postId),
+        content: "",
+        commentId,
+        level,
+        categoryId,
+      },
+    });
 
   function onSubmit(data: CommentData) {
+    console.log("COMMENT PAYLOAD:", data);
+    // return;
     startTransition(async () => {
-      const res = await insertComment(data);
+      const res = await insertComment({payload: data, shouldRevalidate: !isReplying});
       
       if (!res.ok) {
         if (res.fieldErrors) {
@@ -37,6 +57,10 @@ export default function CommentForm({form}: Props) {
         position: "bottom-right",
       });
       form.setValue("content", "");
+      if (setIsReplying && getReplyComments) {
+        setIsReplying(undefined);
+        getReplyComments();
+      }
     })
   }
   
@@ -62,10 +86,23 @@ export default function CommentForm({form}: Props) {
               </FormItem>
             ))}
           />
-          <Button size={'sm'} className="mt-2 ml-auto" type="submit" loading={isPending}>
-            <Send />
-            <span>Comment</span>
-          </Button>
+          <div className="ml-auto mt-2 space-x-2">
+            {isReplying && (
+              <Button 
+                size={'sm'} 
+                variant={"secondary"} 
+                className="" 
+                type="button"
+                onClick={setIsReplying ? () => setIsReplying(undefined) : undefined}
+              >
+                <span>Cancel</span>
+              </Button>
+            )}
+            <Button size={'sm'} className="" type="submit" loading={isPending}>
+              <Send className="size-3" />
+              <span>Comment</span>
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

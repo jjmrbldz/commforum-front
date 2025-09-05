@@ -202,14 +202,16 @@ export type PostData = {
 
 export type UserCommentData = {
   id: number;
+  commentId: number | null;
   postId: string | null;
-  categoryId: number | null;
   content: string;
   level: number | null;
+  replyCount: number | null;
   regDatetime: Date | null;
   userId: number;
   like: number | null;
   dislike: number | null;
   username: string;
   name: string;
+  children?: UserCommentData[];
 }

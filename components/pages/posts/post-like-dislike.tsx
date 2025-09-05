@@ -14,10 +14,8 @@ import { toast } from "sonner";
 
 export default function PostLikeDisLike({
   data,
-  form
 } : {
   data: PostData;
-  form: UseFormReturn<CommentData>;
 }) {
   const user = useUserStore(state => state.user);
   // const router = useRouter();
@@ -88,7 +86,7 @@ export default function PostLikeDisLike({
         <span>Like{likeDislike === "like" && "d"}</span>
         <span>(<NumberFormatter value={likeCount || 0} />)</span>
       </Button>
-      <Button variant={"secondary"} className="flex-1" onClick={() => form.setFocus("content")}>
+      <Button variant={"secondary"} className="flex-1">
         <MessageCircle />
         <span>Comment</span>
         <span>(<NumberFormatter value={data.commentCount} />)</span>

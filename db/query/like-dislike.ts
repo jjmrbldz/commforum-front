@@ -4,7 +4,7 @@ import { getUserSession } from "@/lib/session";
 import { likeDislikeTables } from "../schema/like-dislike";
 import { PostCategory, postTables } from "../schema/posts";
 import { db } from "..";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 interface Payload {
@@ -25,18 +25,18 @@ export async function likeDislikeAction({postId, category, actionType}: Payload)
     const likeDislikeTable = likeDislikeTables[category];
     const postTable = postTables[category];
 
-    const postRows = await db
-      .select({
-        postId: postTable.id,
-        currentLikeCount: postTable.likeCount,
-        currentDislikeCount: postTable.dislikeCount,
-      })
-      .from(postTable)
-      .where(eq(postTable.id, postId));
+    // const postRows = await db
+    //   .select({
+    //     postId: postTable.id,
+    //     currentLikeCount: postTable.likeCount,
+    //     currentDislikeCount: postTable.dislikeCount,
+    //   })
+    //   .from(postTable)
+    //   .where(eq(postTable.id, postId));
 
-    if (postRows.length === 0) return { ok: false, message: "Post not available." }; 
+    // if (postRows.length === 0) return { ok: false, message: "Post not available." }; 
 
-    const { currentLikeCount, currentDislikeCount } = postRows[0];
+    // const { currentLikeCount, currentDislikeCount } = postRows[0];
 
     const likeDislikeRows = await db
       .select({
@@ -58,8 +58,10 @@ export async function likeDislikeAction({postId, category, actionType}: Payload)
     } = { 
       query: "insert", 
       action: actionType,
-      newLikeCount: currentLikeCount || 0,
-      newDislikeCount: currentDislikeCount || 0,
+      // newLikeCount: currentLikeCount || 0,
+      // newDislikeCount: currentDislikeCount || 0,
+      newLikeCount: 0,
+      newDislikeCount: 0,
     };
 
     if (likeDislikeRows.length > 0) {
@@ -70,7 +72,7 @@ export async function likeDislikeAction({postId, category, actionType}: Payload)
       ) queryAction = { 
         query: "update", 
         action: "unlike", 
-        newLikeCount: queryAction.newLikeCount - 1,
+        newLikeCount: -1,
         newDislikeCount: queryAction.newDislikeCount
       };
 
@@ -79,8 +81,8 @@ export async function likeDislikeAction({postId, category, actionType}: Payload)
       ) queryAction = { 
         query: "update", 
         action: "dislike",
-        newLikeCount: queryAction.newLikeCount - 1,
-        newDislikeCount: queryAction.newDislikeCount + 1
+        newLikeCount: -1,
+        newDislikeCount: +1
       };
 
       if (
@@ -89,7 +91,7 @@ export async function likeDislikeAction({postId, category, actionType}: Payload)
         query: "update", 
         action: "undislike",
         newLikeCount: queryAction.newLikeCount,
-        newDislikeCount: queryAction.newDislikeCount - 1
+        newDislikeCount: -1
       };
 
       if (
@@ -97,15 +99,15 @@ export async function likeDislikeAction({postId, category, actionType}: Payload)
       ) queryAction = { 
         query: "update", 
         action: "like",
-        newLikeCount: queryAction.newLikeCount + 1,
-        newDislikeCount: queryAction.newDislikeCount - 1
+        newLikeCount: +1,
+        newDislikeCount: -1
       };
       if (
         type === "unlike" && actionType === "like"
       ) queryAction = { 
         query: "update", 
         action: "like",
-        newLikeCount: queryAction.newLikeCount + 1,
+        newLikeCount: +1,
         newDislikeCount: queryAction.newDislikeCount
       };
       if (
@@ -114,14 +116,14 @@ export async function likeDislikeAction({postId, category, actionType}: Payload)
         query: "update", 
         action: "dislike",
         newLikeCount: queryAction.newLikeCount,
-        newDislikeCount: queryAction.newDislikeCount + 1
+        newDislikeCount: +1
       };
       if (
         type === "undislike" && actionType === "like"
       ) queryAction = { 
         query: "update", 
         action: "like",
-        newLikeCount: queryAction.newLikeCount + 1,
+        newLikeCount: +1,
         newDislikeCount: queryAction.newDislikeCount
       };
       if (
@@ -130,7 +132,7 @@ export async function likeDislikeAction({postId, category, actionType}: Payload)
         query: "update", 
         action: "dislike",
         newLikeCount: queryAction.newLikeCount,
-        newDislikeCount: queryAction.newDislikeCount + 1
+        newDislikeCount: +1
       };
 
       db.transaction(async (tx) => {
@@ -147,13 +149,12 @@ export async function likeDislikeAction({postId, category, actionType}: Payload)
         await tx
         .update(postTable)
         .set({
-          likeCount: queryAction.newLikeCount,
-          dislikeCount: queryAction.newDislikeCount,
+          likeCount: sql`COALESCE(${postTable.likeCount}) + ${queryAction.newLikeCount}`,
+          dislikeCount: sql`COALESCE(${postTable.dislikeCount}) + ${queryAction.newDislikeCount}`,
         })
         .where(eq(postTable.id, postId));
+
       });
-
-
       if (queryAction.action === "unlike" || queryAction.action === "undislike" ) return { ok: true };
 
       return { ok: true, message: `Post ${queryAction.action}d` };

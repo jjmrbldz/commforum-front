@@ -98,7 +98,7 @@ export async function getPostsByCategory({category, id, logView}: FilterData): S
     if (id && isLoggedIn && !isAllowed) return { ok: false, message: "Your level is not enough to view this content" };
     if (id && !isLoggedIn && postTableRows[0].visibility === "private") return { ok: false, message: "You need to login to view this content" };
 
-    if (logView && isLoggedIn && id) await viewPost({userId: user.id, postId: id, currViewCount: (postTableRows[0].viewCount || 0), category})
+    if (logView && isLoggedIn && id && process.env.NODE_ENV === "production") await viewPost({userId: user.id, postId: id, category})
   
     return { ok: true, data: postTableRows, message: "Posts successfully retreived." };
   } catch (error) {

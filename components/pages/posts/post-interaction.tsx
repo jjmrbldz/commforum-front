@@ -1,17 +1,9 @@
-"use client"
-
 import CommentForm from "@/components/forms/comment-form";
-import { NumberFormatter } from "@/components/number-formatter";
-import { Button } from "@/components/ui/button";
 import { PostData, UserCommentData } from "@/types";
-import { MessageCircle, ThumbsDown, ThumbsUp } from "lucide-react";
-import Comment from "./comment";
-import { useMemo, useRef } from "react";
 import NotOkMessage from "@/components/not-ok-message";
 import PostLikeDisLike from "./post-like-dislike";
-import { useForm } from "react-hook-form";
-import { CommentData, commentSchema } from "@/db/validations/comment";
-import { zodResolver } from "@hookform/resolvers/zod";
+import Comments from "./comments/comment";
+import { buildCommentTree } from "@/lib/utils";
 
 
 export default function PostInteraction({
@@ -21,28 +13,22 @@ export default function PostInteraction({
   data: PostData,
   userComments: UserCommentData[]
  }) {
-  const form = useForm<CommentData>({
-    resolver: zodResolver(commentSchema),
-    defaultValues: {
-      postId: String(data.id),
-      content: "",
-      categoryId: data.categoryId,
-      level: 1
-    },
-  });
 
-  const commentLength = useMemo(() => userComments ? userComments.length : 0, [userComments]);
+  const commentLength = userComments ? userComments.length : 0;
+  // const treeifyComments = buildCommentTree(userComments);
+
+  // console.log("COMMENTS", userComments);
 
   return (
     <>
-      <PostLikeDisLike form={form} data={data} />
+      <PostLikeDisLike data={data} />
       <div className="space-y-3">
         <div className="">
-          <CommentForm form={form} />
+          <CommentForm level={1} commentId={null} postId={data.id} categoryId={data.categoryId || 0} />
         </div>
-        <div className="font-bold text-base">Comments ({commentLength})</div>
+        <div className="font-bold text-base">Comments ({data.commentCount})</div>
         {commentLength > 0 ? (
-          userComments.map((item, index) =><Comment key={index} {...item} />)
+          userComments.map((item, index) => <Comments key={item.id} {...item} categoryId={data.categoryId || 0} />)
         ) : (
           <NotOkMessage variant={"info"} title="" message="No comments found." />
         )}

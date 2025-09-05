@@ -8,7 +8,7 @@ function createComment(name: `T_COMMENT_${Categories}`) {
     {
       id: int("id", { unsigned: true }).autoincrement().primaryKey(),
       postId: varchar("tp_id", { length: 255 }).default(""),
-      categoryId: int("tc_id"),
+      commentId: int("tc_id"),
       content: longtext("tc_content").notNull(),
       level: int("tc_level").default(1),
       regDatetime: datetime("tc_reg_datetime").default(sql`CURRENT_TIMESTAMP`),
@@ -16,6 +16,7 @@ function createComment(name: `T_COMMENT_${Categories}`) {
       userId: int("tu_id").notNull().default(0),
       like: int("tc_like"),
       dislike: int("tc_dislike"),
+      replyCount: int("tc_reply_count"),
     }
   );
 }

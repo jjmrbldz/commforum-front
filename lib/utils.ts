@@ -1,4 +1,4 @@
-import { ItemWithId, WidgetCarouselProps } from "@/types";
+import { ItemWithId, UserCommentData, WidgetCarouselProps } from "@/types";
 import { clsx, type ClassValue } from "clsx"
 import dayjs from "dayjs";
 import DOMPurify from "dompurify";
@@ -106,4 +106,45 @@ export function isValidUrl(url: string | null): boolean {
 
 export function sanitizeHTML(html: string) {
   return DOMPurify.sanitize(html);
+}
+
+export function buildCommentTree(
+  rows: UserCommentData[]
+): UserCommentData[] {
+  // Keep top-level order as given (DESC by your query)
+  // Only children will be sorted ASC by regDatetime.
+
+  // Clone nodes and ensure children arrays exist (avoid mutating input)
+  const byId = new Map<number, UserCommentData>();
+  const roots: UserCommentData[] = [];
+
+  for (const r of rows) {
+    byId.set(r.id, { ...r, children: [] });
+  }
+
+  for (const r of rows) {
+    const node = byId.get(r.id)!;
+    if (r.commentId == null) {
+      roots.push(node);
+    } else {
+      const parent = byId.get(r.commentId);
+      (parent ? parent.children! : roots).push(node);
+    }
+  }
+
+  // Helper to convert Date|null to millis; nulls sort last
+  const toMillis = (d: Date | null) => (d instanceof Date ? d.getTime() : Number.POSITIVE_INFINITY);
+
+  // Sort children ASC by regDatetime (nulls last), recursively
+  const sortChildrenAsc = (nodes: UserCommentData[]) => {
+    for (const n of nodes) {
+      if (n.children && n.children.length > 1) {
+        n.children.sort((a, b) => toMillis(a.regDatetime) - toMillis(b.regDatetime));
+      }
+      if (n.children && n.children.length) sortChildrenAsc(n.children);
+    }
+  };
+  sortChildrenAsc(roots);
+  // return roots.sort((a, b) => toMillis(a.regDatetime) - toMillis(b.regDatetime));
+  return roots;
 }

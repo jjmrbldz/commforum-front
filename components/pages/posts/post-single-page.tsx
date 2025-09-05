@@ -7,9 +7,10 @@ import { getComments } from "@/db/query/comment";
 
 export default async function PostSinglePagePage({title, data}: {title: string, data: PostData}) {
   const comments = await getComments({
-    categoryId: data.categoryId || 0,
     category: data.category,
-    id: data.id
+    postId: data.id,
+    level: 1,
+    limit: 10
   });
 
   return (

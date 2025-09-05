@@ -7,20 +7,23 @@ import { ExpLogGroup, expLogTables } from "../schema/exp-log";
 import { balanceLogTables } from "../schema/balance-log";
 import { getUserExpLevel } from "./user-level-exp";
 import { db } from "..";
-import { and, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq, SQL, sql } from "drizzle-orm";
 import z, { ZodError } from "zod";
 import { revalidatePath } from "next/cache";
-import { CommentRow, commentTables } from "../schema/comment";
+import { commentTables } from "../schema/comment";
 import { users } from "../schema/user";
 import { getLevelSettings } from "./level";
 import { getUserBalance } from "./user-balance";
 import { PostCategory, postTables } from "../schema/posts";
-import { ServerActionResponse, UserCommentData } from "@/types";
+import { UserCommentData } from "@/types";
 
 interface FilterData  {
-  categoryId: number;
   category: PostCategory;
-  id: number;
+  postId: number;
+  commentId?: number;
+  level: number;
+  sort?: "asc" | "desc";
+  limit?: number;
 }
 
 function getLuckyPoints(luckyChance: number, luckyPoints: number): number {
@@ -89,7 +92,7 @@ async function transactLuckyCommentPoints(
 }
 
 
-export async function insertComment(payload: CommentData) {
+export async function insertComment({payload, shouldRevalidate}: {payload: CommentData, shouldRevalidate?: boolean}) {
 
   try {
     const user = await getUserSession();
@@ -128,21 +131,6 @@ export async function insertComment(payload: CommentData) {
     const comments = commentTables[categoryValue];
     const balanceLogs = balanceLogTables[userGroup];
     const postTable = postTables[categoryValue];
-
-    const postRows = await db
-      .select({
-        postId: postTable.id,
-        prevCommnentCount: postTable.commentCount
-      })
-      .from(postTable)
-      .where(and(
-        eq(postTable.id, parseInt(data.postId)),
-        eq(postTable.status,  1)
-      ))
-
-    if (!postRows[0]) return { ok: false, message: "Post not available." } as const;
-
-    const { prevCommnentCount, postId } = postRows[0];
 
     const realExpLevelLog  = await getUserExpLevel(userId, userGroup);
 
@@ -197,21 +185,33 @@ export async function insertComment(payload: CommentData) {
     
       const commentInsert = await tx.insert(comments).values({
         userId,
-        postId: String(postId),
-        categoryId: data.categoryId,
+        postId: data.postId,
+        commentId: data.commentId,
         content: data.content,
         level: data.level,
       }).$returningId();
 
       const returningId = commentInsert[0].id;
 
-      await tx.update(postTable)
+      if (data.commentId) {
+        await tx.update(comments)
         .set({
-          commentCount: (prevCommnentCount || 0) + 1
+          replyCount: sql`COALESCE(${comments.replyCount}, 0) + 1`,
         })
         .where(
-          eq(postTable.id, postId)
+          eq(comments.id, data.commentId)
         );
+      }      
+
+      await tx.update(postTable)
+        .set({
+          commentCount: sql`COALESCE(${postTable.commentCount}, 0) + 1`
+        })
+        .where(
+          eq(postTable.id, Number(data.postId))
+        );
+
+      
 
       await tx.insert(expLogs).values({
         userId,
@@ -257,6 +257,7 @@ export async function insertComment(payload: CommentData) {
     if (shouldAwardLuckyPoints && referenceId > 0) await transactLuckyCommentPoints(userId, luckyPts, referenceId, referenceTable);
 
 
+    // if (shouldRevalidate) revalidatePath(`/posts/${categoryValue}/${data.postId}`);
     revalidatePath(`/posts/${categoryValue}/${data.postId}`);
     return { ok: true, message: `Comment submitted. ${shouldAwardLuckyPoints ? `Congrats! You've earned ${luckyPts} points!` : ""}` };
   } catch (e) {
@@ -273,27 +274,57 @@ export async function insertComment(payload: CommentData) {
   
 }
 
-export async function getComments({categoryId, category, id}: FilterData): Promise<UserCommentData[]> {
-  const comments = commentTables[category];
-  return await db
-  .select({
-    id: comments.id,
-    postId: comments.postId,
-    categoryId: comments.categoryId,
-    content: comments.content,
-    level: comments.level,
-    regDatetime: comments.regDatetime,
-    userId: users.id,
-    like: comments.like,
-    dislike: comments.dislike,
-    username: users.username,
-    name: users.name,
-  })
-  .from(comments)
-  .where(and(
-      eq(comments.postId, String(id)),
-      eq(comments.categoryId, categoryId)
-  ))
-  .innerJoin(users, eq(users.id, comments.userId))
-  .orderBy(desc(comments.regDatetime))
+export async function getComments({category, postId, commentId, level, sort = "desc", limit}: FilterData): Promise<Omit<UserCommentData, "children">[]> {
+  try {
+    const comments = commentTables[category];
+    const filters: SQL[] = [];
+    const orders: SQL[] = [];
+  
+    if (level) filters.push(eq(comments.level, level));
+    if (commentId) filters.push(eq(comments.commentId, commentId));
+    if (sort === "desc") orders.push(desc(comments.regDatetime));
+    if (sort === "asc") orders.push(asc(comments.regDatetime));
+  
+    console.log("COMMENT FILTERS", {
+      category,
+      postId,
+      commentId,
+      level,
+      sort,
+      limit
+    })
+
+    let base  = db
+      .select({
+        id: comments.id,
+        commentId: comments.commentId,
+        content: comments.content,
+        postId: comments.postId,
+        level: comments.level,
+        replyCount: comments.replyCount,
+        regDatetime: comments.regDatetime,
+        userId: users.id,
+        like: comments.like,
+        dislike: comments.dislike,
+        username: users.username,
+        name: users.name,
+      })
+      .from(comments)
+      .where(and(
+        eq(comments.postId, String(postId)),
+        ...filters
+      ))
+      .innerJoin(users, eq(users.id, comments.userId))
+      .orderBy(...orders);
+
+    const query = typeof limit === 'number' ? base.limit(limit) : base;  
+    
+    const res = await query;
+
+    console.log("COMMENT RES", res)
+    return res;
+  } catch (error) {
+    console.error("Error getting comments:", error);
+    return [];
+  }
 }

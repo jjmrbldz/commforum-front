@@ -3,17 +3,15 @@
 import { db } from ".."
 import { PostCategory, postTables } from "../schema/posts"
 import { viewPostTables } from "../schema/view-post";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export async function viewPost({
   userId, 
   postId, 
   category, 
-  currViewCount, 
 } : {
   userId: number, 
   postId: number, 
-  currViewCount: number, 
   category: PostCategory, 
 }) {
 
@@ -31,7 +29,7 @@ export async function viewPost({
       await tx
         .update(postTable)
         .set({
-          viewCount: currViewCount + 1
+          viewCount: sql`COALESCE(${postTable.viewCount}, 0) + 1`
         })
         .where(eq(postTable.id, postId));
     });
