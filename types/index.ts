@@ -213,5 +213,6 @@ export type UserCommentData = {
   dislike: number | null;
   username: string;
   name: string;
+  likeDislikeType?: string | null;
   children?: UserCommentData[];
 }

@@ -16,6 +16,7 @@ import { getLevelSettings } from "./level";
 import { getUserBalance } from "./user-balance";
 import { PostCategory, postTables } from "../schema/posts";
 import { UserCommentData } from "@/types";
+import { commentLikeDislikeTables } from "../schema/comment-like-dislike";
 
 interface FilterData  {
   category: PostCategory;
@@ -277,8 +278,12 @@ export async function insertComment({payload, shouldRevalidate}: {payload: Comme
 export async function getComments({category, postId, commentId, level, sort = "desc", limit}: FilterData): Promise<Omit<UserCommentData, "children">[]> {
   try {
     const comments = commentTables[category];
+    const likeDislikeTable = commentLikeDislikeTables[category];
     const filters: SQL[] = [];
     const orders: SQL[] = [];
+
+    const user = await getUserSession();
+    const isLoggedIn = !!user;
   
     if (level) filters.push(eq(comments.level, level));
     if (commentId) filters.push(eq(comments.commentId, commentId));
@@ -308,6 +313,7 @@ export async function getComments({category, postId, commentId, level, sort = "d
         dislike: comments.dislike,
         username: users.username,
         name: users.name,
+        ...(isLoggedIn ? { likeDislikeType: likeDislikeTable.type } : {})
       })
       .from(comments)
       .where(and(
@@ -317,9 +323,19 @@ export async function getComments({category, postId, commentId, level, sort = "d
       .innerJoin(users, eq(users.id, comments.userId))
       .orderBy(...orders);
 
-    const query = typeof limit === 'number' ? base.limit(limit) : base;  
+    let baseWithLimit = typeof limit === 'number' ? base.limit(limit) : base;  
+
+    if (isLoggedIn) {
+      baseWithLimit = baseWithLimit.leftJoin(
+        likeDislikeTable,
+        and(
+          eq(likeDislikeTable.commentId, comments.id),
+          eq(likeDislikeTable.userId, user!.id)
+        )
+      );
+    }
     
-    const res = await query;
+    const res = await baseWithLimit;
 
     console.log("COMMENT RES", res)
     return res;

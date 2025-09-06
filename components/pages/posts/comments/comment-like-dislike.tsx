@@ -1,26 +1,23 @@
 "use client"
-
 import { NumberFormatter } from "@/components/number-formatter";
-import { Button } from "@/components/ui/button";
-import { likeDislikeAction } from "@/db/query/like-dislike";
+import { commentLikeDislikeAction } from "@/db/query/comment-like-dislike";
+import { PostCategory } from "@/db/schema/posts";
+import { cn } from "@/lib/utils";
 import { useUserStore } from "@/store/use-user-store";
-import { PostData } from "@/types";
-import { MessageCircle, ThumbsDown, ThumbsUp } from "lucide-react";
+import { UserCommentData } from "@/types";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
+import { useParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
 
-export default function PostLikeDisLike({
-  data,
-} : {
-  data: PostData;
-}) {
+export default function CommentLikeDislike(item: UserCommentData & {categoryId: number}) {
+  const { category } = useParams();
   const user = useUserStore(state => state.user);
-  // const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [likeDislike, setLikeDislike] = useState<string | null | undefined>(data.likeDislikeType);
-  const [likeCount, setLikeCount] = useState(data.likeCount);
-  const [dislikeCount, setDislikeCount] = useState(data.dislikeCount);
+  const [likeDislike, setLikeDislike] = useState<string | null | undefined>(item.likeDislikeType);
+  const [likeCount, setLikeCount] = useState(item.like);
+  const [dislikeCount, setDislikeCount] = useState(item.dislike);
 
   const handleClick = async (type: string) => {
     if (isPending) return;
@@ -68,9 +65,10 @@ export default function PostLikeDisLike({
       setLikeDislike("dislike");
     }
     startTransition(async () => {
-      const res = await likeDislikeAction({
-        postId: data.id,
-        category: data.category,
+      const res = await commentLikeDislikeAction({
+        commentId: item.id,
+        postId: Number(item.postId),
+        category: category as PostCategory,
         actionType: type
       })
       if (res.message) toast[res.ok ? "success" : "warning"](res.message);
@@ -78,22 +76,29 @@ export default function PostLikeDisLike({
   }
 
   return (
-    <div className="flex">
-      <Button variant={likeDislike === "like" ? "default" :"secondary"} className="flex-1" onClick={() => handleClick("like")}>
-        <ThumbsUp />
-        <span>Like{likeDislike === "like" && "d"}</span>
-        <span>(<NumberFormatter value={likeCount || 0} />)</span>
-      </Button>
-      <Button variant={"secondary"} className="flex-1">
-        <MessageCircle />
-        <span>Comment</span>
-        <span>(<NumberFormatter value={data.commentCount} />)</span>
-      </Button>
-      <Button variant={likeDislike === "dislike" ? "destructive" : "secondary"} className="flex-1" onClick={() => handleClick("dislike")}>
-        <ThumbsDown />
-        <span>Dislike{likeDislike === "dislike" && "d"}</span>
-        <span>(<NumberFormatter value={dislikeCount || 0} />)</span>
-      </Button>
-    </div>
+    <>
+      <div className="flex items-center gap-[1px] mr-1"> 
+        <ThumbsUp 
+          fill={likeDislike === "like" ? "blue" :"none"}
+          className={cn(
+            "size-4 cursor-pointer hover:text-blue-500",
+            likeDislike === "like" && "text-white"
+          )} 
+          onClick={() => handleClick("like")} 
+        />
+        <span><NumberFormatter value={likeCount || 0} /></span>
+      </div>
+      <div className="flex items-center gap-[1px] mr-2">
+        <ThumbsDown 
+          fill={likeDislike === "dislike" ? "red" :"none"}
+          className={cn(
+            "size-4 relative -bottom-[2px] cursor-pointer hover:text-red-500",
+            likeDislike === "dislike" && "text-white"
+          )} 
+          onClick={() => handleClick("dislike")} 
+        />
+        <span><NumberFormatter value={dislikeCount || 0} /></span>
+      </div>
+    </>
   )
 }

@@ -5,6 +5,7 @@ import { UserCommentData } from "@/types";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 import ReplyCommentButton from "./reply-button";
 import ReplyCommentForm from "./reply-comment-form";
+import CommentLikeDislike from "./comment-like-dislike";
 
 export default function CommentItem(item: UserCommentData & {categoryId: number; getReplyComments: () => void}) {
 
@@ -28,8 +29,7 @@ export default function CommentItem(item: UserCommentData & {categoryId: number;
             <div className="flex item-center text-slate-500 mt-1">
               <div className="text-slate-500 text-xs">{formatDate(item.regDatetime || "")}</div>
               <div className="ml-auto flex items-center pr-1">
-                  <ThumbsUp className="size-4 cursor-pointer mr-1 hover:text-blue-500" />
-                  <ThumbsDown className="size-4 relative -bottom-[2px] cursor-pointer mr-2 hover:text-red-500" />
+                  <CommentLikeDislike {...item} />
                   <ReplyCommentButton commentId={item.id} />
               </div>
             </div>
