@@ -1,4 +1,5 @@
 import { getHtml } from "@/app/posts/[category]/[id]/actions";
+import ReadOnlyContent from "@/components/readonly-content";
 import { parseImage } from "@/lib/utils";
 import { PostData } from "@/types";
 import Image from "next/image";
@@ -20,8 +21,10 @@ export default async function Post({ data } : { data: PostData }) {
       </div>
       <article 
         // suppressHydrationWarning
+        className="sr-only"
         dangerouslySetInnerHTML={{__html: html}}
       />
+      <ReadOnlyContent content={data.content} />
       <div className="flex items-center justify-center flex-wrap gap-4">
         {media?.map((item, index) => (
           <Image 

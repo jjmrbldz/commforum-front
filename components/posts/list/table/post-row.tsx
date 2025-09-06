@@ -1,3 +1,4 @@
+import ContentPlainText from "@/components/content-plaintext";
 import { NumberFormatter } from "@/components/number-formatter";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
@@ -15,6 +16,9 @@ export default function PostRowItem(item: PostData) {
         <Link href={`/posts/${item.category}/${item.id}`} className="hover:underline">
           {item.title}
         </Link>
+      </TableCell>
+      <TableCell className="hidden md:table-cell">
+        <ContentPlainText content={item.content} />
       </TableCell>
       <TableCell>
         <div className="flex gap-2">

@@ -2,7 +2,6 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { formatDate } from "@/lib/utils";
 import { UserCommentData } from "@/types";
-import { ThumbsDown, ThumbsUp } from "lucide-react";
 import ReplyCommentButton from "./reply-button";
 import ReplyCommentForm from "./reply-comment-form";
 import CommentLikeDislike from "./comment-like-dislike";

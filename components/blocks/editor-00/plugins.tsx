@@ -37,7 +37,7 @@ import { InsertEmbeds } from "@/components/editor/plugins/toolbar/block-insert/i
 import { AutoEmbedPlugin } from "@/components/editor/plugins/embeds/auto-embed-plugin"
 import { YouTubePlugin } from "@/components/editor/plugins/embeds/youtube-plugin"
 
-export function Plugins() {
+export function Plugins({editable = true}:{editable?: boolean}) {
   const [floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null)
 
@@ -50,6 +50,7 @@ export function Plugins() {
   return (
     <div className="relative">
       {/* toolbar plugins */}
+      {editable && (
        <ToolbarPlugin>
         {() => (
           <div className="vertical-align-middle sticky top-0 z-10 flex gap-2 border-b-2 border-neutral-200 dark:border-neutral-800 p-1 flex-wrap">
@@ -83,6 +84,7 @@ export function Plugins() {
           </div>
         )}
       </ToolbarPlugin>
+      )}
       <div className="relative">
         <RichTextPlugin
           contentEditable={

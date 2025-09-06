@@ -10,7 +10,7 @@ export default async function Page({
 }) {
   const {category, id} = await params
   const postRes = await getPostsByCategory({category, id: parseInt(id), logView: true});
-
+  console.log("Post", postRes)
   if (!postRes.ok) return <NotOkMessage message={postRes.message} />;
 
   return <PostSinglePagePage data={postRes.data[0]} title={postRes.data[0].title} />

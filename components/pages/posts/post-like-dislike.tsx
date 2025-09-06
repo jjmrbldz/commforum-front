@@ -79,9 +79,9 @@ export default function PostLikeDisLike({
 
   return (
     <div className="flex">
-      <Button variant={likeDislike === "like" ? "default" :"secondary"} className="flex-1" onClick={() => handleClick("like")}>
+      <Button variant={user && likeDislike === "like" ? "default" :"secondary"} className="flex-1" onClick={() => handleClick("like")}>
         <ThumbsUp />
-        <span>Like{likeDislike === "like" && "d"}</span>
+        <span>Like{user && likeDislike === "like" && "d"}</span>
         <span>(<NumberFormatter value={likeCount || 0} />)</span>
       </Button>
       <Button variant={"secondary"} className="flex-1">
@@ -89,9 +89,9 @@ export default function PostLikeDisLike({
         <span>Comment</span>
         <span>(<NumberFormatter value={data.commentCount} />)</span>
       </Button>
-      <Button variant={likeDislike === "dislike" ? "destructive" : "secondary"} className="flex-1" onClick={() => handleClick("dislike")}>
+      <Button variant={user && likeDislike === "dislike" ? "destructive" : "secondary"} className="flex-1" onClick={() => handleClick("dislike")}>
         <ThumbsDown />
-        <span>Dislike{likeDislike === "dislike" && "d"}</span>
+        <span>Dislike{user && likeDislike === "dislike" && "d"}</span>
         <span>(<NumberFormatter value={dislikeCount || 0} />)</span>
       </Button>
     </div>

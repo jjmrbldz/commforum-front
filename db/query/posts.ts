@@ -95,6 +95,7 @@ export async function getPostsByCategory({category, id, logView}: FilterData): S
 
     const isAllowed = isLoggedIn && (parseInt(user.level || "1") >= postTableRows[0].allowedViewLevel)
 
+    if (!isLoggedIn && postTableRows[0].visibility === "private") return { ok: false, message: "You need to login to view this content" };
     if (id && isLoggedIn && !isAllowed) return { ok: false, message: "Your level is not enough to view this content" };
     if (id && !isLoggedIn && postTableRows[0].visibility === "private") return { ok: false, message: "You need to login to view this content" };
 

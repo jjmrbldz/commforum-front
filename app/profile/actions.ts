@@ -5,19 +5,66 @@ import getCategories from "@/db/query/categories";
 import { getLevelSettings } from "@/db/query/level";
 import { getUserExpLevel } from "@/db/query/user-level-exp";
 import { balanceLogTables } from "@/db/schema/balance-log";
-import { categories } from "@/db/schema/category";
 import { ExpLogGroup, expLogTables } from "@/db/schema/exp-log";
-import { levelSettings } from "@/db/schema/level";
 import { postTables } from "@/db/schema/posts";
 import { users } from "@/db/schema/user";
 import { PostData, postSchema } from "@/db/validations/posts";
-import { getUserSession } from "@/lib/session";
+import { updateInfoSchema, UserInfoData } from "@/db/validations/update-info";
+import { requireUserSession } from "@/lib/session";
 import { randomUUID } from "crypto";
-import { and, desc, eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { mkdir, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import path from "path";
 import z, { ZodError } from "zod";
+import bcrypt from "bcrypt";
+
+export async function updateInfoAction(payload: UserInfoData) {
+  
+  try {
+    console.log("USER UPDATE PAYLOAD", payload)
+    const user = await requireUserSession();
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    const data = updateInfoSchema.parse({...payload, username: user.username});
+
+    const {name, nickname, email, phone}  = data;
+
+    let newPassword = "";
+
+    if (data.password) {
+      newPassword = await bcrypt.hash(data.password, 12);
+    }
+
+    await db.transaction(async (tx) => {
+      await tx
+        .update(users)
+        .set({
+          name,
+          nickname,
+          email,
+          phone,          
+          ...(payload.password ? {password: newPassword} : {}),          
+        })
+        .where(eq(users.id, user.id));
+    })
+
+    return { ok: true, message: "Successfully registered." } as const;
+  } catch (e) {
+    console.error(e);
+    if (e instanceof ZodError) {
+      const fieldErrors = z.flattenError(e).fieldErrors;
+      console.log("FIELD ERRORS", fieldErrors)
+      return { ok: false, fieldErrors, message: "Updates failed to save." } as const;
+    }
+    if (e instanceof Error) {
+      return { ok: false, message: e.message };
+    }
+    return { ok: false, message: "Something went wrong." };
+  }
+}
 
 const uploadDir = path.join(process.cwd(), "public/uploads");
 
@@ -32,7 +79,7 @@ async function ensureUploadDir() {
 export async function uploadImages(files: File[]) {
   
   try {
-    const user = getUserSession();
+    const user = requireUserSession();
     if (!user) {
       throw new Error("User not authenticated");
     }
@@ -68,7 +115,7 @@ export async function uploadImages(files: File[]) {
 export async function insertPost(payload: PostData) {
   try {
     console.log("INSERT POST PAYLOAD", payload)
-    const user = await getUserSession();
+    const user = await requireUserSession();
     if (!user) {
       throw new Error("User not authenticated");
     }

@@ -1,4 +1,3 @@
-import ProfileSkeleton from "@/components/skeletons/profile-skeleton";
 import SidePanelSkeleton from "@/components/skeletons/sidepanel-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 

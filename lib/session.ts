@@ -57,45 +57,45 @@ export async function createSession({ id, username, level, expiresAt }: SessionP
 
 export async function getUserSession(noRedirect = true) {
   const cookieStore = await cookies();
-  try {
-    
-    const token = cookieStore.get('session')?.value;
-  
-    if (!token) {
-      if (!noRedirect) redirect('/');
-      return undefined;
-    }
-  
-    const payload = await decrypt(token);
-    if (!payload) {
-      if (!noRedirect) redirect('/');
-      return undefined;
-    }
-  
-    const user = await db.select({
-      id: users.id,
-      username: users.username,
-      email: users.email,
-      level: users.level,
-      group: users.group,
-      balance: users.balance,
-      status: users.status,
-      name: users.name,
-      nickname: users.nickname,
-      point: users.point,
-      exp: users.exp,
-    }).from(users).where(eq(users.id, payload.id)).limit(1);
+  const token = cookieStore.get('session')?.value;
 
-    if (!user[0]) {
-      revalidatePath('/');
-      if (!noRedirect) redirect('/');
-      return undefined;
-    }
-
-    return user[0];
-  } catch (error) {
-    console.error('Error getting user session', error);
-    if (!noRedirect) redirect('/');
+  if (!token) {
+    if (!noRedirect) redirect('/login');
     return undefined;
   }
+
+  const payload = await decrypt(token);
+  if (!payload) {
+    if (!noRedirect) redirect('/login');
+    return undefined;
+  }
+
+  const user = await db.select({
+    id: users.id,
+    username: users.username,
+    email: users.email,
+    phone: users.phone,
+    level: users.level,
+    group: users.group,
+    balance: users.balance,
+    status: users.status,
+    name: users.name,
+    nickname: users.nickname,
+    point: users.point,
+    exp: users.exp,
+  }).from(users).where(eq(users.id, payload.id)).limit(1);
+
+  if (!user[0]) {
+    // revalidatePath('/');
+    if (!noRedirect) redirect('/login');
+    return undefined;
+  }
+
+  return user[0] || undefined;
+}
+
+export async function requireUserSession() {
+  const user = await getUserSession();
+  if (!user) redirect("/login"); // throws on purpose; do not wrap
+  return user;
 }

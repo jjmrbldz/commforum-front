@@ -3,6 +3,12 @@
 import { createHeadlessEditor } from "@lexical/headless";
 import { JSDOM } from "jsdom"
 import { $generateHtmlFromNodes } from "@lexical/html";
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { ParagraphNode, TextNode } from "lexical";
+import { ListItemNode, ListNode } from "@lexical/list";
+import { AutoLinkNode, LinkNode } from "@lexical/link";
+import { ImageNode } from "@/components/editor/nodes/headless/image-node";
+import { YouTubeNode } from "@/components/editor/nodes/headless/youtube-node";
 
 function setupDom() {
   const dom = new JSDOM();
@@ -24,10 +30,20 @@ export async function getHtml(content: string) {
   const html: string = await new Promise(resolve => {
     const editor = createHeadlessEditor({
       namespace: 'Editor',
-      nodes: [],
-      onError: () => {},
-    });
-
+      nodes: [
+        HeadingNode, 
+        ParagraphNode, 
+        TextNode, 
+        QuoteNode, 
+        ListNode,
+        ListItemNode,
+        LinkNode,
+        AutoLinkNode,
+        ImageNode,
+        YouTubeNode
+      ],
+      onError: (err) => {console.error("Headless Editor Error:", err)},
+    });    
     editor.setEditorState(editor.parseEditorState(content));
 
     editor.update(() => {
@@ -38,7 +54,7 @@ export async function getHtml(content: string) {
         
         resolve(_html);
       } catch (e) {
-        console.log(e);
+        console.error("Headless Editor Error:", e)
       }
     });
   });

@@ -136,6 +136,7 @@ export type UserSession = Pick<User,
 "id" |
 "username" |
 "email" |
+"phone" |
 "level" |
 "group" |
 "balance" |

@@ -13,6 +13,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { nodes } from "./nodes"
 import { Plugins } from "./plugins"
 import { FloatingLinkContext } from "@/components/editor/context/floating-link-context"
+import { cn } from "@/lib/utils"
 
 const editorConfig: InitialConfigType = {
   namespace: "Editor",
@@ -28,14 +29,16 @@ export function Editor({
   editorSerializedState,
   onChange,
   onSerializedChange,
+  editable = true,
 }: {
   editorState?: EditorState
   editorSerializedState?: SerializedEditorState
   onChange?: (editorState: EditorState) => void
   onSerializedChange?: (editorSerializedState: SerializedEditorState) => void
+  editable?: boolean
 }) {
   return (
-    <div className="bg-white overflow-hidden rounded-none border border-neutral-200 shadow dark:bg-neutral-950 dark:border-neutral-800">
+    <div className={cn("bg-white overflow-hidden rounded-none border border-neutral-200 shadow dark:bg-neutral-950 dark:border-neutral-800", !editable && "border-0 shadow-none")}>
       <LexicalComposer
         initialConfig={{
           ...editorConfig,
@@ -43,11 +46,12 @@ export function Editor({
           ...(editorSerializedState
             ? { editorState: JSON.stringify(editorSerializedState) }
             : {}),
+            editable: editable
         }}
       >
         <TooltipProvider>
           <FloatingLinkContext>
-            <Plugins />
+            <Plugins editable={editable} />
           </FloatingLinkContext>
 
           <OnChangePlugin

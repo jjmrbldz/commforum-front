@@ -79,10 +79,10 @@ export default function CommentLikeDislike(item: UserCommentData & {categoryId: 
     <>
       <div className="flex items-center gap-[1px] mr-1"> 
         <ThumbsUp 
-          fill={likeDislike === "like" ? "blue" :"none"}
+          fill={user && likeDislike === "like" ? "blue" :"none"}
           className={cn(
             "size-4 cursor-pointer hover:text-blue-500",
-            likeDislike === "like" && "text-white"
+            user && likeDislike === "like" && "text-white"
           )} 
           onClick={() => handleClick("like")} 
         />
@@ -90,10 +90,10 @@ export default function CommentLikeDislike(item: UserCommentData & {categoryId: 
       </div>
       <div className="flex items-center gap-[1px] mr-2">
         <ThumbsDown 
-          fill={likeDislike === "dislike" ? "red" :"none"}
+          fill={user && likeDislike === "dislike" ? "red" :"none"}
           className={cn(
             "size-4 relative -bottom-[2px] cursor-pointer hover:text-red-500",
-            likeDislike === "dislike" && "text-white"
+            user && likeDislike === "dislike" && "text-white"
           )} 
           onClick={() => handleClick("dislike")} 
         />
