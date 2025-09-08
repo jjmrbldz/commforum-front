@@ -1,6 +1,6 @@
 "use server"
 
-import { and, count, desc, eq, inArray, like, SQL } from "drizzle-orm";
+import { and, count, countDistinct, desc, eq, inArray, like, sql, SQL } from "drizzle-orm";
 import { db } from "..";
 import { PostCategory, postTables } from "../schema/posts";
 import { PostData, ServerActionResponse } from "@/types";
@@ -16,6 +16,8 @@ interface FilterData  {
   id?: number;
   logView?: boolean;
   userId?: number;
+  page?: string;
+  limit?: string;
 }
 
 type AllPostFilterData = {
@@ -27,9 +29,9 @@ type AllPostFilterData = {
   limit?: string;
 } | undefined;
 
-export async function getPostsByCategory({category, id, logView, userId}: FilterData): ServerActionResponse<PostData[]> {
+export async function getPostsByCategory({category, id, logView, userId, page, limit}: FilterData): ServerActionResponse<PostData[]> {
   try {
-    
+    console.log("SERVER FILTERS", {category, id, logView, userId, page, limit})
     if (!category) return { ok: false, message: "Choose a category first." };
   
     const filters: SQL[] = [];
@@ -90,7 +92,32 @@ export async function getPostsByCategory({category, id, logView, userId}: Filter
         ...filters
       )
     )
-    .orderBy(desc(postTable.viewCount));
+    .orderBy(desc(postTable.viewCount))
+    .$dynamic();
+    
+    let totalItems: number | undefined = undefined;
+    let totalPages: number | undefined = undefined;
+
+    if (page && limit) {
+      const countRows = await db
+        .select({ count: count() })
+        .from(postTable)
+        .innerJoin(categories, eq(categories.id, postTable.categoryId))
+        .innerJoin(users, eq(users.id, postTable.userId))
+        .where(
+          and(
+            eq(postTable.status, 1),
+            ...filters
+          )
+        );  
+
+      basePostTableRows = basePostTableRows
+      .limit(parseInt(limit))
+      .offset((parseInt(page) - 1) * parseInt(limit));
+
+      totalItems = countRows[0].count;
+      totalPages = Math.max(1, Math.ceil(totalItems / parseInt(limit)));
+    }
 
     if (isLoggedIn && id) {
       basePostTableRows = basePostTableRows.leftJoin(
@@ -114,7 +141,13 @@ export async function getPostsByCategory({category, id, logView, userId}: Filter
 
     if (logView && isLoggedIn && id && process.env.NODE_ENV === "production") await viewPost({userId: user.id, postId: id, category})
   
-    return { ok: true, data: postTableRows, message: "Posts successfully retreived." };
+    return { 
+      ok: true, 
+      data: postTableRows, 
+      totalItems,
+      totalPages,
+      message: "Posts successfully retreived." 
+    };
   } catch (error) {
     console.error(error)
     return { ok: false, message: "Something went wrong" };

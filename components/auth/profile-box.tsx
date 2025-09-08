@@ -26,7 +26,7 @@ export default function ProfileBox() {
         </div>
         <div className="">
           <div className="font-bold text-sm">{user.username}</div>
-          <div className="text-xs">포인트: <NumberFormatter value={user.point} /></div>
+          <div className="text-xs">포인트: <NumberFormatter value={user.balance} /></div>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2 mt-4">

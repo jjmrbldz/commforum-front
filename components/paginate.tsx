@@ -98,7 +98,7 @@ export function Paginate({
               <PaginationEllipsis />
             </PaginationItem>
           )}
-          {page !== totalPages && (
+          {page !== totalPages && !nextDisabled && (
             <PaginationItem>
               <PaginationLink href={buildHref(totalPages)}>
                 {totalPages}
