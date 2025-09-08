@@ -12,7 +12,7 @@ import { PostData, postSchema } from "@/db/validations/posts";
 import { updateInfoSchema, UserInfoData } from "@/db/validations/update-info";
 import { requireUserSession } from "@/lib/session";
 import { randomUUID } from "crypto";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { mkdir, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import path from "path";
@@ -255,6 +255,65 @@ export async function insertPost(payload: PostData) {
     if (e instanceof ZodError) {
       const fieldErrors = z.flattenError(e).fieldErrors;
       return { ok: false, fieldErrors, message: "Post failed to save." } as const;
+    }
+    return { ok: false, message: "Something went wrong." };
+  }
+}
+
+export async function updatePost(payload: PostData) {
+  try {
+    console.log("INSERT POST PAYLOAD", payload)
+    const user = await requireUserSession();
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    const data = postSchema.parse(payload);
+
+    if (!data.id) return { ok: false, message: "Post ID is required." } as const;
+
+    const category = await getCategories({categoryId: parseInt(data.categoryId), hasSession: !!user});
+    
+    if (!category[0]) {
+      return { ok: false, fieldErrors: { category: ["Category not available"] }, message: "Category not available." } as const;
+    }
+    
+    const { id: userId } = user;
+    const { value: categoryValue, id: categoryId } = category[0];
+
+    const posts = postTables[categoryValue];
+
+    await db.transaction(async (tx) => {
+
+      const postUpdate = await tx.update(posts).set({
+        userId,
+        title: data.title,
+        content: data.content,
+        thumbnail: data.thumbnail || null,
+        ...(data.thumbnail ? {thumbnail: data.thumbnail} : {}),
+        ...(data.media ? {media: data.media} : {}),
+        categoryId: parseInt(data.categoryId),
+        updateDatetime: new Date(),
+      })
+      .where(and(
+        eq(posts.id, data.id || 0),
+        eq(posts.categoryId, categoryId),
+        eq(posts.userId, userId),
+      ));
+
+      console.log("POST update:", postUpdate);
+    });
+
+    revalidatePath("/profile/posts/edit");
+    return { ok: true, message: "Post updated successfully." };
+  } catch (e) {
+    console.error(e);
+    if (e instanceof Error) {
+      return { ok: false, message: e.message };
+    }
+    if (e instanceof ZodError) {
+      const fieldErrors = z.flattenError(e).fieldErrors;
+      return { ok: false, fieldErrors, message: "Update failed to save." } as const;
     }
     return { ok: false, message: "Something went wrong." };
   }

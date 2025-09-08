@@ -4,36 +4,47 @@ import { useForm } from "react-hook-form";
 import PostEditor from "../pages/profile/posts/editor";
 import { PostData, postSchema } from "@/db/validations/posts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition } from "react";
+import { useMemo, useTransition } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import ImageUpload from "../image-upload";
 import { Button } from "../ui/button";
 import CategorySelect from "../select/category-select";
-import { insertPost } from "@/app/profile/actions";
+import { insertPost, updatePost } from "@/app/profile/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { PostData as PostDataRes } from "@/types";
+import ImagePreview from "../image-preview";
+import { isValidJSON } from "@/lib/utils";
 
-export default function PostForm() {
+export default function PostForm({data}:{data?: PostDataRes}) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const form = useForm<PostData>({
     resolver: zodResolver(postSchema),
     defaultValues: {
-      title: "",
-      content: "",
+      id: data?.id,
+      title: data?.title || "",
+      content: data?.content || "",
       thumbnail: "",
       media: "",
-      categoryId: "",
+      categoryId: String(data?.categoryId) || "",
     },
     mode: "onBlur",
   })
+  const isEditing = useMemo(() => !!data, [data]);
 
   function onSubmit(data: PostData) {
-    
+    console.log('UPDATE POST PAYLOAD', data);
+    // return;
     if (isPending) return;
     startTransition(async () => {
-      const res = await insertPost(data);
+      let res;
+      if (isEditing) {
+        res = await updatePost(data);
+      } else {
+        res = await insertPost(data);
+      }
       if (!res.ok) {
         if (res.fieldErrors) {
           Object.entries(res.fieldErrors).forEach(([name, message]) => {
@@ -103,6 +114,9 @@ export default function PostForm() {
               </FormItem>
             ))}
           />
+           {isEditing && (
+            <ImagePreview initialValue={data?.thumbnail} />
+          )}
           <FormField
             control={form.control}
             name="content"
@@ -111,6 +125,7 @@ export default function PostForm() {
                 <FormLabel htmlFor="content">콘텐츠</FormLabel>
                 <FormControl>
                   <PostEditor 
+                    initiaValue={isEditing && isValidJSON(data?.content || "") ? JSON.parse(data?.content || "") : undefined}
                     onChange={(val) => {
                       //@ts-ignore
                       const newIsEmpty = val?.toJSON()?.root?.children[0]?.children?.length === 0;
@@ -144,6 +159,9 @@ export default function PostForm() {
               </FormItem>
             ))}
           />
+          {isEditing && (
+            <ImagePreview initialValue={data?.media} />
+          )}
           <Button size={'lg'} className="" type="submit" loading={isPending}>
             <span>Submit</span>
           </Button>

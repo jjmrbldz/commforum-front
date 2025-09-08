@@ -168,6 +168,8 @@ export type ServerActionResponse<T = undefined, F = undefined> = Promise<
       message: string;
       data: T;                    // required on success
       fieldErrors?: undefined;
+      totalItems?: number;
+      totalPages?: number;
     }
   | {
       ok: false;
@@ -197,6 +199,7 @@ export type PostData = {
   authorName: string;
   authorGroup: string | null;
   likeDislikeType?: string | null;
+  status?: number | null;
   regDatetime: Date | null;
   updateDateTime: Date | null;
 }

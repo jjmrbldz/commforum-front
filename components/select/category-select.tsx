@@ -5,11 +5,14 @@ import { PostData } from "@/db/validations/posts"
 import { useSiteDataStore } from "@/store/use-sitedata-store"
 import { useMemo } from "react"
 import { useUserStore } from "@/store/use-user-store"
+import { SearchFormSchema } from "@/types"
 
 export default function CategorySelect({
-  field
+  field,
+  search
 }: {
-  field: ControllerRenderProps<PostData>
+  search?: boolean;
+  field: ControllerRenderProps<any>
 }) {
   const siteData = useSiteDataStore(state => state.siteData);
   const user = useUserStore(state => state.user);
@@ -22,10 +25,14 @@ export default function CategorySelect({
       label: item.title || ""
     })) || [];
 
-    return categories.filter(item => item.allowedUserLevel <= parseInt(user?.level || "1")).map(item => ({
+    const options =  categories.filter(item => item.allowedUserLevel <= parseInt(user?.level || "1")).map(item => ({
       value: String(item.id),
       label: item.titleKr || ""
     })) || [];
+
+    if (search) options.unshift({value: "all", label: "전체"})
+
+    return options;
   }, [siteData, user]);
 
   return (

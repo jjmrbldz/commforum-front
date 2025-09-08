@@ -1,6 +1,6 @@
 "use server"
 
-import { and, desc, eq, inArray, SQL } from "drizzle-orm";
+import { and, count, desc, eq, inArray, like, SQL } from "drizzle-orm";
 import { db } from "..";
 import { PostCategory, postTables } from "../schema/posts";
 import { PostData, ServerActionResponse } from "@/types";
@@ -9,14 +9,25 @@ import { users } from "../schema/user";
 import { getUserSession } from "@/lib/session";
 import { likeDislikeTables } from "../schema/like-dislike";
 import { viewPost } from "./view-post";
+import { MySqlTableWithColumns, unionAll } from "drizzle-orm/mysql-core";
 
 interface FilterData  {
   category: PostCategory;
   id?: number;
   logView?: boolean;
+  userId?: number;
 }
 
-export async function getPostsByCategory({category, id, logView}: FilterData): ServerActionResponse<PostData[]> {
+type AllPostFilterData = {
+  userId?: number;
+  type?: string;
+  category?: string;
+  term?: string;
+  page?: string;
+  limit?: string;
+} | undefined;
+
+export async function getPostsByCategory({category, id, logView, userId}: FilterData): ServerActionResponse<PostData[]> {
   try {
     
     if (!category) return { ok: false, message: "Choose a category first." };
@@ -42,6 +53,8 @@ export async function getPostsByCategory({category, id, logView}: FilterData): S
         filters.push(eq(categories.visibility, "public"));
       }
     }
+
+    if (userId) filters.push(eq(postTable.userId, userId));
   
     let basePostTableRows = db
     .select({
@@ -91,7 +104,7 @@ export async function getPostsByCategory({category, id, logView}: FilterData): S
 
     const postTableRows = await basePostTableRows;
     
-    if (postTableRows.length === 0) return { ok: true, data: postTableRows, message: "No available posts for this category." };
+    if (postTableRows.length === 0) return { ok: true, data: postTableRows, message: "No posts found." };
 
     const isAllowed = isLoggedIn && (parseInt(user.level || "1") >= postTableRows[0].allowedViewLevel)
 
@@ -106,4 +119,122 @@ export async function getPostsByCategory({category, id, logView}: FilterData): S
     console.error(error)
     return { ok: false, message: "Something went wrong" };
   }  
+}
+
+export async function getAllPosts(filter?: AllPostFilterData): ServerActionResponse<PostData[]> {
+
+  try {
+    const filters: SQL[] = [];
+
+    const freeBoardPostTable = postTables['freeboard'];
+    const reviewBoardPostTable = postTables['reviewboard'];
+    const casinoPostTable = postTables['casino'];
+    const slotPostTable = postTables['slot'];
+    const sportsPostTable = postTables['sports'];
+    const minigamesPostTable = postTables['minigames'];
+
+    const postTablesArray = [freeBoardPostTable, reviewBoardPostTable, casinoPostTable, slotPostTable, sportsPostTable, minigamesPostTable];
+
+    const allPostTables = postTablesArray.map((table) => 
+      db.select({
+        id: table.id,
+        title: table.title,
+        content: table.content,
+        thumbnail: table.thumbnail,
+        media: table.media,
+        likeCount: table.likeCount,
+        dislikeCount: table.dislikeCount,
+        commentCount: table.commentCount,
+        postStatus: table.status,
+        viewCount: table.viewCount,
+        authorId: table.userId,
+        categoryId: table.categoryId,
+        regDatetime: table.regDatetime,
+        updateDateTime: table.updateDatetime,
+      })
+      .from(table)
+    );
+
+    // @ts-expect-error — acceptable when spreading into unionAll variadic
+    const unionPosts = unionAll(...allPostTables);
+    const allPosts = db.$with("allPosts").as(unionPosts);
+
+    if (filter?.userId) filters.push(eq(allPosts.authorId, filter?.userId));
+    if (filter?.type === "title" && filter?.term) filters.push(like(allPosts.title, `%${filter.term}%`));
+    if (filter?.type === "content" && filter?.term) filters.push(like(allPosts.content, `%${filter.term}%`));
+    if (filter?.category && filter?.category !== "all" && filter?.term) filters.push(eq(allPosts.categoryId, parseInt(filter?.category)));
+
+    console.log("ALL POST FILTERS", filter)
+
+    let baseAllPostsRows = db.with(allPosts)
+      .select({
+        id: allPosts.id,
+        title: allPosts.title,
+        content: allPosts.content,
+        thumbnail: allPosts.thumbnail,
+        media: allPosts.media,
+        likeCount: allPosts.likeCount,
+        dislikeCount: allPosts.dislikeCount,
+        commentCount: allPosts.commentCount,
+        viewCount: allPosts.viewCount,
+        postStatus: allPosts.postStatus,
+        authorId: allPosts.authorId || 0,
+        authorUsername: users.username,
+        authorName: users.name,
+        authorGroup: users.group,
+        categoryId: allPosts.categoryId,
+        category: categories.value,
+        allowedViewLevel: categories.allowedViewLevel,
+        allowedCommentLevel: categories.allowedUserLevelComment,
+        allowedUserLevel: categories.allowedUserLevel,
+        visibility: categories.visibility,
+        regDatetime: allPosts.regDatetime,
+        updateDateTime: allPosts.updateDateTime,
+      })
+      .from(allPosts)
+      .innerJoin(categories, eq(categories.id, allPosts.categoryId))
+      .innerJoin(users, eq(users.id, allPosts.authorId))
+      .where(and(
+        ...filters
+      ))
+      .orderBy(desc(allPosts.viewCount))
+      .$dynamic();
+
+    let totalItems: number | undefined = undefined;
+    let totalPages: number | undefined = undefined;
+
+    if (filter && filter?.page && filter?.limit) {
+      const limit = parseInt(filter.limit);
+      const page = parseInt(filter.page);
+      const countRows = await db
+      .with(allPosts)
+      .select({ count: count() })
+      .from(allPosts)
+      .where(and(
+        ...filters
+      ));
+
+      baseAllPostsRows = baseAllPostsRows
+      .limit(limit)
+      .offset((page - 1) * limit);
+
+      totalItems = countRows[0].count;
+      totalPages = Math.max(1, Math.ceil(totalItems / limit));
+    }
+
+
+    const allPostsRows = await baseAllPostsRows;
+
+    return { 
+      ok: true, 
+      data: allPostsRows as PostData[], 
+      totalItems,
+      totalPages,
+      message: "Posts successfully retreived." 
+    };
+
+  } catch (error) {
+    console.log(error)
+    return { ok: false, message: "Something went wrong" };
+  }
 }

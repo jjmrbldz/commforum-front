@@ -2,11 +2,14 @@ import * as React from "react"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronsLeft,
+  ChevronsRight,
   MoreHorizontalIcon,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
+import Link from "next/link"
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -49,7 +52,7 @@ function PaginationLink({
   ...props
 }: PaginationLinkProps) {
   return (
-    <a
+    <Link
       aria-current={isActive ? "page" : undefined}
       data-slot="pagination-link"
       data-active={isActive}
@@ -60,11 +63,28 @@ function PaginationLink({
         }),
         className
       )}
+      href={(props.href || "#") as string}
       {...props}
     />
   )
 }
 
+function PaginationFirst({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) {
+  return (
+    <PaginationLink
+      aria-label="Go to first page"
+      size="default"
+      className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
+      {...props}
+    >
+      <ChevronsLeft />
+      <span className="hidden sm:block font-light">First</span>
+    </PaginationLink>
+  )
+}
 function PaginationPrevious({
   className,
   ...props
@@ -77,11 +97,27 @@ function PaginationPrevious({
       {...props}
     >
       <ChevronLeftIcon />
-      <span className="hidden sm:block">Previous</span>
+      <span className="hidden sm:block font-light">Previous</span>
     </PaginationLink>
   )
 }
 
+function PaginationLast({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) {
+  return (
+    <PaginationLink
+      aria-label="Go to last page"
+      size="default"
+      className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
+      {...props}
+    >
+      <span className="hidden sm:block font-light">Last</span>
+      <ChevronsRight />
+    </PaginationLink>
+  )
+}
 function PaginationNext({
   className,
   ...props
@@ -93,7 +129,7 @@ function PaginationNext({
       className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
+      <span className="hidden sm:block font-light">Next</span>
       <ChevronRightIcon />
     </PaginationLink>
   )
@@ -121,7 +157,9 @@ export {
   PaginationContent,
   PaginationLink,
   PaginationItem,
+  PaginationFirst,
   PaginationPrevious,
   PaginationNext,
+  PaginationLast,
   PaginationEllipsis,
 }

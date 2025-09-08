@@ -35,12 +35,13 @@ import { Editor } from "@/components/blocks/editor-00/editor"
 // } as unknown as SerializedEditorState
 
 interface Prop {
-  onChange?: (value: EditorState) => void
+  onChange?: (value: EditorState) => void;
+  initiaValue?: SerializedEditorState;
 }
 
-export default function PostEditor({ onChange }: Prop) {
+export default function PostEditor({ onChange, initiaValue }: Prop) {
   const [editorState, setEditorState] =
-    useState<SerializedEditorState>()
+    useState<SerializedEditorState | undefined>(initiaValue)
 
   return (
     <div>

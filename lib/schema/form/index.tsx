@@ -11,13 +11,14 @@ export const loginFormSchema = z.object({
 })
 
 export const searchFormSchema = z.object({
-  searchType: z.string().min(2, {
+  type: z.string().min(2, {
     error: "Type is required",
   }),
-  searchOperator: z.string().min(2, {
-    error: "AND OR is required",
+  category: z.string().min(1, {
+    error: "Category is required",
   }),
-  searchTerm: z.string().min(2, {
-    error: "검색어는 두글자 이상 입력하십시오.",
-  }),
+  // searchOperator: z.string().min(2, {
+  //   error: "AND OR is required",
+  // }),
+  term: z.string(),
 })

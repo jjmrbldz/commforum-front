@@ -233,8 +233,8 @@ export const serviceMenuList: {
 
 // OPTIONS
 export const searchTypeOptions = [
-  { label: "게시물", value: "post"},
-  { label: "태그", value: "tag"},
+  { label: "제목", value: "title"},
+  { label: "내용", value: "content"},
 ];
 
 export const searchOperatorOptions = [
