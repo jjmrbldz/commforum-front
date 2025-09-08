@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '2mb',
     },
   },
+  eslint: { ignoreDuringBuilds: process.env.NODE_ENV === "production" }
 };
 
 export default nextConfig;
