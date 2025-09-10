@@ -10,7 +10,7 @@ export default async function PostSinglePagePage({title, data}: {title: string, 
     category: data.category,
     postId: data.id,
     level: 1,
-    limit: 10
+    limit: Number(process.env.NEXT_PUBLIC_LIMIT || 20)
   });
 
   return (

@@ -52,7 +52,8 @@ export async function getPostsByCategory({category, id, logView, userId, page, l
       if (id) {
         filters.push(inArray(categories.visibility, ["public", "private"]))
       } else {
-        filters.push(eq(categories.visibility, "public"));
+        // filters.push(eq(categories.visibility, "public"));
+        filters.push(inArray(categories.visibility, ["public", "private"]))
       }
     }
 

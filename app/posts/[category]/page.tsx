@@ -16,7 +16,7 @@ export default async function Page({
   const postRes = await getPostsByCategory({
     category,
     page: "1",
-    limit: "20",
+    limit: process.env.NEXT_PUBLIC_LIMIT || "20",
     ...filters,
   });
 
@@ -24,5 +24,13 @@ export default async function Page({
 
   if (!postRes.ok) return <NotOkMessage message={postRes.message} />;
   
-  return <PostCategoryPage title={category.toUpperCase()} data={postRes.data} totalItems={postRes.totalItems} totalPages={postRes.totalPages} />
+  return (
+    <PostCategoryPage 
+      title={category.toUpperCase()} 
+      data={postRes.data} 
+      totalItems={postRes.totalItems} 
+      totalPages={postRes.totalPages} 
+      category={category}
+    />
+  )
 }

@@ -14,11 +14,11 @@ export default function PageHeader({ title, viewMode, onChangeView }: PageHeader
       <div className="flex items-center space-x-2">
         <div className="w-1.5 h-5 bg-yellow-500 rounded-sm" />
         <h2 className="text-lg font-semibold">{title}</h2>
-        <div className="w-px h-5 bg-gray-300 mx-2" />
+        {/* <div className="w-px h-5 bg-gray-300 mx-2" /> */}
       </div>
       
       {/* Right: View selector */}
-      {onChangeView !== undefined && (
+      {/* {onChangeView !== undefined && (
         <div className="flex space-x-1 bg-gray-100 rounded overflow-hidden">
           <Button
             variant="ghost"
@@ -45,7 +45,7 @@ export default function PageHeader({ title, viewMode, onChangeView }: PageHeader
             <LayoutList className="w-5 h-5" />
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

@@ -1,12 +1,18 @@
+"use client"
+
 import AuthUserButtons from "@/components/auth/auth-user-button";
 import { NumberFormatter } from "@/components/number-formatter";
 import SidebarTitle from "@/components/sidebar-title";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { menuList } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { useSiteDataStore } from "@/store/use-sitedata-store";
 import Link from "next/link";
+import MenuItemSheet from "./menu-item-sheet";
 
 export default function MenuSheet() {
+  const categories = useSiteDataStore(state => state.siteData?.categories);
+
   return (
     <>
       <AuthUserButtons />
@@ -17,33 +23,9 @@ export default function MenuSheet() {
         className="w-full text-xs"
         // defaultValue="item-1"
       >
-        {menuList.map((item, index) => (
-          <AccordionItem
-            key={index}
-            value={item.href}
-          >
-            <AccordionTrigger
-              className={cn("data-[state=open]:text-red-500")}
-            >
-              <Link href={item.href} className="text-xs font-light">
-                {item.title}
-              </Link>
-            </AccordionTrigger>
-            <AccordionContent 
-              className="flex flex-col text-balance"
-            >
-              {item.children && item.children.map((subLink, subIndex) => (
-                <Link 
-                  key={subIndex}
-                  href={subLink.href}
-                  className="text-xs font-light py-2 pl-3 bg-slate-50 border-b border-slate-200 last:border-b-0 hover:text-red-500"
-                >
-                  {subLink.title}
-                </Link>
-              ))}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
+        {menuList.slice(0, 2).map((item, index) => <MenuItemSheet key={index} path={item.href} title={item.title || ""} sublinks={item.children} />)}
+        {categories?.map((item, index) => <MenuItemSheet key={index} path={`/posts/${item.value}`} title={item.titleKr || ""} />)}
+        {menuList.slice(2, 3).map((item, index) => <MenuItemSheet key={index} path={item.href} title={item.title || ""} sublinks={item.children} />)}
       </Accordion>
       <SidebarTitle title="STATS" />
       <div className="text-xs font-light">

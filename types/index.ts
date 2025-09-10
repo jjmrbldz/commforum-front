@@ -118,9 +118,10 @@ export interface WidgetCarouselGalleryProps extends Pick<WidgetProps, "path" | "
 export type ArticleData = {
   id: number;
   title: string;
-  description?: string;
+  description?: string | React.ReactNode;
   author: string;
   date: string;
+  category?: string;
   rating?: number;
   img?: string;
 }
