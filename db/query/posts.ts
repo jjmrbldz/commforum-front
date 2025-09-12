@@ -1,6 +1,6 @@
 "use server"
 
-import { and, count, countDistinct, desc, eq, inArray, like, sql, SQL } from "drizzle-orm";
+import { and, asc, count, countDistinct, desc, eq, inArray, like, sql, SQL } from "drizzle-orm";
 import { db } from "..";
 import { PostCategory, postTables } from "../schema/posts";
 import { PostData, ServerActionResponse } from "@/types";
@@ -27,6 +27,8 @@ type AllPostFilterData = {
   term?: string;
   page?: string;
   limit?: string;
+  orderBy?: "date" | "views"; // date | views
+  sortBy?: "asc" | "desc"; // asc | desc
 } | undefined;
 
 export async function getPostsByCategory({category, id, logView, userId, page, limit}: FilterData): ServerActionResponse<PostData[]> {
@@ -193,12 +195,14 @@ export async function getAllPosts(filter?: AllPostFilterData): ServerActionRespo
     const unionPosts = unionAll(...allPostTables);
     const allPosts = db.$with("allPosts").as(unionPosts);
 
+    let order: SQL = desc(allPosts.viewCount); // default is order by viewCount desc
+
     if (filter?.userId) filters.push(eq(allPosts.authorId, filter?.userId));
     if (filter?.type === "title" && filter?.term) filters.push(like(allPosts.title, `%${filter.term}%`));
     if (filter?.type === "content" && filter?.term) filters.push(like(allPosts.content, `%${filter.term}%`));
     if (filter?.category && filter?.category !== "all" && filter?.term) filters.push(eq(allPosts.categoryId, parseInt(filter?.category)));
-
-    console.log("ALL POST FILTERS", filter)
+    if (filter?.orderBy && filter?.orderBy === "date" && filter?.sortBy === "desc") order = desc(allPosts.regDatetime);
+    if (filter?.orderBy && filter?.orderBy === "date" && filter?.sortBy === "asc") order = asc(allPosts.regDatetime);
 
     let baseAllPostsRows = db.with(allPosts)
       .select({
@@ -231,7 +235,7 @@ export async function getAllPosts(filter?: AllPostFilterData): ServerActionRespo
       .where(and(
         ...filters
       ))
-      .orderBy(desc(allPosts.viewCount))
+      .orderBy(order)
       .$dynamic();
 
     let totalItems: number | undefined = undefined;

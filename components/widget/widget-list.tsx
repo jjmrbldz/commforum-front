@@ -13,7 +13,8 @@ export default function WidgetList({
   showRank,
   showAuthor,
   rankColor,
-  showPoints
+  showPoints,
+  routable,
 }: WidgetListProps) {
   return (
     <div className="">
@@ -37,7 +38,8 @@ export default function WidgetList({
           showRank,
           showAuthor,
           rankColor,
-          showPoints
+          showPoints,
+          routable,
         }} />
       ))}
     </div>

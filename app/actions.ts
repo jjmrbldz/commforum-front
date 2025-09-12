@@ -12,13 +12,48 @@ import z, { ZodError } from "zod";
 import { LoginFormState } from "@/types";
 import getCategories from "@/db/query/categories";
 import getConfig from "@/db/query/config";
+import { getAllPosts } from "@/db/query/posts";
+import { getAllComments } from "@/db/query/comment";
+import { getAllUserBalance } from "@/db/query/user-balance";
 
 export async function getSiteData() {
   try {
     const user = await getUserSession();
     const categories = await getCategories({hasSession: !!user});
     const config = await getConfig();
-    return { categories, config, user };
+    const recentPosts = await getAllPosts({
+      orderBy: "date",
+      sortBy: "desc",
+      page: "1",
+      limit: "20",
+    })
+    const recentComments = await getAllComments({
+      orderBy: "date",
+      sortBy: "desc",
+      page: "1",
+      limit: "20",
+    })
+
+    const topUserBalance = await getAllUserBalance();
+
+    return { 
+      categories, 
+      config, 
+      user, 
+      recentPosts: recentPosts.ok ?
+       recentPosts.data
+       .map((item, index) => ({...item, index})) : 
+       [],
+      recentComments: recentComments.ok ?
+       recentComments.data
+       .map((item, index) => ({...item, index})) : 
+       [],
+      topUserBalance: topUserBalance ?
+       topUserBalance
+       .map((item, index) => ({...item, rank: index + 1})) : 
+       [],
+       
+    };
   } catch (error) {
     console.error("Error fetching site data:", error);
     return undefined;

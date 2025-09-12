@@ -24,6 +24,7 @@ export default function Widget({
   showPoints = false,
   showTitle = true,
   tabNames,
+  routable = true,
 } : WidgetProps) {
   return (
     <div className={cn("max-w-full", rootClassname)}>
@@ -47,6 +48,7 @@ export default function Widget({
           showTitle,
           rankColor,
           showPoints,
+          routable,
           data: chunkData ? 
             Object.fromEntries(
               Object.entries(data).map(([key, value]) => [key, chunkWithRandomPrefixes(
@@ -64,7 +66,8 @@ export default function Widget({
           title,
           data: data as NonWidgetTabProps['data'],
           path,
-          hasContentTitle
+          hasContentTitle,
+          routable
         }} />
       )}
 
@@ -85,6 +88,7 @@ export default function Widget({
           loop,
           showAuthor,
           showTitle,
+          routable,
           data: chunkData ? 
             chunkWithRandomPrefixes(
               data as NonWidgetTabProps['data'], 

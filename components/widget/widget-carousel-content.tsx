@@ -18,7 +18,8 @@ export default function WidgetCarouselContent({
   hasContentTitle,
   showAuthor,
   rankColor,
-  showPoints
+  showPoints,
+  routable,
 } : WidgetCarouselProps) {
   return data && data.length > 0 ? (
     <CarouselContent className="min-h-[100px]">
@@ -36,6 +37,7 @@ export default function WidgetCarouselContent({
               showAuthor,
               rankColor,
               showPoints,
+              routable,
             }} />
           )}
 

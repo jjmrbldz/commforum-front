@@ -3,6 +3,16 @@ import { clsx, type ClassValue } from "clsx"
 import dayjs from "dayjs";
 import DOMPurify from "dompurify";
 import { twMerge } from "tailwind-merge"
+import {
+  $createParagraphNode,
+  $createTextNode,
+  $getRoot,
+  EditorState,
+  ParagraphNode,
+  TextNode,
+} from "lexical";
+import { createHeadlessEditor } from "@lexical/headless";
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -147,4 +157,54 @@ export function buildCommentTree(
   sortChildrenAsc(roots);
   // return roots.sort((a, b) => toMillis(a.regDatetime) - toMillis(b.regDatetime));
   return roots;
+}
+
+/**
+ * Convert a Lexical JSON string to plain text.
+ * - Works without a DOM (uses @lexical/headless).
+ * - Safely handles invalid JSON.
+ * - Ensures a paragraph exists if the editor state is empty.
+ * - Trims and slices to `max` characters.
+ */
+export function lexicalToPlainText(content: string, max = 160): string {
+  const editor = createHeadlessEditor({
+    namespace: "Editor",
+    nodes: [HeadingNode, ParagraphNode, TextNode, QuoteNode],
+    onError: () => {},
+  });
+
+  let parsed: EditorState | null = null;
+
+  try {
+    parsed = editor.parseEditorState(content);
+  } catch {
+    parsed = null;
+  }
+
+  if (parsed) {
+    const isEmpty = parsed.read(() => $getRoot().getChildrenSize() === 0);
+
+    if (isEmpty) {
+      editor.update(() => {
+        const root = $getRoot();
+        const p = $createParagraphNode();
+        root.append(p);
+      });
+    } else {
+      editor.setEditorState(parsed);
+    }
+  } else {
+    // Fallback to an empty paragraph
+    editor.update(() => {
+      const root = $getRoot();
+      root.clear();
+      const p = $createParagraphNode();
+      p.append($createTextNode(""));
+      root.append(p);
+    });
+  }
+
+  const text = editor.read(() => $getRoot().getTextContent());
+  // Normalize whitespace and clamp length
+  return text.replace(/\s+/g, " ").trim().slice(0, max);
 }

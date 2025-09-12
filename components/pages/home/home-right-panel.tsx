@@ -1,10 +1,15 @@
+"use client"
+
 import AdBoxImage from "@/components/ads/adbox-img";
 import AuthBox from "@/components/auth/auth-box";
 import Widget from "@/components/widget/widget";
 import { articleWidget, freeBoard, noticeFreeBoard, pointsTab } from "@/lib/constants";
+import { useSiteDataStore } from "@/store/use-sitedata-store";
 
 
 export default function HomeRightPanel() {
+  const siteData = useSiteDataStore(state => state.siteData);
+
   return (
     <div className="hidden md:block col-span-3 py-4">
       <AuthBox />
@@ -58,11 +63,12 @@ export default function HomeRightPanel() {
       }} />
       <Widget {...{
         title: "최근글",
-        data: freeBoard,
-        path: '/board', 
+        data: siteData?.recentPosts || [],
+        path: '/posts', 
         rootClassname: 'my-4',
         carouselSize: 1,
-      }} />            
+        showAuthor: true
+      }} />           
       {/* <Widget {...{
         title: "댓글",
         data: topComments,
@@ -75,7 +81,11 @@ export default function HomeRightPanel() {
       <Widget {...{
         layout: 'tab',
         tabNames: pointsTab.tabNames,
-        data: pointsTab.data,
+        data: {
+          tab1: siteData?.topUserBalance || [],
+          tab2: pointsTab.data.tab2,
+        },
+        routable: false,
         path: '/board', 
         rootClassname: '',
         carouselSize: 1,

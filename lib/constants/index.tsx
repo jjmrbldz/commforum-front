@@ -1,3 +1,5 @@
+import { TopUserPointsData } from "@/types";
+
 export const koreanWeekdays = ['일', '월', '화', '수', '목', '금', '토'];
 
 // MENU
@@ -253,8 +255,8 @@ export const categoryTypeOptions = [
 
 // SAMPLE DATA
 export const articleWidget = [
-  { "id": 1, "rank": 1, "title": "NORWAY 8K", "description": "크라우드 펀딩은 자금의 모집자와 제공자간 거래가 온라인상에서 소셜미디어에 의한 쌍방향 소통을 바탕으로 한 관계 지향적이고 …", "author": "겨울비", "date": "2022-03-22", "img": "/images/article-img1.jpg" },
-  { "id": 2, "rank": 2, "title": "NORWAY 8K", "description": "크라우드 펀딩은 자금의 모집자와 제공자간 거래가 온라인상에서 소셜미디어에 의한 쌍방향 소통을 바탕으로 한 관계 지향적이고 …", "author": "겨울비", "date": "2022-03-22", "img": "/images/article-img1.jpg" },
+  { "id": 1, "rank": 1, "title": "NORWAY 8K", "description": "크라우드 펀딩은 자금의 모집자와 제공자간 거래가 온라인상에서 소셜미디어에 의한 쌍방향 소통을 바탕으로 한 관계 지향적이고 …", "author": "겨울비", "date": "2022-03-22", "img": "article-img1.jpg" },
+  { "id": 2, "rank": 2, "title": "NORWAY 8K", "description": "크라우드 펀딩은 자금의 모집자와 제공자간 거래가 온라인상에서 소셜미디어에 의한 쌍방향 소통을 바탕으로 한 관계 지향적이고 …", "author": "겨울비", "date": "2022-03-22", "img": "article-img1.jpg" },
 ];
 
 export const freeBoard = [
@@ -389,5 +391,5 @@ export const pointsTab = {
       { "rank": 19, "name": "훌안한탱자", "points": 0 },
       { "rank": 20, "name": "마르마크", "points": 0 }
     ]
-  }
+  } as Record<string, TopUserPointsData[]>
 }

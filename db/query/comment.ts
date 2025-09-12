@@ -7,7 +7,7 @@ import { ExpLogGroup, expLogTables } from "../schema/exp-log";
 import { balanceLogTables } from "../schema/balance-log";
 import { getUserExpLevel } from "./user-level-exp";
 import { db } from "..";
-import { and, asc, desc, eq, SQL, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, SQL, sql } from "drizzle-orm";
 import z, { ZodError } from "zod";
 import { revalidatePath } from "next/cache";
 import { commentTables } from "../schema/comment";
@@ -15,8 +15,9 @@ import { users } from "../schema/user";
 import { getLevelSettings } from "./level";
 import { getUserBalance } from "./user-balance";
 import { PostCategory, postTables } from "../schema/posts";
-import { UserCommentData } from "@/types";
+import { ServerActionResponse, UserCommentData } from "@/types";
 import { commentLikeDislikeTables } from "../schema/comment-like-dislike";
+import { unionAll } from "drizzle-orm/mysql-core";
 
 interface FilterData  {
   category: PostCategory;
@@ -26,6 +27,13 @@ interface FilterData  {
   sort?: "asc" | "desc";
   limit?: number;
 }
+
+type AllPostFilterData = {
+  page?: string;
+  limit?: string;
+  orderBy?: "date" | "views"; // date | views
+  sortBy?: "asc" | "desc"; // asc | desc
+} | undefined;
 
 function getLuckyPoints(luckyChance: number, luckyPoints: number): number {
   const roll = Math.random() * 100; 
@@ -342,5 +350,118 @@ export async function getComments({category, postId, commentId, level, sort = "d
   } catch (error) {
     console.error("Error getting comments:", error);
     return [];
+  }
+}
+
+export async function getAllComments(filter?: AllPostFilterData): ServerActionResponse<UserCommentData[]>  {
+
+  try {
+    const filters: SQL[] = [];
+
+    const freeBoardCommentTable = commentTables['freeboard'];
+    const reviewBoardCommentTable = commentTables['reviewboard'];
+    const casinoCommentTable = commentTables['casino'];
+    const slotCommentTable = commentTables['slot'];
+    const sportsCommentTable = commentTables['sports'];
+    const minigamesCommentTable = commentTables['minigames'];
+
+    const commentTablesArray = [
+      { table: freeBoardCommentTable, category: "freeboard" },
+      { table: reviewBoardCommentTable, category: "reviewboard" },
+      { table: casinoCommentTable, category: "casino" },
+      { table: slotCommentTable, category: "slot" },
+      { table: sportsCommentTable, category: "sports" },
+      { table: minigamesCommentTable, category: "minigames" },
+    ];
+
+    const allCommentTables = commentTablesArray.map(({ table, category }) =>
+      db
+        .select({
+          id: table.id,
+          postId: table.postId,
+          replyCount: table.replyCount,
+          commentId: table.commentId,
+          level: table.level,
+          content: table.content,
+          like: table.like,
+          dislike: table.dislike,
+          userId: table.userId,
+          regDatetime: table.regDatetime,
+          updateDateTime: table.updateDatetime,
+          category: sql<string>`${category}`.as("category"),
+        })
+        .from(table)
+    );
+
+    // @ts-expect-error — acceptable when spreading into unionAll variadic
+    const unionComments = unionAll(...allCommentTables);
+    const allComments = db.$with("allComments").as(unionComments);
+
+    let order: SQL = desc(allComments.like); // default is order by viewCount desc
+
+    
+    if (filter?.orderBy && filter?.orderBy === "date" && filter?.sortBy === "desc") order = desc(allComments.regDatetime);
+    if (filter?.orderBy && filter?.orderBy === "date" && filter?.sortBy === "asc") order = asc(allComments.regDatetime);
+
+    let baseAllCommentsRows = db.with(allComments)
+      .select({
+        id: allComments.id,
+        postId: allComments.postId,
+        content: allComments.content,
+        replyCount: allComments.replyCount,
+        commentId: allComments.commentId,
+        level: allComments.level,
+        like: allComments.like,
+        dislike: allComments.dislike,
+        userId: allComments.userId || 0,
+        username: users.username,
+        name: users.name,
+        regDatetime: allComments.regDatetime,
+        updateDateTime: allComments.updateDateTime,
+        category: allComments.category,
+      })
+      .from(allComments)
+      .innerJoin(users, eq(users.id, allComments.userId))
+      .where(and(
+        ...filters
+      ))
+      .orderBy(order)
+      .$dynamic();
+
+    let totalItems: number | undefined = undefined;
+    let totalPages: number | undefined = undefined;
+
+    if (filter && filter?.page && filter?.limit) {
+      const limit = parseInt(filter.limit);
+      const page = parseInt(filter.page);
+      const countRows = await db
+      .with(allComments)
+      .select({ count: count() })
+      .from(allComments)
+      .where(and(
+        ...filters
+      ));
+
+      baseAllCommentsRows = baseAllCommentsRows
+      .limit(limit)
+      .offset((page - 1) * limit);
+
+      totalItems = countRows[0].count;
+      totalPages = Math.max(1, Math.ceil(totalItems / limit));
+    }
+
+    const allCommentsRows = await baseAllCommentsRows;
+
+    return { 
+      ok: true, 
+      data: allCommentsRows as UserCommentData[], 
+      totalItems,
+      totalPages,
+      message: "Posts successfully retreived." 
+    };
+
+  } catch (error) {
+    console.log(error)
+    return { ok: false, message: "Something went wrong" };
   }
 }

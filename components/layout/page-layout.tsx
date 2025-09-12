@@ -1,3 +1,5 @@
+"use client"
+
 import LeftPanel from "@/components/pages/board/left-panel";
 import { PagePanelProps } from "@/types";
 

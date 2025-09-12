@@ -49,6 +49,7 @@ export type CommonWidgetProps = {
   loop?: boolean;
   /** Whether to show points of data entry */
   showPoints?: boolean;
+  routable?: boolean;
 }
 
 export type NonWidgetTabProps = CommonWidgetProps & {
@@ -73,19 +74,25 @@ export type WidgetTabProps = CommonWidgetProps & {
 export type WidgetProps = NonWidgetTabProps  | WidgetTabProps;
 
 export type WidgetCarouselProps = Omit<WidgetProps, "title" | "rootClassname" | "loop"> & { data: any[] };
-export type WidgetListProps = Pick<WidgetCarouselProps, "data" | "path" | "hasItemPrefix" | "dataLimitPerList" | "isReviews" | "addCategory" | "showRank" | "showAuthor" | "rankColor" | "showPoints">;
+export type WidgetListProps = Pick<WidgetCarouselProps, "data" | "path" | "hasItemPrefix" | "dataLimitPerList" | "isReviews" | "addCategory" | "showRank" | "showAuthor" | "rankColor" | "showPoints" | "routable">;
 export type WidgetItemPrefixProps = Pick<WidgetCarouselProps, "data" | "path" | "isReviews" | "showRank">;
 
-export interface WidgetItemProps extends Pick<WidgetCarouselProps, "path" | "isReviews" | "addCategory" | "showRank" | "showAuthor" | "rankColor" | "showPoints"> {
+export interface WidgetItemProps extends Pick<WidgetCarouselProps, "path" | "isReviews" | "addCategory" | "showRank" | "showAuthor" | "rankColor" | "showPoints" | "routable"> {
   item: {
+    postId: string | number;
     id: string | number;
     rank: number;
+    index: number;
     points: number;
     title: string;
+    content: string;
     date: string;
     reviews: number;
     category: string;
     author: string;
+    regDatetime: string;
+    username: string;
+    authorUsername: string;
     name: string;
   }
 }
@@ -217,7 +224,14 @@ export type UserCommentData = {
   like: number | null;
   dislike: number | null;
   username: string;
+  category?: string;
   name: string;
   likeDislikeType?: string | null;
   children?: UserCommentData[];
+}
+
+export type TopUserPointsData = {
+  rank: number;
+  points: number | null;
+  name: string;
 }
