@@ -15,6 +15,8 @@ import getConfig from "@/db/query/config";
 import { getAllPosts } from "@/db/query/posts";
 import { getAllComments } from "@/db/query/comment";
 import { getAllUserBalance } from "@/db/query/user-balance";
+import { Groups } from "@/db/schema/user-group";
+import { getUserAgentInfo } from "@/lib/helpers/user-agent";
 
 export async function getSiteData() {
   try {
@@ -80,17 +82,19 @@ export async function loginAction(payload: LoginData): Promise<LoginFormState> {
       return { ok: false, fieldErrors: { password: ["Password incorrect"] }, message: "Login failed." } as const;
     }
 
-    if (user[0].status !== "1") {
+    if (user[0].status !== 1) {
       return { ok: false, message: "You account is inactive." } as const;
     }
 
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const group = user[0].group as Groups;
 
     await createSession({
       id: user[0].id,
       username: user[0].username,
       level: user[0].level ?? "1",
-      expiresAt
+      expiresAt,
+      group
     });
 
     revalidatePath("/");

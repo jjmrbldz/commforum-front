@@ -43,7 +43,7 @@ export default async function registerAction(payload: RegisterData) {
         referralUsername: data.referralUsername ?? null,
         emailOptin: data.emailOptin,
         level: String(defaultSignupLevel),
-        status: "1",
+        status: 1,
         regDatetime: new Date().toISOString(),
         regIp: ip,
         group: randUserGroup,

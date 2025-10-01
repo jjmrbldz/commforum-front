@@ -8,6 +8,8 @@ import { cookies, headers } from "next/headers";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { loginLogTables } from "@/db/schema/login-log";
+import { getUserAgentInfo } from "./helpers/user-agent";
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey)
@@ -32,19 +34,42 @@ export async function decrypt(session: string | undefined = '') {
   }
 }
 
-export async function createSession({ id, username, level, expiresAt }: SessionPayload) {
+export async function createSession({ id, username, level, expiresAt, group }: SessionPayload) {
   const session = await encrypt({ id, username, level, expiresAt })
-  const ip = (await headers()).get("x-forwarded-for");
+  // const ip = (await headers()).get("x-forwarded-for");
   const cookieStore = await cookies();
+
+  const loginLogs = loginLogTables[group!];
+
+  const uaInfo = await getUserAgentInfo();
+
+  await db.transaction(async (tx) => {
+
+    await tx
+      .update(users)
+      .set({
+        token: session,
+        lastLoginIp: uaInfo.ip,
+        lastLogin: new Date()
+      })
+      .where(eq(users.id, id));
+
+    await tx
+      .insert(loginLogs)
+      .values({
+        userId: id,
+        ip: uaInfo.ip,
+        browser: uaInfo.browser,
+        os: uaInfo.os,
+        device: uaInfo.device,
+        time: uaInfo.time,
+        dayOfWeek: uaInfo.dayOfWeek,
+        day: uaInfo.day,
+        month: uaInfo.month,
+        year: uaInfo.year
+      })
+  })
  
-  await db
-    .update(users)
-    .set({
-      token: session,
-      lastLoginIp: ip,
-      lastLogin: new Date().toISOString()
-    })
-    .where(eq(users.id, id));
 
   cookieStore.set('session', session, {
     httpOnly: true,
