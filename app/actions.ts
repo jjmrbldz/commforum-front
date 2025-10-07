@@ -5,7 +5,7 @@ import { users } from "@/db/schema/user";
 import { LoginData, loginSchema } from "@/db/validations/login";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
-import { createSession, getUserSession } from "@/lib/session";
+import { createSession, getCookieData, getUserSession } from "@/lib/session";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import z, { ZodError } from "zod";

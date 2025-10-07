@@ -5,9 +5,9 @@ import { useEffect, useMemo, useState } from "react";
 import { nodes } from "./blocks/editor-00/nodes";
 import { Editor } from "./blocks/editor-00/editor";
 
-type Props = { content: string; className?: string };
+type Props = { content: string; className?: string; rootClassname?: string; };
 
-export default function ReadOnlyContent({ content, className = "" }: Props) {
+export default function ReadOnlyContent({ content, className = "", rootClassname = "" }: Props) {
   const editor = useMemo(
     () =>
       createEditor({
@@ -59,5 +59,5 @@ export default function ReadOnlyContent({ content, className = "" }: Props) {
     };
   }, [content, editor]);
 
-  return editorState && <Editor editorState={editorState} editable={false} />
+  return editorState && <Editor rootClassname={rootClassname} className={className} editorState={editorState} editable={false} />
 }

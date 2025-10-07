@@ -37,7 +37,7 @@ import { InsertEmbeds } from "@/components/editor/plugins/toolbar/block-insert/i
 import { AutoEmbedPlugin } from "@/components/editor/plugins/embeds/auto-embed-plugin"
 import { YouTubePlugin } from "@/components/editor/plugins/embeds/youtube-plugin"
 
-export function Plugins({editable = true}:{editable?: boolean}) {
+export function Plugins({editable = true, className = ""}:{editable?: boolean; className?: string}) {
   const [floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null)
 
@@ -90,7 +90,7 @@ export function Plugins({editable = true}:{editable?: boolean}) {
           contentEditable={
             <div className="">
               <div className="" ref={onRef}>
-                <ContentEditable placeholder={"입력 시작..."} />
+                <ContentEditable className={className} placeholder={"입력 시작..."} />
               </div>
             </div>
           }

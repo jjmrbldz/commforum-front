@@ -10,6 +10,8 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { loginLogTables } from "@/db/schema/login-log";
 import { getUserAgentInfo } from "./helpers/user-agent";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey)
@@ -80,11 +82,22 @@ export async function createSession({ id, username, level, expiresAt, group }: S
   });
 }
 
+export async function getCookieData(): Promise<RequestCookie[]> {
+  const cookieStore = await cookies()
+  const cookieData = cookieStore.getAll()
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      resolve(cookieData)
+    }, 1000)
+  )
+}
+
 export async function getUserSession() {
   
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('session')?.value;
+    const cookieStore = await getCookieData();
+    
+    const token = cookieStore.find(item => item.name === "session")?.value;
     
     if (!token) {
       // if (!noRedirect) redirect('/login');

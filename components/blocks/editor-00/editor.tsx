@@ -30,15 +30,19 @@ export function Editor({
   onChange,
   onSerializedChange,
   editable = true,
+  className = "",
+  rootClassname = "",
 }: {
   editorState?: EditorState
   editorSerializedState?: SerializedEditorState
   onChange?: (editorState: EditorState) => void
   onSerializedChange?: (editorSerializedState: SerializedEditorState) => void
-  editable?: boolean
+  editable?: boolean;
+  className?: string;
+  rootClassname?: string;
 }) {
   return (
-    <div className={cn("bg-white overflow-hidden rounded-none border border-neutral-200 shadow dark:bg-neutral-950 dark:border-neutral-800", !editable && "border-0 shadow-none")}>
+    <div className={cn("bg-white overflow-hidden rounded-none border border-neutral-200 shadow dark:bg-neutral-950 dark:border-neutral-800", !editable && "border-0 shadow-none", rootClassname)}>
       <LexicalComposer
         initialConfig={{
           ...editorConfig,
@@ -51,7 +55,7 @@ export function Editor({
       >
         <TooltipProvider>
           <FloatingLinkContext>
-            <Plugins editable={editable} />
+            <Plugins className={className} editable={editable} />
           </FloatingLinkContext>
 
           <OnChangePlugin
