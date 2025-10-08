@@ -16,6 +16,7 @@ export default function InquiryList({data}: {data: UserInquiry<"A">[]}) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("MESSAGES", data)
     const timer = setTimeout(() => {
       const el = scrollRef.current;
       if (el && !loading) el.scrollTop = el.scrollHeight;
@@ -31,16 +32,16 @@ export default function InquiryList({data}: {data: UserInquiry<"A">[]}) {
       <Loader className="animate-spin flex m-auto" />
     ) : (
 
-      <div key={data?.length} ref={scrollRef} className="flex flex-col gap-3 max-h-[400px] overflow-y-auto">
+      <div ref={scrollRef} className="flex flex-col gap-3 max-h-[400px] overflow-y-auto">
         {data?.map(item => (
           <div 
-          key={item.id}
+            key={item.id}
             className={cn(
               "flex flex-col", 
               item.sender === "user" ? "ml-auto items-end" : "mr-auto"
             )} 
           >
-            {isValidJSON(item.attachment!) && (
+            {item.attachment && isValidJSON(item.attachment) && (
               <div className="p-1">
                 <ImagePreview initialValue={item.attachment} />
               </div>
@@ -78,8 +79,7 @@ export default function InquiryList({data}: {data: UserInquiry<"A">[]}) {
               <span className="text-slate-400">{formatDate(item.regDatetime!)}</span>
             </div>
           </div>
-        )).reverse()}
-        <div className=""></div>
+        ))}
       </div>
     )
   )

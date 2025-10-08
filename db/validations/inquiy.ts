@@ -10,7 +10,7 @@ const baseInquirySchema = createInsertSchema(inquiryTables.A, {
 
 export const inquirySchema = baseInquirySchema.omit({
   userId: true,
-  partnerId: true,
+  // partnerId: true,
   regDatetime: true,
   userIsRead: true,
   partnerIsRead: true,

@@ -30,7 +30,7 @@ export async function insertInquiry(payload: InquiryData) {
         userId,
         content: data.content,
         attachment: data.attachment || "",
-        partnerId: 1,
+        partnerId: data.partnerId,
         regDatetime: new Date(),
         userLastReadDatetime: new Date(),
         userIsRead: 1,
@@ -67,7 +67,7 @@ export async function getInquiries(): ServerActionResponse<UserInquiry<"A">[]> {
     const result = await db.select()
       .from(inquiries)
       .where(eq(inquiries.userId, userId))
-      .orderBy(desc(inquiries.regDatetime))
+      .orderBy(desc(inquiries.id))
       .limit(100);
 
     if (result.length === 0) return { ok: true, data: result, message: "No inquiries found." };
@@ -78,8 +78,8 @@ export async function getInquiries(): ServerActionResponse<UserInquiry<"A">[]> {
       message: "Inquiries retreived." 
     };
 
-  } catch (error) {
+  } catch (error: any) {
     console.error(error)
-    return { ok: false, message: "Something went wrong" };
+    return { ok: false, message: error?.message || "Something went wrong" };
   }
 }

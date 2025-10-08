@@ -9,11 +9,11 @@ export default async function InquiryPage() {
   const res = await getInquiries();
 
   if (!res.ok) return <NotOkMessage message={res.message} />  
-
+  
   return (
     <div className="space-y-4">
       <InquiryList data={res.data}  />
-      <InquiryForm />
+      <InquiryForm list={res.data} />
     </div>
   )
 }

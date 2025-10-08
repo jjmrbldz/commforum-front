@@ -19,16 +19,22 @@ import { isValidJSON } from "@/lib/utils";
 import { InquiryData, inquirySchema } from "@/db/validations/inquiy";
 import { insertInquiry } from "@/app/inquiry/actions";
 
-export default function InquiryForm({data}:{data?: PostDataRes}) {
+export default function InquiryForm({list}:{list?: InquiryData[]}) {
   const [isPending, startTransition] = useTransition();
   const form = useForm<InquiryData>({
     resolver: zodResolver(inquirySchema),
     defaultValues: {
-      content: data?.content || "",
+      content: undefined,
       attachment: null,
     },
     mode: "onBlur",
   })
+
+  const partnerId = useMemo(() => {
+    if (list && list.length > 0) {
+      return list.reverse().find(item => item.sender === "admin")?.partnerId
+    }
+  }, [list])
 
   function onSubmit(data: InquiryData) {
     console.log('UPDATE POST PAYLOAD', data);
@@ -59,8 +65,10 @@ export default function InquiryForm({data}:{data?: PostDataRes}) {
   }
 
   useEffect(() => {
-    console.log(form.watch())
-  }, [form])
+    if (list && list.length > 0) {
+      form.setValue("partnerId", list.reverse().find(item => item.sender === "admin")?.partnerId) 
+    }
+  }, [list]);
 
   return (
     <Form {...form}>
