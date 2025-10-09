@@ -18,8 +18,11 @@ import ImagePreview from "../image-preview";
 import { isValidJSON } from "@/lib/utils";
 import { InquiryData, inquirySchema } from "@/db/validations/inquiy";
 import { insertInquiry } from "@/app/inquiry/actions";
+import { useSiteDataStore } from "@/store/use-sitedata-store";
+import NotOkMessage from "../not-ok-message";
 
 export default function InquiryForm({list}:{list?: InquiryData[]}) {
+  const siteData = useSiteDataStore(state => state.siteData);
   const [isPending, startTransition] = useTransition();
   const form = useForm<InquiryData>({
     resolver: zodResolver(inquirySchema),
@@ -30,47 +33,37 @@ export default function InquiryForm({list}:{list?: InquiryData[]}) {
     mode: "onBlur",
   })
 
-  const partnerId = useMemo(() => {
-    if (list && list.length > 0) {
-      return list.reverse().find(item => item.sender === "admin")?.partnerId
-    }
-  }, [list])
-
   function onSubmit(data: InquiryData) {
     console.log('UPDATE POST PAYLOAD', data);
-    // return;
     if (isPending) return;
     startTransition(async () => {
-      // let res;
-      // if (isEditing) {
-      //   res = await updatePost(data);
-      // } else {
-      //   res = await insertPost(data);
-      // }
       const res = await insertInquiry(data);
       if (!res.ok) {
         if (res.fieldErrors) {
           Object.entries(res.fieldErrors).forEach(([name, message]) => {
             form.setError(name as keyof InquiryData, { message: (message as string[])[0] });
           });
-          form.reset();
+          // form.reset();
         } else {
           toast.error(res.message);
         }
         return;
       }
       // router.push("/profile/posts");
+      form.reset();
       toast.success(res.message);
     });
   }
 
   useEffect(() => {
     if (list && list.length > 0) {
-      form.setValue("partnerId", list.reverse().find(item => item.sender === "admin")?.partnerId) 
+      form.setValue("partnerId", list.find(item => item.sender === "admin")?.partnerId) 
     }
   }, [list]);
 
-  return (
+  return siteData?.config?.inquiryOnOff === 0 ? (
+    <NotOkMessage message="Inquiry is not available as of the moment." title="" variant={"info"}  />
+  ) : (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)} 

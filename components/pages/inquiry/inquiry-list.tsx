@@ -27,9 +27,13 @@ export default function InquiryList({data}: {data: UserInquiry<"A">[]}) {
   }, [loading, data.length]);
 
   return data.length === 0 ? (
-    <NotOkMessage variant={"warn"} message="No inquiries found." />
+    <div className="min-h-[400px]">
+      <NotOkMessage variant={"warn"} message="No inquiries found." />
+    </div>
   ) : ( loading ? (
-      <Loader className="animate-spin flex m-auto" />
+      <div className="min-h-[400px] flex justify-center items-center">
+        <Loader className="animate-spin m-auto" />
+      </div>
     ) : (
 
       <div ref={scrollRef} className="flex flex-col gap-3 max-h-[400px] overflow-y-auto">
