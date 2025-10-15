@@ -1,5 +1,4 @@
 import WidgetTitle from "@/components/widget/widget-title";
-import WideBanner from "./wide-banner";
 import Article from "@/components/article/article";
 import SidebarTitle from "@/components/sidebar-title";
 import { NumberFormatter } from "@/components/number-formatter";
@@ -8,9 +7,9 @@ import { NumberFormatter } from "@/components/number-formatter";
 export default function BottomSection() {
   return (
     <>
-      <div className="">
+      {/* <div className="">
         <WideBanner />
-      </div>
+      </div> */}
       <div className="max-w-7xl m-auto">
         <div className="grid md:grid-cols-12 gap-4 p-4 md:p-0">
           <div className="col-span-12 md:col-span-9 py-4">

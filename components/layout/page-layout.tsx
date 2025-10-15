@@ -3,7 +3,7 @@
 import LeftPanel from "@/components/pages/board/left-panel";
 import { PagePanelProps } from "@/types";
 
-export default function PageLayout({ isPanelLeft = true, children }: PagePanelProps) {
+export default function PageLayout({ isPanelLeft = false, children }: PagePanelProps) {
   return (
     <div className="max-w-7xl m-auto">
       <div className="grid grid-cols-1 md:grid-cols-12 p-4 md:p-0 gap-4">

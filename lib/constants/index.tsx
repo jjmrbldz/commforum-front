@@ -14,186 +14,275 @@ export const menuList: {
     href: string;
   }[];
 }[] = [
-  {
-    title: "HOME",
-    href: "/",
-  },
-  {
-    title: "타짜365",
-    href: "/tazza",
-  },
   // {
-  //   title: "보증사이트",
-  //   href: "/verified",
-  // },
-  // {
-  //   title: "미니게임",
-  //   href: "/minigame",
-  // },
-  // {
-  //   title: "연예",
-  //   href: "/entertainment",
-  // },
-  // {
-  //   title: "스포츠",
-  //   href: "/sports",
-  // },
-  // {
-  //   title: "위너브라더",
-  //   href: "/board/notice",
-  //   triggerClassName: "hover:!bg-blue-500",
-  //   contentClassname: "min-w-[170px] !border-t-3 border-blue-500",
-  //   linkClassName: "hover:!bg-blue-500 hover:!text-white hover:!font-bold",
+  //   title: "타짜 365", // (Tazza 365)
+  //   href: "/",
   //   children: [
   //     {
-  //       title: "위너공지사항",
-  //       href: "/board/notice?subcategory=winner",
+  //       title: "타짜 공지사항", // (Tazza Announcements)
+  //       href: "/tazza/announcements",
   //     },
   //   ]
   // },
-  // {
-  //   title: "보증 사이트",
-  //   href: "/board/warranty1",
-  //   triggerClassName: "hover:!bg-red-500",
-  //   contentClassname: "min-w-[170px] border-t-3 border-red-500",
-  //   linkClassName: "hover:!bg-red-500 hover:!text-white hover:!font-bold",
-  //   children: [
-  //     {
-  //       title: "보증 바카라 카지노",
-  //       href: "/board/warranty1",
-  //     },
-  //     {
-  //       title: "보증 슬롯 카지노",
-  //       href: "/board/warranty2",
-  //     },
-  //   ]
-  // },
+  // // {
+  // //   title: "보증사이트",
+  // //   href: "/verified",
+  // // },
+  // // {
+  // //   title: "미니게임",
+  // //   href: "/minigame",
+  // // },
+  // // {
+  // //   title: "연예",
+  // //   href: "/entertainment",
+  // // },
+  // // {
+  // //   title: "스포츠",
+  // //   href: "/sports",
+  // // },
+  // // {
+  // //   title: "위너브라더",
+  // //   href: "/board/notice",
+  // //   triggerClassName: "hover:!bg-blue-500",
+  // //   contentClassname: "min-w-[170px] !border-t-3 border-blue-500",
+  // //   linkClassName: "hover:!bg-blue-500 hover:!text-white hover:!font-bold",
+  // //   children: [
+  // //     {
+  // //       title: "위너공지사항",
+  // //       href: "/board/notice?subcategory=winner",
+  // //     },
+  // //   ]
+  // // },
+  // // {
+  // //   title: "보증 사이트",
+  // //   href: "/board/warranty1",
+  // //   triggerClassName: "hover:!bg-red-500",
+  // //   contentClassname: "min-w-[170px] border-t-3 border-red-500",
+  // //   linkClassName: "hover:!bg-red-500 hover:!text-white hover:!font-bold",
+  // //   children: [
+  // //     {
+  // //       title: "보증 바카라 카지노",
+  // //       href: "/board/warranty1",
+  // //     },
+  // //     {
+  // //       title: "보증 슬롯 카지노",
+  // //       href: "/board/warranty2",
+  // //     },
+  // //   ]
+  // // },
   
+  // // {
+  // //   title: "위너바카라",
+  // //   href: "/baccarat",
+  // //   triggerClassName: "hover:!bg-teal-500",
+  // //   contentClassname: "min-w-[170px] border-t-3 border-teal-500",
+  // //   linkClassName: "hover:!bg-teal-500 hover:!text-white hover:!font-bold",
+  // //   children: [
+  // //     {
+  // //       title: "위너 바카라",
+  // //       href: "/baccarat",
+  // //     },
+  // //     {
+  // //       title: "꽁머니 바카라",
+  // //       href: "/baccarat-money",
+  // //     },
+  // //     {
+  // //       title: "명예의전당",
+  // //       href: "/board/winner",
+  // //     },
+  // //   ]
+  // // },
+  // // {
+  // //   title: "이벤트",
+  // //   href: "/event/winner",
+  // //   triggerClassName: "hover:!bg-slate-500",
+  // //   contentClassname: "min-w-[170px] border-t-3 border-slate-500",
+  // //   linkClassName: "hover:!bg-slate-500 hover:!text-white hover:!font-bold",
+  // //   children: [
+  // //     {
+  // //       title: "위너 이벤트",
+  // //       href: "/event/winner",
+  // //     },
+  // //     {
+  // //       title: "회원 이벤트",
+  // //       href: "/event/user",
+  // //     },
+  // //     {
+  // //       title: "보증 이벤트",
+  // //       href: "/event/warrant",
+  // //     },
+  // //   ]
+  // // },
+  // // {
+  // //   title: "포인트교환",
+  // //   href: "/point",
+  // //   triggerClassName: "hover:!bg-stone-500",
+  // //   contentClassname: "min-w-[170px] border-t-3 border-stone-500",
+  // //   linkClassName: "hover:!bg-stone-500 hover:!text-white hover:!font-bold",
+  // //   children: [
+  // //     {
+  // //       title: "위브 포인트 교환",
+  // //       href: "/event/winner",
+  // //     },
+  // //   ]
+  // // },
+  // // {
+  // //   title: "먹튀카지노",
+  // //   href: "/board/casino",
+  // //   triggerClassName: "hover:!bg-zinc-500",
+  // //   contentClassname: "min-w-[170px] border-t-3 border-zinc-500",
+  // //   linkClassName: "hover:!bg-zinc-500 hover:!text-white hover:!font-bold",
+  // //   children: [
+  // //     {
+  // //       title: "먹튀 카지노",
+  // //       href: "/board/casino",
+  // //     },
+  // //   ]
+  // // },
+  // // {
+  // //   title: "커뮤니티",
+  // //   href: "/board/free",
+  // //   // triggerClassName: "hover:!bg-indigo-500",
+  // //   // contentClassname: "min-w-[170px] border-t-3 border-indigo-500",
+  // //   // linkClassName: "hover:!bg-indigo-500 hover:!text-white hover:!font-bold",
+  // //   children: [
+  // //     {
+  // //       title: "자유게시판",
+  // //       href: "/board/free",
+  // //     },
+  // //     {
+  // //       title: "온카 후기 게시판",
+  // //       href: "/board/onca",
+  // //     },
+  // //     {
+  // //       title: "슬롯 후기 게시판",
+  // //       href: "/board/slot",
+  // //     },
+  // //     {
+  // //       title: "가입인사",
+  // //       href: "/board/signup",
+  // //     },
+  // //     {
+  // //       title: "출석체크",
+  // //       href: "/board/attendance",
+  // //     },
+  // //     {
+  // //       title: "카지노 노하우",
+  // //       href: "/board/gambling-tip",
+  // //     },
+  // //   ]
+  // // },
+  // // {
+  // //   title: "갤러리",
+  // //   href: "/board/gallery",
+  // //   children: [
+  // //     {
+  // //       title: "Gallery 1",
+  // //       href: "/board/gallery/1",
+  // //     },
+  // //   ]
+  // // },
   // {
-  //   title: "위너바카라",
-  //   href: "/baccarat",
-  //   triggerClassName: "hover:!bg-teal-500",
-  //   contentClassname: "min-w-[170px] border-t-3 border-teal-500",
-  //   linkClassName: "hover:!bg-teal-500 hover:!text-white hover:!font-bold",
+  //   title: "고객지원",
+  //   href: "/support",
   //   children: [
   //     {
-  //       title: "위너 바카라",
-  //       href: "/baccarat",
+  //       title: "1:1 문의",
+  //       href: "/inquiry",
   //     },
   //     {
-  //       title: "꽁머니 바카라",
-  //       href: "/baccarat-money",
-  //     },
-  //     {
-  //       title: "명예의전당",
-  //       href: "/board/winner",
-  //     },
-  //   ]
-  // },
-  // {
-  //   title: "이벤트",
-  //   href: "/event/winner",
-  //   triggerClassName: "hover:!bg-slate-500",
-  //   contentClassname: "min-w-[170px] border-t-3 border-slate-500",
-  //   linkClassName: "hover:!bg-slate-500 hover:!text-white hover:!font-bold",
-  //   children: [
-  //     {
-  //       title: "위너 이벤트",
-  //       href: "/event/winner",
-  //     },
-  //     {
-  //       title: "회원 이벤트",
-  //       href: "/event/user",
-  //     },
-  //     {
-  //       title: "보증 이벤트",
-  //       href: "/event/warrant",
-  //     },
-  //   ]
-  // },
-  // {
-  //   title: "포인트교환",
-  //   href: "/point",
-  //   triggerClassName: "hover:!bg-stone-500",
-  //   contentClassname: "min-w-[170px] border-t-3 border-stone-500",
-  //   linkClassName: "hover:!bg-stone-500 hover:!text-white hover:!font-bold",
-  //   children: [
-  //     {
-  //       title: "위브 포인트 교환",
-  //       href: "/event/winner",
-  //     },
-  //   ]
-  // },
-  // {
-  //   title: "먹튀카지노",
-  //   href: "/board/casino",
-  //   triggerClassName: "hover:!bg-zinc-500",
-  //   contentClassname: "min-w-[170px] border-t-3 border-zinc-500",
-  //   linkClassName: "hover:!bg-zinc-500 hover:!text-white hover:!font-bold",
-  //   children: [
-  //     {
-  //       title: "먹튀 카지노",
-  //       href: "/board/casino",
-  //     },
-  //   ]
-  // },
-  // {
-  //   title: "커뮤니티",
-  //   href: "/board/free",
-  //   // triggerClassName: "hover:!bg-indigo-500",
-  //   // contentClassname: "min-w-[170px] border-t-3 border-indigo-500",
-  //   // linkClassName: "hover:!bg-indigo-500 hover:!text-white hover:!font-bold",
-  //   children: [
-  //     {
-  //       title: "자유게시판",
-  //       href: "/board/free",
-  //     },
-  //     {
-  //       title: "온카 후기 게시판",
-  //       href: "/board/onca",
-  //     },
-  //     {
-  //       title: "슬롯 후기 게시판",
-  //       href: "/board/slot",
-  //     },
-  //     {
-  //       title: "가입인사",
-  //       href: "/board/signup",
-  //     },
-  //     {
-  //       title: "출석체크",
-  //       href: "/board/attendance",
-  //     },
-  //     {
-  //       title: "카지노 노하우",
-  //       href: "/board/gambling-tip",
-  //     },
-  //   ]
-  // },
-  // {
-  //   title: "갤러리",
-  //   href: "/board/gallery",
-  //   children: [
-  //     {
-  //       title: "Gallery 1",
-  //       href: "/board/gallery/1",
+  //       title: "TG 문의",
+  //       href: "/telegram",
   //     },
   //   ]
   // },
   {
-    title: "고객지원",
-    href: "/support",
-    children: [
+    "title": "타짜 365", // #1 (Tazza 365) 
+    "href": "/",
+    "children": [
       {
-        title: "1:1 문의",
-        href: "/inquiry",
+        "title": "타짜 공지사항", // (Tazza Announcements)
+        "href": "/tazza/announcements"
       },
       {
-        title: "TG 문의",
-        href: "/telegram",
+        "title": "타짜 가이드", // (Tazza Guide)
+        "href": "/tazza/guide"
       },
+      {
+        "title": "가입인사", // (Introduction / Greetings for New Members)
+        "href": "/tazza/introduction"
+      },
+      {
+        "title": "1:1문의", // (1:1 Inquiry / Private Inquiry)
+        "href": "/inquiry"
+      }
     ]
   },
+  {
+    "title": "보증 사이트", // #2 (Verified Site)
+    "href": "/posts/verified-baccarat",
+    "children": [
+      {
+        "title": "보증 바카라 카지노", // (Verified Baccarat Casino)
+        "href": "/posts/verified-baccarat"
+      },
+      {
+        "title": "보증 슬롯 카지노", // (Verified Slot Casino)
+        "href": "/posts/verified-slot"
+      }
+    ]
+  },
+  {
+    "title": "온라인 게시판", // #3 (Online Board)
+    "href": "/posts/freeboard",
+    "children": [
+      {
+        "title": "자유게시판", // (Free Board)
+        "href": "/posts/freeboard"
+      },
+      {
+        "title": "온카 후기 게시판", // (Online Casino Review Board)
+        "href": "/posts/reviewboard"
+      },
+      {
+        "title": "슬롯 후기 게시판", // (Slot Review Board)
+        "href": "/posts/slot"
+      },
+      {
+        "title": "회원 이벤트", // (Member Event)
+        "href": "/posts/event-member"
+      }
+    ]
+  },
+  {
+    "title": "타짜 바카라", // #4 (Tazza Baccarat)
+    "href": "/tazza-baccarat",
+    // "children": []
+  },
+  {
+    "title": "이벤트 게시판", // #5 (Event Board)
+    "href": "/posts/event-tazza",
+    "children": [
+      {
+        "title": "타짜 이벤트", // (Tazza Event)
+        "href": "/posts/event-tazza"
+      },
+      {
+        "title": "보증 이벤트", // (Verified Event)
+        "href": "/posts/event-verified"
+      }
+    ]
+  },
+  {
+    "title": "타짜 포인트 교환", // #6 (Tazza Point Exchange)
+    "href": "/point-exchange",
+    // "children": []
+  },
+  {
+    "title": "먹튀 카지노", // #7 (Scam Casino)
+    "href": "/posts/scam-casino",
+    // "children": []
+  }
 ];
 
 export const userMenuList: {
