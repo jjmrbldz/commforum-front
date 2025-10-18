@@ -92,7 +92,7 @@ export async function loginAction(payload: LoginData): Promise<LoginFormState> {
     await createSession({
       id: user[0].id,
       username: user[0].username,
-      level: user[0].level ?? "1",
+      level: user[0].level ?? 1,
       expiresAt,
       group
     });

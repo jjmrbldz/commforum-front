@@ -3,15 +3,12 @@
 import PageHeader from "@/components/page-header";
 import Widget from "@/components/widget/widget";
 import { specialBoard } from "@/lib/constants";
-import { useState } from "react";
 import PostPage from "../post-page";
 
-
 export default function BoardCatPage({title, segment}: {title: string, segment: string[]}) {
-  const [viewMode, setViewMode] = useState("grid")
   return (
     <>
-      <PageHeader title={decodeURIComponent(title)} viewMode={viewMode} onChangeView={(mode) => setViewMode(mode)} />
+      <PageHeader title={decodeURIComponent(title)} />
         {segment.length > 0 && segment[1] ? (
           <PostPage />
         ) : (

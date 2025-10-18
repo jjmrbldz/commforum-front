@@ -15,9 +15,15 @@ import { cn } from "@/lib/utils";
 import CategorySelect from "../select/category-select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { useSiteDataStore } from "@/store/use-sitedata-store";
 
+interface Props {
+  className?: string; 
+  defaultCategory?: string;
+  searchAllCategories?: boolean;
+}
 
-export default function SearchForm({className = ""}: {className?: string}) {
+export default function SearchForm({className = "", defaultCategory, searchAllCategories = false}: Props) {
   const searchParams  = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
@@ -25,32 +31,34 @@ export default function SearchForm({className = ""}: {className?: string}) {
     resolver: zodResolver(searchFormSchema),
     defaultValues: {
       type: "title",
-      // searchOperator: "",
-      category: "all",
+      category: defaultCategory || "all",
       term: "",
     },
   });
 
   function onSubmit(data: SearchFormSchema) {
     const params = new URLSearchParams(searchParams.toString());
+    let path = pathName;    
+
+    if (!searchAllCategories) {
+      params.delete("category");
+      const siteData = useSiteDataStore.getState().siteData;
+      const categoryVal = siteData?.categories?.find(item => item.id == Number(data.category || defaultCategory))?.value;
+      path = `/posts/${categoryVal}`
+    } else {
+      params.set("category", data.category || "");
+    }
+
     params.set("type", data.type);
-    params.set("category", data.category || "");
     params.set("term", data.term || "");
     params.set("page", "1");
-    // toast("You submitted the following values", {
-    //   description: (
-    //     <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    //   position: "bottom-right"
-    // })
-    router.push(`${pathName}?${params.toString()}`)
+
+    router.push(`${path}?${params.toString()}`)
   }
 
   useEffect(() => {
     form.setValue("type", searchParams.get("type") || "title");
-    form.setValue("category", searchParams.get("category") || "all");
+    form.setValue("category", defaultCategory || searchParams.get("category") || "all");
     form.setValue("term", searchParams.get("term") || "");
   }, [searchParams]);
 
@@ -71,10 +79,11 @@ export default function SearchForm({className = ""}: {className?: string}) {
           <FormField 
             control={form.control}
             name="category"
+            disabled={!!defaultCategory}
             render={(({field}) => (
               <FormItem className="col-span-1">
                 {/* <SearchOperatorSelect field={field} /> */}
-                <CategorySelect field={field} search />
+                <CategorySelect field={field} search={searchAllCategories} disabled={!!defaultCategory} />
                 <FormMessage />
               </FormItem>
             ))}

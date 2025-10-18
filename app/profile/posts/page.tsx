@@ -28,7 +28,7 @@ export default async function Page({
 
   return (
     <>
-      <SearchForm />
+      <SearchForm searchAllCategories />
       <div className="">
         <div className="mb-2 flex items-center justify-between">
           <div className="">전체 {postRes.totalItems} 건</div>

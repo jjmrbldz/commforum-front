@@ -1,8 +1,13 @@
 import { getHtml } from "@/app/posts/[category]/[id]/actions";
 import ReadOnlyContent from "@/components/readonly-content";
-import { parseImage } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import UserLevelBadge from "@/components/user-level-badge";
+import { formatDate, parseImage } from "@/lib/utils";
 import { PostData } from "@/types";
+import { Clock, Eye, MessageCircle, ThumbsUp } from "lucide-react";
 import Image from "next/image";
+import dayjs from "@/lib/dayjs"
+import PostInfo from "./post-info";
 
 export default async function Post({ data } : { data: PostData }) {
   const html = await getHtml(data.content);
@@ -10,6 +15,7 @@ export default async function Post({ data } : { data: PostData }) {
 
   return (
     <div className="space-y-4">
+      <PostInfo data={data} />
       <div className="aspect-video">
         <Image 
           width={900}

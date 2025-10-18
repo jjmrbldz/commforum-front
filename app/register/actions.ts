@@ -11,7 +11,9 @@ import { MySQLError } from "@/types";
 
 export default async function registerAction(payload: RegisterData) {
   try {
-    const { defaultSignupLevel, userGroup } = await getConfig();
+    const { defaultSignupLevel } = await getConfig();
+
+    const userGroup = "A,B,C,D,E";
 
     if (!userGroup) return {ok: false, message: "No group found"};
 
@@ -42,9 +44,9 @@ export default async function registerAction(payload: RegisterData) {
         phone: data.phone ?? null,
         referralUsername: data.referralUsername ?? null,
         emailOptin: data.emailOptin,
-        level: String(defaultSignupLevel),
+        level: defaultSignupLevel,
         status: 1,
-        regDatetime: new Date().toISOString(),
+        regDatetime: new Date(),
         regIp: ip,
         group: randUserGroup,
       });

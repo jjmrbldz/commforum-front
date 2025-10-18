@@ -131,7 +131,7 @@ export async function insertComment({payload, shouldRevalidate}: {payload: Comme
       luckyPts,
     } = category[0];
 
-    let prevLevel = level ? parseInt(level) : 1;
+    let prevLevel = level ? level : 1;
     let prevExp = userExp || 0;
     let prevBalance = userBalance || 0;
 
@@ -256,7 +256,7 @@ export async function insertComment({payload, shouldRevalidate}: {payload: Comme
         .set({
           exp: gainedUserExp,
           balance: isEarnBalanceEnabled ? gainedUserBalance : 0,
-          level: String(afterLevel),
+          level: afterLevel,
         })
         .where(eq(users.id, userId));
 

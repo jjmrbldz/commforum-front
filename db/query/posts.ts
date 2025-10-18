@@ -16,6 +16,8 @@ interface FilterData  {
   id?: number;
   logView?: boolean;
   userId?: number;
+  type?: string;
+  term?: string;
   page?: string;
   limit?: string;
 }
@@ -31,9 +33,9 @@ type AllPostFilterData = {
   sortBy?: "asc" | "desc"; // asc | desc
 } | undefined;
 
-export async function getPostsByCategory({category, id, logView, userId, page, limit}: FilterData): ServerActionResponse<PostData[]> {
+export async function getPostsByCategory({category, id, logView, type, term, userId, page, limit}: FilterData): ServerActionResponse<PostData[]> {
   try {
-    console.log("SERVER FILTERS", {category, id, logView, userId, page, limit})
+    console.log("SERVER FILTERS", {category, id, logView, type, term, userId, page, limit})
     if (!category) return { ok: false, message: "Choose a category first." };
   
     const filters: SQL[] = [];
@@ -44,6 +46,8 @@ export async function getPostsByCategory({category, id, logView, userId, page, l
 
     if(id && typeof id !== "number") return { ok: false, message: "Post not found." };
     if (id) filters.push(eq(postTable.id, id));
+    if (type === "title" && term) filters.push(like(postTable.title, `%${term}%`));
+    if (type === "content" && term) filters.push(like(postTable.content, `%${term}%`));
 
     const user = await getUserSession();
     const isLoggedIn = !!user;
@@ -74,6 +78,7 @@ export async function getPostsByCategory({category, id, logView, userId, page, l
       viewCount: postTable.viewCount,
       categoryId: categories.id,
       category: categories.value,
+      categoryTitleKr: categories.titleKr,
       allowedViewLevel: categories.allowedViewLevel,
       allowedCommentLevel: categories.allowedUserLevelComment,
       allowedUserLevel: categories.allowedUserLevel,
@@ -82,6 +87,7 @@ export async function getPostsByCategory({category, id, logView, userId, page, l
       authorId: users.id,
       authorName: users.name,
       authorGroup: users.group,
+      authorLevel: users.level,
       regDatetime: postTable.regDatetime,
       updateDateTime: postTable.updateDatetime,
       ...(isLoggedIn && id ? { likeDislikeType: likeDislikeTable.type } : {})
@@ -95,7 +101,7 @@ export async function getPostsByCategory({category, id, logView, userId, page, l
         ...filters
       )
     )
-    .orderBy(desc(postTable.viewCount))
+    .orderBy(desc(postTable.regDatetime))
     .$dynamic();
     
     let totalItems: number | undefined = undefined;
@@ -136,7 +142,7 @@ export async function getPostsByCategory({category, id, logView, userId, page, l
     
     if (postTableRows.length === 0) return { ok: true, data: postTableRows, message: "No posts found." };
 
-    const isAllowed = isLoggedIn && (parseInt(user.level || "1") >= postTableRows[0].allowedViewLevel)
+    const isAllowed = isLoggedIn && ((user.level || 1) >= postTableRows[0].allowedViewLevel)
 
     if (!isLoggedIn && postTableRows[0].visibility === "private") return { ok: false, message: "You need to login to view this content" };
     if (id && isLoggedIn && !isAllowed) return { ok: false, message: "Your level is not enough to view this content" };
@@ -220,8 +226,10 @@ export async function getAllPosts(filter?: AllPostFilterData): ServerActionRespo
         authorUsername: users.username,
         authorName: users.name,
         authorGroup: users.group,
+        authorLevel: users.level,
         categoryId: allPosts.categoryId,
         category: categories.value,
+        categoryTitleKr: categories.titleKr,
         allowedViewLevel: categories.allowedViewLevel,
         allowedCommentLevel: categories.allowedUserLevelComment,
         allowedUserLevel: categories.allowedUserLevel,

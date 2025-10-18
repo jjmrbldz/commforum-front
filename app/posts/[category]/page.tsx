@@ -20,13 +20,11 @@ export default async function Page({
     ...filters,
   });
 
-  console.log("postRes", postRes);
-
   if (!postRes.ok) return <NotOkMessage message={postRes.message} />;
   
   return (
     <PostCategoryPage 
-      title={category.toUpperCase()} 
+      title={category} 
       data={postRes.data} 
       totalItems={postRes.totalItems} 
       totalPages={postRes.totalPages} 

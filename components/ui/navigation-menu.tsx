@@ -4,6 +4,7 @@ import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { ChevronDownIcon } from "lucide-react"
+import Link from "next/link"
 
 function NavigationMenu({
   className,
@@ -124,19 +125,26 @@ function NavigationMenuViewport({
   )
 }
 
-function NavigationMenuLink({
-  className,
-  ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Link>) {
+type Props = {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+} & Omit<React.ComponentProps<typeof NavigationMenuPrimitive.Link>, "asChild">;
+
+function NavigationMenuLink({ href, className, children, ...props }: Props) {
   return (
-    <NavigationMenuPrimitive.Link
-      data-slot="navigation-menu-link"
-      className={cn(
-        "data-[active=true]:focus:bg-accent data-[active=true]:hover:bg-accent data-[active=true]:bg-accent/50 data-[active=true]:text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 p-2 text-xs transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4 border-bottom",
-        className
-      )}
-      {...props}
-    />
+    <NavigationMenuPrimitive.Link asChild {...props}>
+      <Link
+        href={href}
+        className={cn(
+          "data-[active=true]:focus:bg-accent data-[active=true]:hover:bg-accent data-[active=true]:bg-accent/50 data-[active=true]:text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 p-2 text-xs transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4 border-bottom",
+          className
+        )}
+        data-slot="navigation-menu-link"
+      >
+        {children}
+      </Link>
+    </NavigationMenuPrimitive.Link>
   )
 }
 

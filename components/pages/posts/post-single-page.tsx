@@ -15,7 +15,7 @@ export default async function PostSinglePagePage({title, data}: {title: string, 
 
   return (
     <>
-      <PageHeader title={decodeURIComponent(title)} />
+      <PageHeader title={data.categoryTitleKr!} />
       <Post data={data} />
       <PostInteraction data={data} userComments={comments} />
     </>

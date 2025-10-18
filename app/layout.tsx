@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   publisher: "타짜365-카지노커뮤니티 온라인카지노 먹튀검증 카지노사이트",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({
   children,
 }: Readonly<{

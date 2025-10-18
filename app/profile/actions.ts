@@ -132,7 +132,7 @@ export async function insertPost(payload: PostData) {
     const { id: userId, exp: userExp, balance: userBalance, level, group } = user;
     const { postExp, postPts, allowedUserLevel, value: categoryValue } = category[0];
 
-    let prevLevel = level ? parseInt(level) : 1;
+    let prevLevel = level ? level : 1;
     let prevExp = userExp || 0;
     let prevBalance = userBalance || 0;
 
@@ -240,7 +240,7 @@ export async function insertPost(payload: PostData) {
         .set({
           exp: gainedUserExp,
           balance: gainedUserBalance,
-          level: String(afterLevel),
+          level: afterLevel,
         })
         .where(eq(users.id, userId));
     });

@@ -199,6 +199,7 @@ export type PostData = {
   viewCount: number;
   categoryId: number | null;
   category: "casino" | "freeboard" | "minigames" | "reviewboard" | "slot" | "sports";
+  categoryTitleKr: string | null;
   allowedViewLevel: number | null;
   allowedCommentLevel: number | null;
   allowedUserLevel: number | null;
@@ -206,6 +207,7 @@ export type PostData = {
   authorId: number;
   authorName: string;
   authorGroup: string | null;
+  authorLevel: number | null;
   likeDislikeType?: string | null;
   status?: number | null;
   regDatetime: Date | null;

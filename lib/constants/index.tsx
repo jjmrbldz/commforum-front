@@ -220,15 +220,15 @@ export const menuList: {
   },
   {
     "title": "보증 사이트", // #2 (Verified Site)
-    "href": "/posts/verified-baccarat",
+    "href": "/posts/verifiedbaccarat",
     "children": [
       {
         "title": "보증 바카라 카지노", // (Verified Baccarat Casino)
-        "href": "/posts/verified-baccarat"
+        "href": "/posts/verifiedbaccarat"
       },
       {
         "title": "보증 슬롯 카지노", // (Verified Slot Casino)
-        "href": "/posts/verified-slot"
+        "href": "/posts/verifiedslot"
       }
     ]
   },
@@ -250,7 +250,7 @@ export const menuList: {
       },
       {
         "title": "회원 이벤트", // (Member Event)
-        "href": "/posts/event-member"
+        "href": "/posts/eventmember"
       }
     ]
   },
@@ -261,15 +261,15 @@ export const menuList: {
   },
   {
     "title": "이벤트 게시판", // #5 (Event Board)
-    "href": "/posts/event-tazza",
+    "href": "/posts/eventtazza",
     "children": [
       {
         "title": "타짜 이벤트", // (Tazza Event)
-        "href": "/posts/event-tazza"
+        "href": "/posts/eventtazza"
       },
       {
         "title": "보증 이벤트", // (Verified Event)
-        "href": "/posts/event-verified"
+        "href": "/posts/eventverified"
       }
     ]
   },
@@ -280,7 +280,7 @@ export const menuList: {
   },
   {
     "title": "먹튀 카지노", // #7 (Scam Casino)
-    "href": "/posts/scam-casino",
+    "href": "/posts/scamcasino",
     // "children": []
   }
 ];
@@ -341,6 +341,19 @@ export const categoryTypeOptions = [
   { label: "Free Board", value: "5"},
   { label: "Review Board", value: "6"},
 ];
+
+export const userLevelClasses: Record<number, string> = {
+  1: "bg-[#CD7F32] text-white ring-1 ring-black/5 dark:bg-[#8B5A2B] dark:text-white dark:ring-white/10", // Bronze
+  2: "bg-[#C0C0C0] text-black ring-1 ring-black/5 dark:bg-[#7A7A7A] dark:text-white dark:ring-white/10", // Silver
+  3: "bg-[#FFD700] text-black ring-1 ring-black/5 dark:bg-[#B8860B] dark:text-white dark:ring-white/10", // Gold
+  4: "bg-[#E5E4E2] text-black ring-1 ring-black/5 dark:bg-[#A9A9A9] dark:text-black dark:ring-black/10", // Platinum
+  5: "bg-[#B9F2FF] text-black ring-1 ring-black/5 dark:bg-[#5FA8C4] dark:text-black dark:ring-black/10", // Diamond
+  6: "bg-[#1E1E1E] text-white ring-1 ring-white/10 dark:bg-[#0D0D0D] dark:text-white dark:ring-white/10", // Black Diamond
+  7: "bg-[#8A2BE2] text-white ring-1 ring-black/5 dark:bg-[#6A1FBF] dark:text-white dark:ring-white/10", // VIP
+  8: "bg-[#4169E1] text-white ring-1 ring-black/5 dark:bg-[#2B4A99] dark:text-white dark:ring-white/10", // VVIP
+  9: "bg-[#FF4500] text-white ring-1 ring-black/5 dark:bg-[#CC3700] dark:text-white dark:ring-white/10", // GOD
+  10: "bg-[#00BFFF] text-white ring-1 ring-black/5 dark:bg-[#007ACC] dark:text-white dark:ring-white/10", // Admin
+};
 
 // SAMPLE DATA
 export const articleWidget = [

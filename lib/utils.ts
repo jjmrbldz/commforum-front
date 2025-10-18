@@ -1,6 +1,6 @@
 import { ItemWithId, UserCommentData, WidgetCarouselProps } from "@/types";
 import { clsx, type ClassValue } from "clsx"
-import dayjs from "dayjs";
+import dayjs from "./dayjs"
 import DOMPurify from "dompurify";
 import { twMerge } from "tailwind-merge"
 import {
@@ -207,4 +207,9 @@ export function lexicalToPlainText(content: string, max = 160): string {
   const text = editor.read(() => $getRoot().getTextContent());
   // Normalize whitespace and clamp length
   return text.replace(/\s+/g, " ").trim().slice(0, max);
+}
+
+
+export function isSameDay(date?: string | null | Date) {
+  return dayjs(date).isSame(dayjs(), "day");
 }

@@ -15,14 +15,13 @@ export default function PostTable({data, totalItems = 0, totalPages = 0}: Props)
     <div className="space-y-2">
       <div className="overflow-x-auto max-w-[calc(100vw-1rem)]">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-sm">
             <TableRow>
-              <TableHead className="">Title</TableHead>
-              <TableHead className="hidden md:table-cell">Content</TableHead>
-              <TableHead>Stats</TableHead>
-              <TableHead>Author</TableHead>
-              <TableHead>Date Published</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead className="text-center">번호</TableHead>
+              <TableHead className="hidden md:table-cell">제목</TableHead>
+              <TableHead className="text-center">이름</TableHead>
+              <TableHead className="text-center">날짜</TableHead>
+              <TableHead className="text-center">조회</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
