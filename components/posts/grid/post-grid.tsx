@@ -105,7 +105,8 @@ export default function PostGrid({data, totalItems = 0, totalPages = 0}: Props) 
               description: <ContentPlainText content={item.content} />,
               author: item.authorName,
               date: formatDate(item.regDatetime || ""),
-              rating: 0
+              rating: 0,
+              commentCount: item.commentCount || 0,
             }}
           />
         ))}

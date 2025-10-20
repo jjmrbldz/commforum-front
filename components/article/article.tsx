@@ -40,7 +40,7 @@ export default function Article({
         <div className="space-y-2">
           <div className="flex gap-2 justify-between items-center">
             <h3 className={cn("font-bold text-base group-hover:underline line-clamp-1", titleClass)}>{data.title}</h3>
-            <span className="text-sm text-red-500">{data.rating && (`+${data.rating}`)}</span>
+            <span className="text-sm text-red-500">{data.commentCount}</span>
           </div>
           {!noDesc && (<div className="line-clamp-2 text-muted-foreground">{data.description}</div>)}
           <div className={cn("flex flex-col md:flex-row items-start md:items-center text-muted-foreground gap-2", footerClass)}>

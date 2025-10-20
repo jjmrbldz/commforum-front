@@ -131,6 +131,7 @@ export type ArticleData = {
   category?: string;
   rating?: number;
   img?: string;
+  commentCount?: number;
 }
 
 export type MySQLError = Error & {
