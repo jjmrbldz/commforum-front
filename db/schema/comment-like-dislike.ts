@@ -22,6 +22,13 @@ export const commentLikeDislikeTables = {
   reviewboard: createCommentLikeDislike("T_COMMENT_REVIEWBOARD_LIKE_DISLIKE"),
   slot: createCommentLikeDislike("T_COMMENT_SLOT_LIKE_DISLIKE"),
   sports: createCommentLikeDislike("T_COMMENT_SPORTS_LIKE_DISLIKE"),
+  eventmember: createCommentLikeDislike("T_COMMENT_EVENTMEMBER_LIKE_DISLIKE"),
+  eventverified: createCommentLikeDislike("T_COMMENT_EVENTVERIFIED_LIKE_DISLIKE"),
+  eventtazza: createCommentLikeDislike("T_COMMENT_EVENTTAZZA_LIKE_DISLIKE"),
+  scamcasino: createCommentLikeDislike("T_COMMENT_SCAMCASINO_LIKE_DISLIKE"),
+  slotreviewboard: createCommentLikeDislike("T_COMMENT_SLOTREVIEWBOARD_LIKE_DISLIKE"),
+  minigame: createCommentLikeDislike("T_COMMENT_MINIGAME_LIKE_DISLIKE"),
+  fishgame: createCommentLikeDislike("T_COMMENT_FISHGAME_LIKE_DISLIKE"),
 } as const;
 
 export type CommentLikeDislike = keyof typeof commentLikeDislikeTables;

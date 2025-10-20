@@ -9,6 +9,7 @@ import { ListItemNode, ListNode } from "@lexical/list";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { ImageNode } from "@/components/editor/nodes/headless/image-node";
 import { YouTubeNode } from "@/components/editor/nodes/headless/youtube-node";
+import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 
 function setupDom() {
   const dom = new JSDOM();
@@ -40,7 +41,10 @@ export async function getHtml(content: string) {
         LinkNode,
         AutoLinkNode,
         ImageNode,
-        YouTubeNode
+        YouTubeNode,
+        TableNode,
+        TableRowNode,
+        TableCellNode,
       ],
       onError: (err) => {console.error("Headless Editor Error:", err)},
     });    

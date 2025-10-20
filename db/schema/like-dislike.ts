@@ -22,6 +22,13 @@ export const likeDislikeTables = {
   reviewboard: createPostLikeDislike("T_POST_REVIEWBOARD_LIKE_DISLIKE"),
   slot: createPostLikeDislike("T_POST_SLOT_LIKE_DISLIKE"),
   sports: createPostLikeDislike("T_POST_SPORTS_LIKE_DISLIKE"),
+  eventmember: createPostLikeDislike("T_POST_EVENTMEMBER_LIKE_DISLIKE"),
+  eventverified: createPostLikeDislike("T_POST_EVENTVERIFIED_LIKE_DISLIKE"),
+  eventtazza: createPostLikeDislike("T_POST_EVENTTAZZA_LIKE_DISLIKE"),
+  scamcasino: createPostLikeDislike("T_POST_SCAMCASINO_LIKE_DISLIKE"),
+  slotreviewboard: createPostLikeDislike("T_POST_SLOTREVIEWBOARD_LIKE_DISLIKE"),
+  minigame: createPostLikeDislike("T_POST_MINIGAME_LIKE_DISLIKE"),
+  fishgame: createPostLikeDislike("T_POST_FISHGAME_LIKE_DISLIKE"),
 } as const;
 
 export type PostLikeDislike = keyof typeof likeDislikeTables;

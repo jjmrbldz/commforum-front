@@ -23,9 +23,7 @@ export default function MenuSheet() {
         className="w-full text-xs"
         // defaultValue="item-1"
       >
-        {menuList.slice(0, 2).map((item, index) => <MenuItemSheet key={index} path={item.href} title={item.title || ""} sublinks={item.children} />)}
-        {categories?.map((item, index) => <MenuItemSheet key={index} path={`/posts/${item.value}`} title={item.titleKr || ""} />)}
-        {menuList.slice(2, 3).map((item, index) => <MenuItemSheet key={index} path={item.href} title={item.title || ""} sublinks={item.children} />)}
+        {menuList.map((item, index) => <MenuItemSheet key={index} path={item.href} title={item.title || ""} sublinks={item.children} />)}
       </Accordion>
       <SidebarTitle title="STATS" />
       <div className="text-xs font-light">

@@ -219,16 +219,16 @@ export const menuList: {
     ]
   },
   {
-    "title": "보증 사이트", // #2 (Verified Site)
-    "href": "/posts/verifiedbaccarat",
+    "title": "보증 사이트", // #2 (Verified Site) ✅
+    "href": "/posts/casino",
     "children": [
       {
-        "title": "보증 바카라 카지노", // (Verified Baccarat Casino)
-        "href": "/posts/verifiedbaccarat"
+        "title": "보증 바카라 카지노", // (Verified Baccarat Casino) ✅
+        "href": "/posts/casino"
       },
       {
-        "title": "보증 슬롯 카지노", // (Verified Slot Casino)
-        "href": "/posts/verifiedslot"
+        "title": "보증 슬롯 카지노", // (Verified Slot Casino) ✅ 
+        "href": "/posts/slot"
       }
     ]
   },
@@ -237,19 +237,19 @@ export const menuList: {
     "href": "/posts/freeboard",
     "children": [
       {
-        "title": "자유게시판", // (Free Board)
+        "title": "자유게시판", // (Free Board) ✅
         "href": "/posts/freeboard"
       },
       {
-        "title": "온카 후기 게시판", // (Online Casino Review Board)
+        "title": "온카 후기 게시판", // (Online Casino Review Board) ✅
         "href": "/posts/reviewboard"
       },
       {
-        "title": "슬롯 후기 게시판", // (Slot Review Board)
-        "href": "/posts/slot"
+        "title": "슬롯 후기 게시판", // (Slot Review Board) ✅
+        "href": "/posts/reviewboardslot"
       },
       {
-        "title": "회원 이벤트", // (Member Event)
+        "title": "회원 이벤트", // (Member Event) ✅
         "href": "/posts/eventmember"
       }
     ]
@@ -260,15 +260,15 @@ export const menuList: {
     // "children": []
   },
   {
-    "title": "이벤트 게시판", // #5 (Event Board)
+    "title": "이벤트 게시판", // #5 (Event Board) ✅
     "href": "/posts/eventtazza",
     "children": [
       {
-        "title": "타짜 이벤트", // (Tazza Event)
+        "title": "타짜 이벤트", // (Tazza Event) ✅
         "href": "/posts/eventtazza"
       },
       {
-        "title": "보증 이벤트", // (Verified Event)
+        "title": "보증 이벤트", // (Verified Event) ✅
         "href": "/posts/eventverified"
       }
     ]
@@ -279,7 +279,7 @@ export const menuList: {
     // "children": []
   },
   {
-    "title": "먹튀 카지노", // #7 (Scam Casino)
+    "title": "먹튀 카지노", // #7 (Scam Casino) ✅
     "href": "/posts/scamcasino",
     // "children": []
   }
@@ -352,7 +352,7 @@ export const userLevelClasses: Record<number, string> = {
   7: "bg-[#8A2BE2] text-white ring-1 ring-black/5 dark:bg-[#6A1FBF] dark:text-white dark:ring-white/10", // VIP
   8: "bg-[#4169E1] text-white ring-1 ring-black/5 dark:bg-[#2B4A99] dark:text-white dark:ring-white/10", // VVIP
   9: "bg-[#FF4500] text-white ring-1 ring-black/5 dark:bg-[#CC3700] dark:text-white dark:ring-white/10", // GOD
-  10: "bg-[#00BFFF] text-white ring-1 ring-black/5 dark:bg-[#007ACC] dark:text-white dark:ring-white/10", // Admin
+  10: "bg-black text-white border border-red-500", // Admin
 };
 
 // SAMPLE DATA

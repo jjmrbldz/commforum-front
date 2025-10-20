@@ -13,7 +13,7 @@ export const editorTheme: EditorThemeClasses = {
     h5: "scroll-m-20 text-lg font-semibold tracking-tight",
     h6: "scroll-m-20 text-base font-semibold tracking-tight",
   },
-  paragraph: "leading-7 [&:not(:first-child)]:mt-6",
+  paragraph: "leading-4 [&:not(:first-child)]:mt-4",
   quote: "mt-6 border-l-2 pl-6 italic",
   link: "text-blue-600 hover:underline hover:cursor-pointer",
   list: {
@@ -92,7 +92,7 @@ export const editorTheme: EditorThemeClasses = {
     variable: "EditorTheme__tokenVariable",
   },
   characterLimit: "!bg-destructive/50",
-  table: "EditorTheme__table w-fit overflow-scroll border-collapse",
+  table: "EditorTheme__table overflow-scroll border-collapse",
   tableCell:
     "'EditorTheme__tableCell w-24 relative border border-neutral-200 px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right' dark:border-neutral-800",
   tableCellActionButton:

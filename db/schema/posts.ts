@@ -42,6 +42,13 @@ export const postTables = {
   reviewboard: createPostTable("T_POST_REVIEWBOARD"),
   slot: createPostTable("T_POST_SLOT"),
   sports: createPostTable("T_POST_SPORTS"),
+  eventmember: createPostTable("T_POST_EVENTMEMBER"),
+  eventverified: createPostTable("T_POST_EVENTVERIFIED"),
+  eventtazza: createPostTable("T_POST_EVENTTAZZA"),
+  scamcasino: createPostTable("T_POST_SCAMCASINO"),
+  slotreviewboard: createPostTable("T_POST_SLOTREVIEWBOARD"),
+  minigame: createPostTable("T_POST_MINIGAME"),
+  fishgame: createPostTable("T_POST_FISHGAME"),
 } as const;
 
 export type PostCategory = keyof typeof postTables;

@@ -19,9 +19,11 @@ export default function PageHeader({ title }: PageHeaderProps) {
       <div className="hidden md:flex gap-2 items-center justify-end">
         <Link href={"/tazza/guide"} className="hover:underline opacity-60">타짜 가이드</Link>
         <span className="opacity-60">|</span>
-        <Link href={"/posts/eventtazza"} className="hover:underline opacity-60">이벤트 게시판</Link>
+        <Link href={"/posts/eventtazza"} className="hover:underline opacity-60">타짜 이벤트</Link>
         <span className="opacity-60">|</span>
-        <Link href={"/posts/verifiedbaccarat"} className="hover:underline opacity-60">보증 사이트</Link>
+        <Link href={"/posts/casino"} className="hover:underline opacity-60">보증 바카라 카지노</Link>
+        <span className="opacity-60">|</span>
+        <Link href={"/posts/scamcasino"} className="hover:underline opacity-60">먹튀 카지노</Link>
         <span className="opacity-60">|</span>
         <Link href={"/posts/freeboard"} className="hover:underline opacity-60">온라인 게시판</Link>
         <span className="opacity-60">|</span>

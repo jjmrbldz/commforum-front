@@ -21,6 +21,13 @@ export const viewPostTables = {
   reviewboard: createPostView("T_POST_REVIEWBOARD_VIEWLIST"),
   slot: createPostView("T_POST_SLOT_VIEWLIST"),
   sports: createPostView("T_POST_SPORTS_VIEWLIST"),
+  eventmember: createPostView("T_POST_EVENTMEMBER_VIEWLIST"),
+  eventverified: createPostView("T_POST_EVENTVERIFIED_VIEWLIST"),
+  eventtazza: createPostView("T_POST_EVENTTAZZA_VIEWLIST"),
+  scamcasino: createPostView("T_POST_SCAMCASINO_VIEWLIST"),
+  slotreviewboard: createPostView("T_POST_SLOTREVIEWBOARD_VIEWLIST"),
+  minigame: createPostView("T_POST_MINIGAME_VIEWLIST"),
+  fishgame: createPostView("T_POST_FISHGAME_VIEWLIST"),
 } as const;
 
 export type ViewPost = keyof typeof viewPostTables;

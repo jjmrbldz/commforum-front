@@ -198,7 +198,7 @@ export type PostData = {
   commentCount: number | null;
   viewCount: number;
   categoryId: number | null;
-  category: "casino" | "freeboard" | "minigames" | "reviewboard" | "slot" | "sports";
+  category: "casino" | "freeboard" | "minigames" | "reviewboard" | "slot" | "sports" | "eventmember" | "eventverified" | "eventtazza" | "scamcasino" | "slotreviewboard" | "minigame" | "fishgame";
   categoryTitleKr: string | null;
   allowedViewLevel: number | null;
   allowedCommentLevel: number | null;

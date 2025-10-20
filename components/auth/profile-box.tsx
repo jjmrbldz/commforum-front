@@ -24,7 +24,7 @@ export default function ProfileBox() {
             <AvatarFallback className="uppercase font-bold text-lg">{user.username.charAt(0)}</AvatarFallback>
           </Avatar>
           {/* <Badge className="absolute bottom-0 -right-1 rounded-full text-[10px] font-bold px-[6px] py-[4px] leading-none">{user.level}</Badge> */}
-          <UserLevelBadge className="absolute bottom-0 -right-1 rounded-full text-[10px] leading-none" level={user.level!} />
+          <UserLevelBadge className="absolute bottom-0 -right-1 rounded-full text-[10px] leading-none" level={user.level!} textOnly isRounded />
         </div>
         <div className="">
           <div className="font-bold text-sm">{user.username}</div>

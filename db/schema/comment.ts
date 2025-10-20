@@ -28,6 +28,13 @@ export const commentTables = {
   reviewboard: createComment("T_COMMENT_REVIEWBOARD"),
   slot: createComment("T_COMMENT_SLOT"),
   sports: createComment("T_COMMENT_SPORTS"),
+  eventmember: createComment("T_COMMENT_EVENTMEMBER"),
+  eventverified: createComment("T_COMMENT_EVENTVERIFIED"),
+  eventtazza: createComment("T_COMMENT_EVENTTAZZA"),
+  scamcasino: createComment("T_COMMENT_SCAMCASINO"),
+  slotreviewboard: createComment("T_COMMENT_SLOTREVIEWBOARD"),
+  minigame: createComment("T_COMMENT_MINIGAME"),
+  fishgame: createComment("T_COMMENT_FISHGAME"),
 } as const;
 
 export type Comment = keyof typeof commentTables;

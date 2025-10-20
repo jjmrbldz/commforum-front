@@ -3,6 +3,7 @@ import { ImageNode } from "@/components/editor/nodes/image-node"
 import { AutoLinkNode, LinkNode } from "@lexical/link"
 import { ListItemNode, ListNode } from "@lexical/list"
 import { HeadingNode, QuoteNode } from "@lexical/rich-text"
+import { TableCellNode, TableNode, TableRowNode } from "@lexical/table"
 import {
   Klass,
   LexicalNode,
@@ -22,5 +23,8 @@ export const nodes: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement> =
     LinkNode,
     AutoLinkNode,
     ImageNode,
-    YouTubeNode
+    YouTubeNode,
+    TableNode,
+    TableRowNode,
+    TableCellNode,
   ]

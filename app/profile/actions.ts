@@ -161,7 +161,7 @@ export async function insertPost(payload: PostData) {
     }    
 
     const levels = await getLevelSettings(prevLevel);
-
+    console.log(levels)
     const { totalExp: requiredExpToLevelUp } = levels[0];
 
     const realBalanceLog = await db

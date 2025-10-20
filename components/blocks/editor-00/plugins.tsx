@@ -7,6 +7,7 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin"
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin"
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin"
 import { ClickableLinkPlugin } from "@lexical/react/LexicalClickableLinkPlugin"
+import { TablePlugin } from "@lexical/react/LexicalTablePlugin"
 
 import { ContentEditable } from "@/components/editor/editor-ui/content-editable"
 import { ToolbarPlugin } from "@/components/editor/plugins/toolbar/toolbar-plugin"
@@ -36,6 +37,7 @@ import { ImagesPlugin } from "@/components/editor/plugins/images-plugin"
 import { InsertEmbeds } from "@/components/editor/plugins/toolbar/block-insert/insert-embeds"
 import { AutoEmbedPlugin } from "@/components/editor/plugins/embeds/auto-embed-plugin"
 import { YouTubePlugin } from "@/components/editor/plugins/embeds/youtube-plugin"
+import { InsertTable } from "@/components/editor/plugins/toolbar/block-insert/insert-table"
 
 export function Plugins({editable = true, className = ""}:{editable?: boolean; className?: string}) {
   const [floatingAnchorElem, setFloatingAnchorElem] =
@@ -80,6 +82,7 @@ export function Plugins({editable = true, className = ""}:{editable?: boolean; c
             <BlockInsertPlugin>
               <InsertImage />
               <InsertEmbeds />
+              <InsertTable />
             </BlockInsertPlugin>
           </div>
         )}
@@ -110,6 +113,7 @@ export function Plugins({editable = true, className = ""}:{editable?: boolean; c
         <ImagesPlugin />
         <AutoEmbedPlugin />
         <YouTubePlugin />
+        <TablePlugin />
       </div>
       {/* actions plugins */}
     </div>
