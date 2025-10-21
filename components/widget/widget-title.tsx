@@ -4,11 +4,13 @@ import { cn } from "@/lib/utils";
 
 export default function WidgetTitle({
   className = "",
+  rootClassName = "",
   titleClass = "",
   title,
   isCarousel = false,
   isTab = false
 } : {
+  rootClassName?: string;
   className?: string;
   titleClass?: string;
   title: ReactNode;
@@ -16,7 +18,7 @@ export default function WidgetTitle({
   isTab?: boolean;
 }) {
   return (
-    <div className="">
+    <div className={rootClassName}>
       <div className={cn("flex items-center justify-between", className)}>
         {isTab ? (
           title

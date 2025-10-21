@@ -4,12 +4,17 @@ import Article from "../article/article";
 import banner3 from "@/assets/images/banner/banner-3.jpg";
 import BannerCarousel from "./home/banner-carousel";
 import Widget from "../widget/widget";
+import { getThreeBoardPost } from "@/app/actions";
+import ArticleCarousel from "../article/article-carousel";
+import { parseImage } from "@/lib/utils";
 
-export default function AllPosts() {
-  
+export default async function AllPosts() {
+  const result = await getThreeBoardPost();
+
   return (
     <div className="col-span-12 md:col-span-9 py-4">
-      <WidgetTitle title={"온카 후기 게시판"} />
+      <ArticleCarousel data={result.data} />
+      {/* <WidgetTitle title={"온카 후기 게시판"} />
       <div className="grid grid-cols-2 gap-4 my-4">
         <Article 
           data={{
@@ -53,7 +58,7 @@ export default function AllPosts() {
             date: "2022-03-21",
           }}
         />
-      </div>
+      </div> */}
       <BannerCarousel images={[banner3]} />
       {/* <div className="grid grid-cols-2 gap-4 my-4">
         <Widget {...{
@@ -72,15 +77,33 @@ export default function AllPosts() {
       </div> */}
       <Widget {...{
         title: "보증 바카라 카지노",
-        data: baccBoard,
-        path: '/board', 
+        data: result.data
+          .slice(0, 5)
+          .filter(item => item.category === "casino")
+          .map(item => ({
+            id: item.id, 
+            category: item.category, 
+            title: item.title, 
+            img: `${process.env.NEXT_PUBLIC_MEDIA_PATH}/${parseImage(item.thumbnail!)}`
+          })
+        ),
+        path: '/posts', 
         rootClassname: 'my-4',
         layout: 'basic-gallery',
       }} />
       <Widget {...{
         title: "보증 슬롯 카지노",
-        data: slotsBoard,
-        path: '/board', 
+        data: result.data
+          .slice(0, 5)
+          .filter(item => item.category === "slot")
+          .map(item => ({
+            id: item.id, 
+            category: item.category, 
+            title: item.title, 
+            img: `${process.env.NEXT_PUBLIC_MEDIA_PATH}/${parseImage(item.thumbnail!)}`
+          })
+        ),
+        path: '/posts', 
         rootClassname: 'my-4',
         layout: 'basic-gallery',
       }} />

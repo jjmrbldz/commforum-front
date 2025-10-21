@@ -95,7 +95,7 @@ export function isValidJSON(str: string): boolean {
 export function parseImage(str: string, isSingle = true) {
   if (isValidJSON(str)) {
     if (isSingle) {
-      return JSON.parse(str)[0]
+      return JSON.parse(str)?.[0] || null
     } else {
       return JSON.parse(str)
     }

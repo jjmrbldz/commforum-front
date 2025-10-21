@@ -12,7 +12,7 @@ import z, { ZodError } from "zod";
 import { LoginFormState } from "@/types";
 import getCategories from "@/db/query/categories";
 import getConfig from "@/db/query/config";
-import { getAllPosts } from "@/db/query/posts";
+import { getAllPosts, getPostsByCategory } from "@/db/query/posts";
 import { getAllComments } from "@/db/query/comment";
 import { getAllUserBalance } from "@/db/query/user-balance";
 import { Groups } from "@/db/schema/user-group";
@@ -29,6 +29,7 @@ export async function getSiteData() {
       page: "1",
       limit: "20",
     })
+    console.log("RECENT POST", recentPosts)
     const recentComments = await getAllComments({
       orderBy: "date",
       sortBy: "desc",
@@ -115,4 +116,39 @@ export async function logoutAction() {
   cookieStore.delete('session');
   // revalidatePath('/');
   // redirect('/');
+}
+
+export async function getThreeBoardPost() {
+  try {
+    const casinoReviewBoardPosts = await getPostsByCategory({
+      category: "casino",
+      page: "1",
+      limit: "10",
+    });
+    const slotreviewBoardPosts = await getPostsByCategory({
+      category: "slot",
+      page: "1",
+      limit: "10",
+    });
+    const freeBoardPosts = await getPostsByCategory({
+      category: "freeboard",
+      page: "1",
+      limit: "10",
+    });
+
+    return { 
+      ok: true, data: 
+      [
+        ...(casinoReviewBoardPosts?.data ? casinoReviewBoardPosts?.data : []),
+        ...(slotreviewBoardPosts?.data ? slotreviewBoardPosts?.data : []),
+        ...(freeBoardPosts?.data ? freeBoardPosts?.data : []),
+      ]
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      ok: false,
+      data: []
+    }
+  }
 }
