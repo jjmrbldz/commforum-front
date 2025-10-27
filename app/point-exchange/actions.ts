@@ -65,6 +65,7 @@ export async function getUserWithdrawalLogs({page, limit}: FilterData): ServerAc
       })
       .from(withdrawalLogs)
       .leftJoin(users, eq(users.id, user.id))
+      .where(eq(withdrawalLogs.userId, user.id))
       .orderBy(desc(withdrawalLogs.id))
       .limit(Number(limit))
       .offset((Number(page) - 1) * Number(limit));
