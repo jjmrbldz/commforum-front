@@ -35,7 +35,6 @@ export default function PostForm({data}:{data?: PostDataRes}) {
   const isEditing = useMemo(() => !!data, [data]);
 
   function onSubmit(data: PostData) {
-    console.log('UPDATE POST PAYLOAD', data);
     // return;
     if (isPending) return;
     startTransition(async () => {

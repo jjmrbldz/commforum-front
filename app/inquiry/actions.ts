@@ -19,7 +19,6 @@ import z, { ZodError } from "zod";
 export async function insertInquiry(payload: InquiryData) {
 
   try {
-    console.log("INSERT INIQUIRY PAYLOAD", payload)
     const user = await requireUserSession();
     if (!user) {
       throw new Error("User not authenticated");

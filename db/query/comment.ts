@@ -108,7 +108,6 @@ export async function insertComment({payload, shouldRevalidate}: {payload: Comme
     if (!user) {
       return { ok: false, message: "You need to login first." } as const; 
     }
-    console.log("INSERT COMMENT PAYLOAD", payload)
     const data = commentSchema.parse(payload);
 
     if (!data.categoryId || !data.postId || !data.level) return { ok: false, message: "Post details are required" } as const; 
@@ -166,26 +165,6 @@ export async function insertComment({payload, shouldRevalidate}: {payload: Comme
     const awardedLuckyPoints = luckyComment === 1 ? getLuckyPoints(luckyPtsChance, luckyPts) : 0;
     const shouldAwardLuckyPoints = awardedLuckyPoints > 0;
     const isEarnBalanceEnabled = commentsPts !== 0;
-
-    console.log({
-      prevExp,
-      prevBalance,
-      prevLevel,
-      commentExp,
-      commentsPts,
-      allowedUserLevelComment,
-      gainedUserExp,
-      gainedUserBalance,
-      requiredExpToLevelUp,
-      isLevelup,
-      afterLevel,
-      luckyComment,
-      luckyPtsChance,
-      luckyPts,
-      awardedLuckyPoints,
-      shouldAwardLuckyPoints,
-      isEarnBalanceEnabled
-    });
 
     const referenceTable = `T_COMMENT_${categoryValue.toUpperCase()}`;
     // let referenceId: number;
@@ -297,15 +276,6 @@ export async function getComments({category, postId, commentId, level, sort = "d
     if (commentId) filters.push(eq(comments.commentId, commentId));
     if (sort === "desc") orders.push(desc(comments.regDatetime));
     if (sort === "asc") orders.push(asc(comments.regDatetime));
-  
-    console.log("COMMENT FILTERS", {
-      category,
-      postId,
-      commentId,
-      level,
-      sort,
-      limit
-    })
 
     let base  = db
       .select({
@@ -345,7 +315,6 @@ export async function getComments({category, postId, commentId, level, sort = "d
     
     const res = await baseWithLimit;
 
-    console.log("COMMENT RES", res)
     return res;
   } catch (error) {
     console.error("Error getting comments:", error);

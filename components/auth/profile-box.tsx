@@ -4,7 +4,6 @@ import { useUserStore } from "@/store/use-user-store";
 import LoginForm from "../forms/login-form";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { NumberFormatter } from "../number-formatter";
-import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import LogoutButton from "./logout-button";
@@ -28,7 +27,8 @@ export default function ProfileBox() {
         </div>
         <div className="">
           <div className="font-bold text-sm">{user.username}</div>
-          <div className="text-xs">포인트: <NumberFormatter value={user.balance} /></div>
+          <div className="text-xs"><span className="text-muted-foreground">포인트</span>: <NumberFormatter value={user.point} /></div>
+          <div className="text-xs"><span className="text-muted-foreground">균형</span>: <NumberFormatter value={user.balance} /></div>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2 mt-4">

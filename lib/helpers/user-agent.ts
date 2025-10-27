@@ -49,18 +49,6 @@ export async function getUserAgentInfo() {
   const month = now.format("MM");
   const year = now.format("YYYY");
 
-  console.log({
-    ip,
-    browser,
-    os,
-    device,
-    time,
-    dayOfWeek,
-    day,
-    month,
-    year,
-  })
-
   return {
     ip,
     browser,

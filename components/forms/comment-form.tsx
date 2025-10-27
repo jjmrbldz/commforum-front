@@ -36,7 +36,6 @@ export default function CommentForm({postId, level, commentId, categoryId, isRep
     });
 
   function onSubmit(data: CommentData) {
-    console.log("COMMENT PAYLOAD:", data);
     // return;
     startTransition(async () => {
       const res = await insertComment({payload: data, shouldRevalidate: !isReplying});

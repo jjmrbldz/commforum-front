@@ -16,7 +16,6 @@ export default function InquiryList({data}: {data: UserInquiry<"A">[]}) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("MESSAGES", data)
     const timer = setTimeout(() => {
       const el = scrollRef.current;
       if (el && !loading) el.scrollTop = el.scrollHeight;

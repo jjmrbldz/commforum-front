@@ -15,6 +15,9 @@ const POST_CATEGORIES = [
   "SLOTREVIEWBOARD",
   "MINIGAME",
   "FISHGAME",
+  "ANNOUNCEMENTS",
+  "GUIDE",
+  "INTRODUCTION",
 ] as const;
 
 export type Categories = (typeof POST_CATEGORIES)[number];
@@ -64,6 +67,9 @@ export const categories = mysqlTable("T_CATEGORY", {
       "sports",
       "minigames",
       "fishgame",
+      "announcements",
+      "guide",
+      "introduction",
     ]).notNull(),
     titleKr: varchar("tc_title_kor", { length: 255 }).default(sql`NULL`),
   },

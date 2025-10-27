@@ -165,9 +165,6 @@ export async function commentLikeDislikeAction({commentId, category, actionType,
     if (actionType === "like") queryAction.newLikeCount = queryAction.newLikeCount + 1;
     if (actionType === "dislike") queryAction.newDislikeCount = queryAction.newDislikeCount + 1;
 
-    console.log("PAYLOAD", {userId, commentId, category, actionType});
-    console.log("QUERY ACTION", queryAction);
-
     db.transaction(async (tx) => {
       await tx
         .insert(likeDislikeTable)

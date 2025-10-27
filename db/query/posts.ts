@@ -35,7 +35,6 @@ type AllPostFilterData = {
 
 export async function getPostsByCategory({category, id, logView, type, term, userId, page, limit}: FilterData): ServerActionResponse<PostData[]> {
   try {
-    console.log("SERVER FILTERS", {category, id, logView, type, term, userId, page, limit})
     if (!category) return { ok: false, message: "Choose a category first." };
   
     const filters: SQL[] = [];

@@ -15,10 +15,7 @@ export default function PostInteraction({
  }) {
 
   const commentLength = userComments ? userComments.length : 0;
-  // const treeifyComments = buildCommentTree(userComments);
-
-  // console.log("COMMENTS", userComments);
-
+  
   return (
     <>
       <PostLikeDisLike data={data} />

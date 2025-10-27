@@ -35,7 +35,6 @@ export default function ProfileForm({user}:{user:UserSession}) {
   });
 
   async function onSubmit(data: UserInfoData) {
-    console.log("UPDATE USER FORM DATA:", data);
     // return;
     if (isPending) return;
     setServerError(null);

@@ -22,8 +22,6 @@ export default async function Page({
     ...filters,
   });
 
-  console.log("POST RES", postRes)
-
   if (!postRes.ok) return <NotOkMessage message={postRes.message} />;
 
   return (

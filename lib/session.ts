@@ -141,6 +141,6 @@ export async function getUserSession() {
 
 export async function requireUserSession() {
   const user = await getUserSession();
-  if (!user) redirect("/login"); // throws on purpose; do not wrap
+  if (!user) redirect("/login");
   return user;
 }

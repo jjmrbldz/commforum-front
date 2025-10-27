@@ -35,6 +35,9 @@ export const commentTables = {
   slotreviewboard: createComment("T_COMMENT_SLOTREVIEWBOARD"),
   minigame: createComment("T_COMMENT_MINIGAME"),
   fishgame: createComment("T_COMMENT_FISHGAME"),
+  announcements: createComment("T_COMMENT_ANNOUNCEMENTS"),
+  guide: createComment("T_COMMENT_GUIDE"),
+  introduction: createComment("T_COMMENT_INTRODUCTION"),
 } as const;
 
 export type Comment = keyof typeof commentTables;

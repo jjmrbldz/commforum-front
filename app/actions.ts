@@ -29,7 +29,6 @@ export async function getSiteData() {
       page: "1",
       limit: "20",
     })
-    console.log("RECENT POST", recentPosts)
     const recentComments = await getAllComments({
       orderBy: "date",
       sortBy: "desc",

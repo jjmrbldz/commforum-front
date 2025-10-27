@@ -29,6 +29,9 @@ export const likeDislikeTables = {
   slotreviewboard: createPostLikeDislike("T_POST_SLOTREVIEWBOARD_LIKE_DISLIKE"),
   minigame: createPostLikeDislike("T_POST_MINIGAME_LIKE_DISLIKE"),
   fishgame: createPostLikeDislike("T_POST_FISHGAME_LIKE_DISLIKE"),
+  announcements: createPostLikeDislike("T_POST_ANNOUNCEMENTS_LIKE_DISLIKE"),
+  guide: createPostLikeDislike("T_POST_GUIDE_LIKE_DISLIKE"),
+  introduction: createPostLikeDislike("T_POST_INTRODUCTION_LIKE_DISLIKE"),
 } as const;
 
 export type PostLikeDislike = keyof typeof likeDislikeTables;

@@ -34,7 +34,6 @@ export default function InquiryForm({list}:{list?: InquiryData[]}) {
   })
 
   function onSubmit(data: InquiryData) {
-    console.log('UPDATE POST PAYLOAD', data);
     if (isPending) return;
     startTransition(async () => {
       const res = await insertInquiry(data);

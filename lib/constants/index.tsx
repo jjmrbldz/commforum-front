@@ -1,4 +1,4 @@
-import { TopUserPointsData } from "@/types";
+import { AffiliateData, TopUserPointsData } from "@/types";
 
 export const koreanWeekdays = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -495,3 +495,16 @@ export const pointsTab = {
     ]
   } as Record<string, TopUserPointsData[]>
 }
+
+export const affiliates: AffiliateData[] = [
+  { id: 1, companyName: "빅2 카지노", minExchangeAmount: 10000, maxExchangeAmount: 100000 },
+  { id: 2, companyName: "소울카지노", minExchangeAmount: 10000, maxExchangeAmount: 400000 },
+  { id: 3, companyName: "K카지노", minExchangeAmount: 10000, maxExchangeAmount: 400000 },
+  { id: 4, companyName: "아벤 카지노", minExchangeAmount: 10000, maxExchangeAmount: 400000 },
+  { id: 5, companyName: "BET99 카지노", minExchangeAmount: 10000, maxExchangeAmount: 400000 },
+  { id: 6, companyName: "짱구 카지노", minExchangeAmount: 10000, maxExchangeAmount: 400000 },
+  { id: 7, companyName: "춤사랑 카지노", minExchangeAmount: 10000, maxExchangeAmount: 400000 },
+  { id: 8, companyName: "머니벳 카지노", minExchangeAmount: 10000, maxExchangeAmount: 400000 },
+  { id: 9, companyName: "빅카지노", minExchangeAmount: 10000, maxExchangeAmount: 100000 },
+  { id: 10, companyName: "온카114 빙고", minExchangeAmount: 10000000, maxExchangeAmount: 10000000 },
+];

@@ -17,7 +17,7 @@ export default function PageHeader({ title }: PageHeaderProps) {
       </div>
       
       <div className="hidden md:flex gap-2 items-center justify-end">
-        <Link href={"/tazza/guide"} className="hover:underline opacity-60">타짜 가이드</Link>
+        <Link href={"/posts/guide"} className="hover:underline opacity-60">타짜 가이드</Link>
         <span className="opacity-60">|</span>
         <Link href={"/posts/eventtazza"} className="hover:underline opacity-60">타짜 이벤트</Link>
         <span className="opacity-60">|</span>

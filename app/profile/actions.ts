@@ -22,7 +22,6 @@ import bcrypt from "bcrypt";
 export async function updateInfoAction(payload: UserInfoData) {
   
   try {
-    console.log("USER UPDATE PAYLOAD", payload)
     const user = await requireUserSession();
     if (!user) {
       throw new Error("User not authenticated");
@@ -56,7 +55,6 @@ export async function updateInfoAction(payload: UserInfoData) {
     console.error(e);
     if (e instanceof ZodError) {
       const fieldErrors = z.flattenError(e).fieldErrors;
-      console.log("FIELD ERRORS", fieldErrors)
       return { ok: false, fieldErrors, message: "Updates failed to save." } as const;
     }
     if (e instanceof Error) {
@@ -114,7 +112,6 @@ export async function uploadImages(files: File[]) {
 
 export async function insertPost(payload: PostData) {
   try {
-    console.log("INSERT POST PAYLOAD", payload)
     const user = await requireUserSession();
     if (!user) {
       throw new Error("User not authenticated");
@@ -161,7 +158,6 @@ export async function insertPost(payload: PostData) {
     }    
 
     const levels = await getLevelSettings(prevLevel);
-    console.log(levels)
     const { totalExp: requiredExpToLevelUp } = levels[0];
 
     const realBalanceLog = await db
@@ -177,19 +173,6 @@ export async function insertPost(payload: PostData) {
     const gainedUserBalance = prevBalance + (postPts || 0);
     const isLevelup = gainedUserExp >= (requiredExpToLevelUp || 0);
 
-    console.log({
-      prevExp,
-      prevBalance,
-      prevLevel,
-      postExp,
-      postPts,
-      allowedUserLevel,
-      gainedUserExp,
-      gainedUserBalance,
-      requiredExpToLevelUp,
-      isLevelup
-    });
-
     const afterLevel = isLevelup ? prevLevel + 1 : prevLevel
 
     await db.transaction(async (tx) => {
@@ -202,8 +185,6 @@ export async function insertPost(payload: PostData) {
         media: data.media || null,
         categoryId: parseInt(data.categoryId)
       }).$returningId();
-
-      console.log("POST INSERT:", postInsert);
 
       const referenceTable = `T_POST_${categoryValue.toUpperCase()}`;
       const referenceId = postInsert[0].id;
@@ -262,7 +243,6 @@ export async function insertPost(payload: PostData) {
 
 export async function updatePost(payload: PostData) {
   try {
-    console.log("INSERT POST PAYLOAD", payload)
     const user = await requireUserSession();
     if (!user) {
       throw new Error("User not authenticated");
@@ -300,8 +280,6 @@ export async function updatePost(payload: PostData) {
         eq(posts.categoryId, categoryId),
         eq(posts.userId, userId),
       ));
-
-      console.log("POST update:", postUpdate);
     });
 
     revalidatePath("/profile/posts/edit");

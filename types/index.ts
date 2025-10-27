@@ -199,7 +199,22 @@ export type PostData = {
   commentCount: number | null;
   viewCount: number;
   categoryId: number | null;
-  category: "casino" | "freeboard" | "minigames" | "reviewboard" | "slot" | "sports" | "eventmember" | "eventverified" | "eventtazza" | "scamcasino" | "slotreviewboard" | "minigame" | "fishgame";
+  category: "casino" | 
+    "freeboard" | 
+    "minigames" | 
+    "reviewboard" | 
+    "slot" | 
+    "sports" | 
+    "eventmember" | 
+    "eventverified" | 
+    "eventtazza" | 
+    "scamcasino" | 
+    "slotreviewboard" | 
+    "minigame" | 
+    "fishgame" | 
+    "announcements" | 
+    "guide" | 
+    "introduction";
   categoryTitleKr: string | null;
   allowedViewLevel: number | null;
   allowedCommentLevel: number | null;
@@ -237,4 +252,23 @@ export type TopUserPointsData = {
   rank: number;
   points: number | null;
   name: string;
+}
+
+export type AffiliateData = {
+  id: number;
+  companyName: string;
+  minExchangeAmount: number;
+  maxExchangeAmount: number;
+}
+
+export type PointExchangeFormData = {
+  amount: number;
+}
+
+export type PointExchangeHistory = {
+  id: number;
+  username: string | null;
+  amount: number | null;
+  status: number;
+  regDatetime: Date | null;
 }

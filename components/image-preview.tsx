@@ -17,7 +17,6 @@ export default function ImagePreview({ initialValue }: Prop & DropzoneProps) {
   useEffect(() => {
     if (initialValue) {
       const initialPreview: string[] = isValidJSON(initialValue) ? JSON.parse(initialValue) : [];
-      console.log("INITIAL IMAGE", initialPreview)
       setFilePreview(initialPreview)
     }
   }, [initialValue]);

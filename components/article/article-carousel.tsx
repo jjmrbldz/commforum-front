@@ -33,8 +33,6 @@ export default function ArticleCarousel({data}: {data: PostData[]}) {
     return data.filter(item => item.category === categoryFilter)
   }, [categoryFilter]);
 
-  console.log("fitlered list",list)
-
   // useEffect(() => {
   //   setList((prev) => prev.filter(item => item.category === categoryFilter))
   // }, [categoryFilter])
