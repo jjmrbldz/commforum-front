@@ -201,16 +201,16 @@ export const menuList: {
     "href": "/",
     "children": [
       {
-        "title": "타짜 공지사항", // (Tazza Announcements)
-        "href": "/tazza/announcements"
+        "title": "타짜 공지사항", // (Tazza Announcements) ✅
+        "href": "/posts/announcements"
       },
       {
         "title": "타짜 가이드", // (Tazza Guide)
-        "href": "/tazza/guide"
+        "href": "/posts/guide"
       },
       {
         "title": "가입인사", // (Introduction / Greetings for New Members)
-        "href": "/tazza/introduction"
+        "href": "/posts/introduction"
       },
       {
         "title": "1:1문의", // (1:1 Inquiry / Private Inquiry)
@@ -246,7 +246,7 @@ export const menuList: {
       },
       {
         "title": "슬롯 후기 게시판", // (Slot Review Board) ✅
-        "href": "/posts/reviewboardslot"
+        "href": "/posts/slotreviewboard"
       },
       {
         "title": "회원 이벤트", // (Member Event) ✅
