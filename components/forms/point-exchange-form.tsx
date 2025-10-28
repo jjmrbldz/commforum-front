@@ -9,9 +9,10 @@ import { Button } from "../ui/button";
 import { Dispatch, SetStateAction, useTransition } from "react";
 import { cn } from "@/lib/utils";
 import { pointExchangesSchema } from "@/db/validations/point-exchange";
-import { AffiliateData, PointExchangeFormData } from "@/types";
+import { AffiliateData, PointExchangeFormData, PointExchangePayload } from "@/types";
 import { NumberFormatter } from "../number-formatter";
 import {exchangePoint} from "@/app/point-exchange/actions";
+import { useUserStore } from "@/store/use-user-store";
 
 interface Props {
   affiliate: AffiliateData;
@@ -27,8 +28,9 @@ const formatWithCommas = (value: string) => {
 
 export default function PointExchangeForm({affiliate,setAffilliate}: Props) {
   const [isPending, startTransition] = useTransition();
+  const user = useUserStore(s => s.user);
   const form = useForm<PointExchangeFormData>({
-    resolver: zodResolver(pointExchangesSchema(affiliate || {companyName: "", minExchangeAmount: 0, maxExchangeAmount: 0})),
+    resolver: zodResolver(pointExchangesSchema(affiliate || {nameKor: "", minimumAmount: 0, maximumAmount: 0, type: ""})),
     defaultValues: {
       amount: 0,
     },
@@ -37,9 +39,30 @@ export default function PointExchangeForm({affiliate,setAffilliate}: Props) {
 
   function onSubmit(data: PointExchangeFormData) {
     console.log(data)
-
+    if (data.amount > (user?.point || 0)) {
+      toast.error("포인트가 부족합니다.", {
+        position: "top-right",
+      });
+      return;
+    }
+    if (affiliate.type === "bank" && (!user?.bankName || !user.accountNumber)) {
+      toast.error("먼저 마이페이지에서 은행 정보를 설정해주세요.", {
+        position: "top-right",
+      });
+      return;
+    }
     startTransition(async () => {
-      const res = await exchangePoint({amount: data.amount, affiliateId: affiliate.id});
+      const payload: PointExchangePayload = {
+        amount: data.amount, 
+        type: affiliate.type,
+        note: affiliate.nameKor,
+        note1: affiliate.type === "bank" ? 
+          `${user?.bankName} | ${user?.name} | ${user?.accountNumber}` : 
+          affiliate.type?.toUpperCase(),
+        note2: "Pending"
+      }
+
+      const res = await exchangePoint(payload);
       
       if (!res.ok) {
         if (res.fieldErrors) {
@@ -48,19 +71,19 @@ export default function PointExchangeForm({affiliate,setAffilliate}: Props) {
           });
         } else {
           toast.error(res.message, {
-            position: "bottom-right",
+            position: "top-right",
           });
         }
         return;
       }
       toast.success(res.message, {
-        position: "bottom-right",
+        position: "top-right",
       });
       setAffilliate(undefined);
     })
   }
 
-  return (
+  return affiliate && (
     <Form {...form}>
       <form 
         onSubmit={form.handleSubmit(onSubmit)} 
@@ -68,8 +91,14 @@ export default function PointExchangeForm({affiliate,setAffilliate}: Props) {
         <div className={cn("flex flex-col gap-3")}>
           <div className="">
             <div className="">
-              <div className="">{affiliate?.companyName}</div>
-              <div className=""><span className="text-muted-foreground">MIN:</span> <NumberFormatter value={affiliate?.minExchangeAmount} suffix=" 원" /> <span className="text-muted-foreground">MAX:</span> <NumberFormatter value={affiliate?.maxExchangeAmount} suffix=" 원" /></div>
+              <div className="">{affiliate?.nameKor}</div>
+              <div className="">
+                <span className="text-muted-foreground">MIN: </span> 
+                <NumberFormatter value={affiliate?.minimumAmount} suffix=" 원" /> 
+                &nbsp; &nbsp;
+                <span className="text-muted-foreground">MAX: </span> 
+                <NumberFormatter value={affiliate?.maximumAmount} suffix=" 원" />
+              </div>
             </div>
           </div>
           <FormField 
@@ -88,8 +117,8 @@ export default function PointExchangeForm({affiliate,setAffilliate}: Props) {
                         ? formatWithCommas(String(field.value))
                         : ""
                     }
-                    min={affiliate?.minExchangeAmount}
-                    max={affiliate?.maxExchangeAmount}
+                    min={affiliate?.minimumAmount}
+                    max={affiliate?.maximumAmount}
                     onChange={(e) => {
                       const formatted = formatWithCommas(e.target.value);
                       e.target.value = formatted;
@@ -103,6 +132,28 @@ export default function PointExchangeForm({affiliate,setAffilliate}: Props) {
               </FormItem>
             ))}
           />
+
+          {affiliate.type === "bank" && (
+            <div className="my-2 p-2 bg-slate-50 rounded">
+              <div className="">
+                <div className="mb-1"><span className="text-muted-foreground">Affiliate Type:</span> {affiliate?.type?.toUpperCase()}</div>
+                  <div className="">
+                    <div className="">
+                      <span className="text-muted-foreground">Bank name:</span> 
+                      <span>{user?.bankName}</span>
+                    </div>
+                    <div className="">
+                      <span className="text-muted-foreground">Account name:</span> 
+                      <span>{user?.name}</span>
+                    </div>
+                    <div className="">
+                      <span className="text-muted-foreground">Account no.:</span> 
+                      <span>{user?.accountNumber}</span>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          )}
           
           <Button size={'sm'} className="mt-2" type="submit" disabled={!form.formState.isValid} loading={isPending}>
             <span>Submit</span>

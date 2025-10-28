@@ -27,6 +27,8 @@ export default function ProfileForm({user}:{user:UserSession}) {
       password: undefined,
       passwordConfirm: undefined,
       name: user?.name,
+      bankName: user?.bankName,
+      accountNumber: user?.accountNumber,
       nickname: user?.nickname,
       email: user?.email,
       phone: user?.phone,
@@ -164,6 +166,48 @@ export default function ProfileForm({user}:{user:UserSession}) {
                       placeholder="한글2자, 영문4자 이상"
                       autoComplete="nickname"
                       {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              ))}
+            />
+            <FormField 
+              control={form.control}
+              name="bankName"
+              render={(({field}) => (
+                <FormItem className="">
+                  <FormLabel htmlFor="bankName">은행명</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="bankName"
+                      placeholder=""
+                      autoComplete="bankName"
+                      {...field}
+                      value={field.value || ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              ))}
+            />
+            <FormField 
+              control={form.control}
+              name="accountNumber"
+              render={(({field}) => (
+                <FormItem className="">
+                  <FormLabel htmlFor="accountNumber">계좌번호</FormLabel>
+                  <FormControl>
+                    <Input
+                      inputMode="numeric"
+                      id="accountNumber"
+                      placeholder=""
+                      autoComplete="accountNumber"
+                      value={field.value || ""}
+                      onChange={(e) => {
+                        const onlyNumbers = e.target.value.replace(/\D/g, "");
+                        field.onChange(onlyNumbers);
+                      }}
                     />
                   </FormControl>
                   <FormMessage />

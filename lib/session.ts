@@ -120,6 +120,8 @@ export async function getUserSession() {
       balance: users.balance,
       status: users.status,
       name: users.name,
+      bankName: users.bankName,
+      accountNumber: users.accountNumber,
       nickname: users.nickname,
       point: users.point,
       exp: users.exp,

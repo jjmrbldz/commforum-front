@@ -19,6 +19,7 @@ export default async function ExchangeHistoryList({data, totalItems = 0, totalPa
               <TableRow>
                 <TableHead className="text-center font-bold">번호</TableHead>
                 <TableHead className="text-center font-bold">회원아이디</TableHead>
+                <TableHead className="text-center font-bold">교환업체명</TableHead>
                 <TableHead className="text-center font-bold">교환금액</TableHead>
                 <TableHead className="text-center font-bold">교환상태</TableHead>
                 <TableHead className="text-center font-bold">신청일</TableHead>

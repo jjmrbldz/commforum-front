@@ -22,13 +22,13 @@ export default function AffiliateRow({item, setAffilliate}: Props) {
         {item.id}
       </TableCell>
       <TableCell className="text-center">
-        {item.companyName}
+        {item.nameKor}
       </TableCell>
       <TableCell className="text-center">
-        <NumberFormatter value={item.minExchangeAmount} suffix=" 원" />
+        <NumberFormatter value={item.minimumAmount} suffix=" 원" />
       </TableCell>
       <TableCell className="text-center">
-        <NumberFormatter value={item.maxExchangeAmount} suffix=" 원" />
+        <NumberFormatter value={item.maximumAmount} suffix=" 원" />
       </TableCell>
       <TableCell className="text-center">
         {user ? (

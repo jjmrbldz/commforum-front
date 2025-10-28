@@ -1,4 +1,6 @@
+import { affiliateSettings } from "@/db/schema/affiliate";
 import { User } from "@/db/schema/user";
+import { withdrawalLogs } from "@/db/schema/withdrawal-log";
 import { LoginData } from "@/db/validations/login";
 import { loginFormSchema, searchFormSchema } from "@/lib/schema/form";
 import { ImageProps } from "next/image";
@@ -151,6 +153,8 @@ export type UserSession = Pick<User,
 "balance" |
 "status" |
 "name" |
+"bankName" |
+"accountNumber" |
 "nickname" |
 "point" |
 "exp"
@@ -254,12 +258,8 @@ export type TopUserPointsData = {
   name: string;
 }
 
-export type AffiliateData = {
-  id: number;
-  companyName: string;
-  minExchangeAmount: number;
-  maxExchangeAmount: number;
-}
+export type AffiliateData = typeof affiliateSettings.$inferSelect
+export type PointExchangePayload = typeof withdrawalLogs.$inferInsert
 
 export type PointExchangeFormData = {
   amount: number;
@@ -270,5 +270,6 @@ export type PointExchangeHistory = {
   username: string | null;
   amount: number | null;
   status: number;
+  note: string | null;
   regDatetime: Date | null;
 }

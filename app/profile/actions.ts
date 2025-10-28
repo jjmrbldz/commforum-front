@@ -29,7 +29,7 @@ export async function updateInfoAction(payload: UserInfoData) {
 
     const data = updateInfoSchema.parse({...payload, username: user.username});
 
-    const {name, nickname, email, phone}  = data;
+    const {name, nickname, email, phone, bankName, accountNumber}  = data;
 
     let newPassword = "";
 
@@ -45,12 +45,14 @@ export async function updateInfoAction(payload: UserInfoData) {
           nickname,
           email,
           phone,          
+          bankName,          
+          accountNumber,          
           ...(payload.password ? {password: newPassword} : {}),          
         })
         .where(eq(users.id, user.id));
     })
 
-    return { ok: true, message: "Successfully registered." } as const;
+    return { ok: true, message: "Successfully updated." } as const;
   } catch (e) {
     console.error(e);
     if (e instanceof ZodError) {

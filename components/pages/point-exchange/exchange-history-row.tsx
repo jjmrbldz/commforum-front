@@ -27,6 +27,9 @@ export default function ExchangeHistoryRow({item}: Props) {
         {item.username}
       </TableCell>
       <TableCell className="text-center">
+        {item.note}
+      </TableCell>
+      <TableCell className="text-center">
         <NumberFormatter value={item.amount} suffix=" 원" />
       </TableCell>
       <TableCell className="text-center">
