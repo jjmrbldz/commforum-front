@@ -1,8 +1,11 @@
+"use client";
+
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { PostCategory, type PostRow } from "@/db/schema/posts";
 import PostRowItem from "./post-row";
 import { PostData } from "@/types";
 import { Paginate } from "@/components/paginate";
+import { usePathname } from "next/navigation";
 
 interface Props {
   data: PostData[];
@@ -11,6 +14,7 @@ interface Props {
 }
 
 export default function PostTable({data, totalItems = 0, totalPages = 0}: Props) {
+  const pathName = usePathname();
   return (
     <div className="space-y-2">
       <div className="overflow-x-auto max-w-[calc(100vw-1rem)]">
@@ -26,7 +30,7 @@ export default function PostTable({data, totalItems = 0, totalPages = 0}: Props)
           </TableHeader>
           <TableBody>
             {data.map((item, index) => (
-              <PostRowItem key={index} {...item} />
+              <PostRowItem key={index} item={item} isNoticePage={pathName.includes("announcements")} />
             ))}
           </TableBody>
           {data.length === 0 && (

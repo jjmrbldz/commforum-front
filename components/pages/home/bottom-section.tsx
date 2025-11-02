@@ -2,9 +2,18 @@ import WidgetTitle from "@/components/widget/widget-title";
 import Article from "@/components/article/article";
 import SidebarTitle from "@/components/sidebar-title";
 import { NumberFormatter } from "@/components/number-formatter";
+import { getPostsByCategory } from "@/db/query/posts";
+import ContentPlainText from "@/components/content-plaintext";
+import { formatDate, parseImage } from "@/lib/utils";
 
 
-export default function BottomSection() {
+export default async function BottomSection() {
+  const scamCasinoPosts = await getPostsByCategory({
+    category: "scamcasino",
+    page: "1",
+    limit: "2",
+  });
+  console.log("SCAMM", scamCasinoPosts)
   return (
     <>
       {/* <div className="">
@@ -15,7 +24,23 @@ export default function BottomSection() {
           <div className="col-span-12 md:col-span-9 py-4">
             <WidgetTitle title={"먹튀카지노"} />
             <div className="grid grid-cols-2 gap-4 my-4">
-              <Article 
+              {(scamCasinoPosts.ok ? scamCasinoPosts.data : [])
+              .map(item => (
+                  <Article 
+                    key={`${item.id}-${item.categoryId}`}
+                    data={{
+                      id: item.id,
+                      title: item.title,
+                      description: <ContentPlainText content={item.content} />,
+                      img: parseImage(item.thumbnail!),
+                      author: item.authorName,
+                      date: formatDate(item.regDatetime!, "MM.DD"),
+                      rating: item.commentCount || undefined,
+                      category: item.category,
+                    }}
+                  />
+              ))}
+              {/* <Article 
                 data={{
                   id: 1,
                   title: "텍스트 유출범이 정의의 기사? 이해 못할 이 영화의 …",
@@ -34,7 +59,7 @@ export default function BottomSection() {
                   date: "2022-03-21",
                   rating: 3
                 }}
-              />
+              /> */}
             </div>
           </div>
           <div className="hidden md:block col-span-3 py-4">

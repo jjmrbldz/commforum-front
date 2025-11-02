@@ -1,6 +1,4 @@
-import { baccBoard, noticeFreeBoard, oEventsBoard, slotsBoard } from "@/lib/constants";
-import WidgetTitle from "../widget/widget-title";
-import Article from "../article/article";
+import { noticeFreeBoard, oEventsBoard } from "@/lib/constants";
 import banner3 from "@/assets/images/banner/banner-3.jpg";
 import BannerCarousel from "./home/banner-carousel";
 import Widget from "../widget/widget";

@@ -1,6 +1,7 @@
 "use client"
 
 import NewBadge from "@/components/new-badge";
+import NoticeBadge from "@/components/notice-badge";
 import { TableCell, TableRow } from "@/components/ui/table";
 import UserLevelBadge from "@/components/user-level-badge";
 import { formatDate, isSameDay } from "@/lib/utils";
@@ -9,7 +10,12 @@ import { PostData } from "@/types";
 import Link from "next/link";
 import { useMemo } from "react";
 
-export default function PostRowItem(item: PostData) {
+interface Props {
+  item: PostData;
+  isNoticePage?: boolean;
+}
+
+export default function PostRowItem({item, isNoticePage}: Props) {
   const user = useUserStore(state => state.user);
   
   const isOwnPost = useMemo(() => user?.id === item.authorId, [user]);
@@ -17,7 +23,10 @@ export default function PostRowItem(item: PostData) {
   return (
     <TableRow className="text-xs">
       <TableCell className="text-center">
-        {item.id}
+        {(!isNoticePage && item.category === "announcements") ? 
+          <NoticeBadge /> : 
+          item.id
+        }
       </TableCell>
       <TableCell className="font-medium hover:text-red-500">
         <Link href={`/posts/${item.category}/${item.id}`} className="hover:underline w-full block" target={isOwnPost ? "_blank" : undefined}>

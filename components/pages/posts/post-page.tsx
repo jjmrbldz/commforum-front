@@ -12,12 +12,13 @@ import { useMemo } from "react";
 interface Props {
   title: string;
   data: PostData[];
+  prependData: PostData[];
   totalItems?: number;
   totalPages?: number;
   category?: string;
 }
 
-export default function PostCategoryPage({title, data, category, totalItems = 0, totalPages = 0}: Props) {
+export default function PostCategoryPage({title, data, prependData, category, totalItems = 0, totalPages = 0}: Props) {
   const siteData = useSiteDataStore(state => state.siteData);
 
   const catProp = useMemo(() => {
@@ -38,7 +39,7 @@ export default function PostCategoryPage({title, data, category, totalItems = 0,
         <NotOkMessage variant={"warn"} title="" message={"No data found"} />
         ) : 
         catProp.layout === "list" ? (
-          <PostTable data={data} totalItems={totalItems} totalPages={totalPages} />
+          <PostTable data={[...prependData, ...data]} totalItems={totalItems} totalPages={totalPages} />
         ) : (
           <PostGrid data={data} totalItems={totalItems} totalPages={totalPages} />
         )

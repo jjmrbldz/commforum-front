@@ -83,7 +83,8 @@ export default function ArticleCarousel({data}: {data: PostData[]}) {
                     img: parseImage(item.thumbnail!),
                     author: item.authorName,
                     date: formatDate(item.regDatetime!, "MM.DD"),
-                    rating: item.commentCount || undefined
+                    rating: item.commentCount || undefined,
+                    category: item.category,
                   }}
                 />
               </CarouselItem>
