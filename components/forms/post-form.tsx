@@ -16,8 +16,12 @@ import { useRouter } from "next/navigation";
 import { PostData as PostDataRes } from "@/types";
 import ImagePreview from "../image-preview";
 import { isValidJSON } from "@/lib/utils";
+import { useUserStore } from "@/store/use-user-store";
+import DateTimePicker from "../date-time-picker";
+import dayjs from "dayjs";
 
 export default function PostForm({data}:{data?: PostDataRes}) {
+  const user = useUserStore(s => s.user);
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const form = useForm<PostData>({
@@ -26,6 +30,7 @@ export default function PostForm({data}:{data?: PostDataRes}) {
       id: data?.id,
       title: data?.title || "",
       content: data?.content || "",
+      schedule: undefined,
       thumbnail: "",
       media: "",
       categoryId: String(data?.categoryId) || "",
@@ -96,6 +101,27 @@ export default function PostForm({data}:{data?: PostDataRes}) {
               </FormItem>
             ))}
           />
+          {user?.isEditor === 1 && (
+            <FormField 
+              control={form.control}
+              name="schedule"
+              render={(({field}) => (
+                <FormItem className="col-span-12">
+                  <FormLabel htmlFor="categoryId">일정 게시물</FormLabel>
+                  <FormControl>
+                    <DateTimePicker
+                      value={field.value}
+                      onChange={(d) => field.onChange(d)}
+                      minuteStep={1}
+                      use12Hour={false}
+                      minDate={dayjs().toDate()}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              ))}
+            />
+          )}
           <FormField 
             control={form.control}
             name="thumbnail"

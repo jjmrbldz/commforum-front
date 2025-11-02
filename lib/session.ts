@@ -125,6 +125,9 @@ export async function getUserSession() {
       nickname: users.nickname,
       point: users.point,
       exp: users.exp,
+      isEditor: users.isEditor,
+      isBlocked: users.isBlocked,
+      isWithdrawn: users.isWithdrawn,
     }).from(users).where(eq(users.id, payload.id)).limit(1);
   
     if (!user[0]) {

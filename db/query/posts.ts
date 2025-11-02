@@ -1,6 +1,6 @@
 "use server"
 
-import { and, asc, count, countDistinct, desc, eq, inArray, like, sql, SQL } from "drizzle-orm";
+import { and, asc, count, countDistinct, desc, eq, inArray, like, lte, sql, SQL } from "drizzle-orm";
 import { db } from "..";
 import { PostCategory, postTables } from "../schema/posts";
 import { PostData, ServerActionResponse } from "@/types";
@@ -97,6 +97,7 @@ export async function getPostsByCategory({category, id, logView, type, term, use
     .where(
       and(
         eq(postTable.status, 1),
+        lte(postTable.regDatetime, new Date()),
         ...filters
       )
     )
@@ -115,6 +116,7 @@ export async function getPostsByCategory({category, id, logView, type, term, use
         .where(
           and(
             eq(postTable.status, 1),
+            lte(postTable.regDatetime, new Date()),
             ...filters
           )
         );  
@@ -254,7 +256,9 @@ export async function getAllPosts(filter?: AllPostFilterData): ServerActionRespo
       .innerJoin(categories, eq(categories.id, allPosts.categoryId))
       .innerJoin(users, eq(users.id, allPosts.authorId))
       .where(and(
-        ...filters
+        eq(allPosts.postStatus, 1),
+        lte(allPosts.regDatetime, new Date()),
+        ...filters,
       ))
       .orderBy(order)
       .$dynamic();
@@ -270,6 +274,8 @@ export async function getAllPosts(filter?: AllPostFilterData): ServerActionRespo
       .select({ count: count() })
       .from(allPosts)
       .where(and(
+        eq(allPosts.postStatus, 1),
+        lte(allPosts.regDatetime, new Date()),
         ...filters
       ));
 

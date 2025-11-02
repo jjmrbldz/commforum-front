@@ -185,7 +185,8 @@ export async function insertPost(payload: PostData) {
         content: data.content,
         thumbnail: data.thumbnail || null,
         media: data.media || null,
-        categoryId: parseInt(data.categoryId)
+        categoryId: parseInt(data.categoryId),
+        regDatetime: data.schedule || undefined,
       }).$returningId();
 
       const referenceTable = `T_POST_${categoryValue.toUpperCase()}`;

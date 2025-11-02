@@ -157,6 +157,9 @@ export type UserSession = Pick<User,
 "accountNumber" |
 "nickname" |
 "point" |
+"isEditor" |
+"isBlocked" |
+"isWithdrawn" |
 "exp"
 > | undefined;
 

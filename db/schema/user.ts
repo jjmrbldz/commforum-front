@@ -1,5 +1,5 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
-import { boolean, datetime, double, int, mysqlTable, varchar } from "drizzle-orm/mysql-core";
+import { boolean, datetime, double, int, mysqlTable, tinyint, varchar } from "drizzle-orm/mysql-core";
 
 export const users = mysqlTable('T_USER', {
   id: int("id").autoincrement().notNull().primaryKey(),
@@ -27,6 +27,9 @@ export const users = mysqlTable('T_USER', {
   token: varchar("tu_token", { length: 255 }),
   exp: double("tu_exp"),
   emailOptin: boolean("tu_email_optin"),
+  isBlocked: tinyint("tu_is_blocked").default(0),
+  isWithdrawn: tinyint("tu_is_withdrawn").default(0),
+  isEditor: tinyint("tu_is_editor").default(0),
 })
 
 export type User = InferSelectModel<typeof users>;  // rows you SELECT

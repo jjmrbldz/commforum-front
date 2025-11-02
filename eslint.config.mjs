@@ -27,6 +27,7 @@ const eslintConfig = [
         },
       ],
       "no-script-url": "off",
+      "prefer-const": "off",
     },
   },
 ];
