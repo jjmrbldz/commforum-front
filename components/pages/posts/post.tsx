@@ -16,15 +16,17 @@ export default async function Post({ data } : { data: PostData }) {
   return (
     <div className="space-y-4">
       <PostInfo data={data} />
-      <div className="aspect-video">
-        <Image 
-          width={900}
-          height={300}
-          className="!h-full !w-full object-cover"
-          src={`${process.env.NEXT_PUBLIC_MEDIA_PATH}${parseImage(data.thumbnail || "", true)}`}
-          alt=""
-        />
-      </div>
+      {data.thumbnail && (  
+        <div className="aspect-video">
+          <Image 
+            width={900}
+            height={300}
+            className="!h-full !w-full object-cover"
+            src={`${process.env.NEXT_PUBLIC_MEDIA_PATH}${parseImage(data.thumbnail || "", true)}`}
+            alt=""
+          />
+        </div>
+      )}
       <article 
         // suppressHydrationWarning
         className="sr-only"

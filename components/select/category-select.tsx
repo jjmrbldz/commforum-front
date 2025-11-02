@@ -26,12 +26,12 @@ export default function CategorySelect({
 
     if (!user) return categories.map(item => ({
       value: String(item.id),
-      label: `${item.titleKr || ""} ${process.env.NODE_ENV === "development" && `(${item.title})`}`
+      label: `${item.titleKr || ""} ${process.env.NODE_ENV === "development" ? `(${item.title})`: ''}`
     })) || [];
 
     const options =  categories.filter(item => item.allowedUserLevel <= (user?.level || 1)).map(item => ({
       value: String(item.id),
-      label: `${item.titleKr || ""} ${process.env.NODE_ENV === "development" && `(${item.title})`}`
+      label: `${item.titleKr || ""} ${process.env.NODE_ENV === "development" ? `(${item.title})`: ''}`
     })) || [];
 
     if (search) options.unshift({value: "all", label: "전체"})
