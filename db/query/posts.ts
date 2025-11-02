@@ -169,12 +169,26 @@ export async function getAllPosts(filter?: AllPostFilterData): ServerActionRespo
 
     const freeBoardPostTable = postTables['freeboard'];
     const reviewBoardPostTable = postTables['reviewboard'];
-    const casinoPostTable = postTables['casino'];
-    const slotPostTable = postTables['slot'];
+    const casinoReviewPostTable = postTables['casino'];
+    const slotReviewPostTable = postTables['slot'];
     const sportsPostTable = postTables['sports'];
     const minigamesPostTable = postTables['minigames'];
+    const memberEventPostTable = postTables['eventmember'];
+    const verifiedEventPostTable = postTables['eventverified'];
+    const eventTazzaPostTable = postTables['eventtazza'];
+    const scamCasinoPostTable = postTables['scamcasino'];
+    const noticePostTable = postTables['announcements'];
+    const tazzaGuidePostTable = postTables['guide'];
+    const tazzaGreetingPostTable = postTables['introduction'];
 
-    const postTablesArray = [freeBoardPostTable, reviewBoardPostTable, casinoPostTable, slotPostTable, sportsPostTable, minigamesPostTable];
+    const postTablesArray = [
+      freeBoardPostTable, reviewBoardPostTable, 
+      casinoReviewPostTable, slotReviewPostTable, 
+      sportsPostTable, minigamesPostTable,
+      memberEventPostTable, verifiedEventPostTable,
+      eventTazzaPostTable, scamCasinoPostTable, noticePostTable,
+      tazzaGuidePostTable, tazzaGreetingPostTable
+    ];
 
     const allPostTables = postTablesArray.map((table) => 
       db.select({
