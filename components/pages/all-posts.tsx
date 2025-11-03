@@ -2,12 +2,19 @@ import { noticeFreeBoard, oEventsBoard } from "@/lib/constants";
 import banner3 from "@/assets/images/banner/banner-3.jpg";
 import BannerCarousel from "./home/banner-carousel";
 import Widget from "../widget/widget";
-import { getThreeBoardPost } from "@/app/actions";
+import { getHomePosts } from "@/app/actions";
 import ArticleCarousel from "../article/article-carousel";
 import { parseImage } from "@/lib/utils";
+import { getAllPosts } from "@/db/query/posts";
 
 export default async function AllPosts() {
-  const result = await getThreeBoardPost();
+  const result = await getHomePosts();
+  const bestPosts = await getAllPosts({
+    orderBy: "likes",
+    sortBy: "desc",
+    page: "1",
+    limit: "20",
+  });
 
   return (
     <div className="col-span-12 md:col-span-9 py-4">
@@ -76,8 +83,8 @@ export default async function AllPosts() {
       <Widget {...{
         title: "보증 바카라 카지노",
         data: result.data
-          .slice(0, 5)
           .filter(item => item.category === "casino")
+          .slice(0, 5)
           .map(item => ({
             id: item.id, 
             category: item.category, 
@@ -92,8 +99,8 @@ export default async function AllPosts() {
       <Widget {...{
         title: "보증 슬롯 카지노",
         data: result.data
-          .slice(0, 5)
           .filter(item => item.category === "slot")
+          .slice(0, 5)
           .map(item => ({
             id: item.id, 
             category: item.category, 
@@ -107,11 +114,27 @@ export default async function AllPosts() {
       }} />
       <Widget {...{
         title: "진행중 이벤트",
+        data: result.data
+          .filter(item => item.category === "eventtazza")
+          .slice(0, 5)
+          .map(item => ({
+            id: item.id, 
+            category: item.category, 
+            title: item.title, 
+            img: `${process.env.NEXT_PUBLIC_MEDIA_PATH}/${parseImage(item.thumbnail!)}`
+          })
+        ),
+        path: '/posts', 
+        rootClassname: 'my-4',
+        layout: 'basic-gallery',
+      }} />
+      {/* <Widget {...{
+        title: "진행중 이벤트",
         data: oEventsBoard,
         path: '/board', 
         rootClassname: 'my-4',
         layout: 'basic-gallery',
-      }} />
+      }} /> */}
       {/* <Widget {...{
         title: "스페셜",
         data: specialBoard,
@@ -127,8 +150,16 @@ export default async function AllPosts() {
       <div className="grid grid-cols-2 gap-4">  
         <Widget {...{
           title: "베스트글",
-          data: noticeFreeBoard,
-          path: '/board', 
+          data: bestPosts.ok ? bestPosts.data
+            .map(item => ({
+              id: item.id, 
+              category: item.category, 
+              title: item.title, 
+              regDatetime: item.regDatetime,
+              // img: `${process.env.NEXT_PUBLIC_MEDIA_PATH}/${parseImage(item.thumbnail!)}`
+            })
+          ) : [],
+          path: '/posts', 
           rootClassname: '',
           hasItemPrefix: false,
           carouselSize: 1,
@@ -136,12 +167,23 @@ export default async function AllPosts() {
         }} />
         <Widget {...{
           title: "공지사항",
-          data: noticeFreeBoard.slice(2, 4),
-          path: '/board', 
+          data: result.data
+            .filter(item => item.category === "announcements")
+            .slice(0, 5)
+            .map(item => ({
+              id: item.id, 
+              category: item.category, 
+              title: item.title, 
+              regDatetime: item.regDatetime,
+              // img: `${process.env.NEXT_PUBLIC_MEDIA_PATH}/${parseImage(item.thumbnail!)}`
+            })
+          ),
+          path: '/posts', 
           rootClassname: '',
           hasItemPrefix: false,
           carouselSize: 1,
           addCategory: true,
+          showAuthor: true,
           showRank: false,
         }} />
       </div>

@@ -21,8 +21,8 @@ export default function LeftPanel() {
       />
       <Widget {...{
         title: "알림장",
-        data: noticeFreeBoard,
-        path: '/board', 
+        data: siteData?.noticePosts || [],
+        path: '/posts', 
         rootClassname: '',
         hasItemPrefix: false,
         carouselSize: 1,

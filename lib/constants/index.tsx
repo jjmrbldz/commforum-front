@@ -495,3 +495,18 @@ export const pointsTab = {
     ]
   } as Record<string, TopUserPointsData[]>
 }
+
+export const categoryKrLabel: Record<string, string> = {
+  "casino": "보증 바카라 카지노",
+  "announcements": "타짜 공지사항",
+  "guide": "타짜 가이드",
+  "introduction": "가입인사",
+  "slot": "보증 슬롯 카지노",
+  "freeboard": "자유게시판",
+  "reviewboard": "온카 후기 게시판",
+  "slotreviewboard": "슬롯 후기 게시판",
+  "eventmember": "회원 이벤트",
+  "eventtazza": "타짜 이벤트",
+  "eventverified": "보증 이벤트",
+  "scamcasino": "먹튀 카지노"
+}

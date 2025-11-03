@@ -2,6 +2,7 @@ import { cn, formatDate } from "@/lib/utils";
 import { WidgetItemProps } from "@/types";
 import Link from "next/link"
 import { NumberFormatter } from "../number-formatter";
+import { categoryKrLabel } from "@/lib/constants";
 
 export default function WidgetItem({
   item,
@@ -22,7 +23,7 @@ export default function WidgetItem({
           <div className="bg-yellow-500 min-w-3 min-h-3 rounded-full"></div>
         )
       )}
-      <div className="overflow-hidden whitespace-nowrap text-ellipsis max-w-full">{addCategory && (`${item.category} | `)}{item.title || item.content || item.name}</div>
+      <div className="overflow-hidden whitespace-nowrap text-ellipsis max-w-full">{addCategory && (`${categoryKrLabel[item.category] || ""} | `)}{item.title || item.content || item.name}</div>
       <div className="flex ml-auto">
         {isReviews && (<div className="text-red-500 mr-3">+{item.reviews}</div>)}
         {showAuthor && (<div className="text-slate-500 text-nowrap mr-3">{item.author || item.username || item.authorUsername}</div>)}

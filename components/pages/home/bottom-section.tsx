@@ -13,7 +13,6 @@ export default async function BottomSection() {
     page: "1",
     limit: "2",
   });
-  console.log("SCAMM", scamCasinoPosts)
   return (
     <>
       {/* <div className="">

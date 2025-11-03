@@ -22,7 +22,7 @@ export default function HomeRightPanel() {
       />
       <Widget {...{
         title: "명예의 전당",
-        data: noticeFreeBoard.slice(0, 1),
+        data: siteData?.bestPosts || [],
         path: '/board', 
         rootClassname: '',
         hasItemPrefix: false,

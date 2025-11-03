@@ -91,6 +91,7 @@ export interface WidgetItemProps extends Pick<WidgetCarouselProps, "path" | "isR
     date: string;
     reviews: number;
     category: string;
+    categoryLabel?: string;
     author: string;
     regDatetime: string;
     username: string;

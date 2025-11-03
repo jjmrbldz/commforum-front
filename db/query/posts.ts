@@ -29,7 +29,7 @@ type AllPostFilterData = {
   term?: string;
   page?: string;
   limit?: string;
-  orderBy?: "date" | "views"; // date | views
+  orderBy?: "date" | "views" | "likes"; // date | views
   sortBy?: "asc" | "desc"; // asc | desc
 } | undefined;
 
@@ -224,6 +224,8 @@ export async function getAllPosts(filter?: AllPostFilterData): ServerActionRespo
     if (filter?.category && filter?.category !== "all" && filter?.term) filters.push(eq(allPosts.categoryId, parseInt(filter?.category)));
     if (filter?.orderBy && filter?.orderBy === "date" && filter?.sortBy === "desc") order = desc(allPosts.regDatetime);
     if (filter?.orderBy && filter?.orderBy === "date" && filter?.sortBy === "asc") order = asc(allPosts.regDatetime);
+    if (filter?.orderBy && filter?.orderBy === "likes" && filter?.sortBy === "desc") order = desc(allPosts.likeCount);
+    if (filter?.orderBy && filter?.orderBy === "likes" && filter?.sortBy === "asc") order = asc(allPosts.likeCount);
 
     let baseAllPostsRows = db.with(allPosts)
       .select({

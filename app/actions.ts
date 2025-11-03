@@ -38,12 +38,33 @@ export async function getSiteData() {
 
     const topUserBalance = await getAllUserBalance();
 
+    const bestPosts = await getAllPosts({
+      orderBy: "likes",
+      sortBy: "desc",
+      page: "1",
+      limit: "20",
+    });
+
+    const noticePosts = await getPostsByCategory({
+      category: "announcements",
+      page: "1",
+      limit: "20",
+    });
+
     return { 
       categories, 
       config, 
       user, 
       recentPosts: recentPosts.ok ?
        recentPosts.data
+       .map((item, index) => ({...item, index})) : 
+       [],
+      bestPosts: bestPosts.ok ?
+       bestPosts.data
+       .map((item, index) => ({...item, index})) : 
+       [],
+      noticePosts: noticePosts.ok ?
+       noticePosts.data
        .map((item, index) => ({...item, index})) : 
        [],
       recentComments: recentComments.ok ?
@@ -117,7 +138,7 @@ export async function logoutAction() {
   // redirect('/');
 }
 
-export async function getThreeBoardPost() {
+export async function getHomePosts() {
   try {
     const casinoReviewBoardPosts = await getPostsByCategory({
       category: "casino",
@@ -134,6 +155,16 @@ export async function getThreeBoardPost() {
       page: "1",
       limit: "10",
     });
+    const tazzaEventPosts = await getPostsByCategory({
+      category: "eventtazza",
+      page: "1",
+      limit: "10",
+    });
+    const noticePosts = await getPostsByCategory({
+      category: "announcements",
+      page: "1",
+      limit: "10",
+    });
 
     return { 
       ok: true, data: 
@@ -141,6 +172,8 @@ export async function getThreeBoardPost() {
         ...(casinoReviewBoardPosts?.data ? casinoReviewBoardPosts?.data : []),
         ...(slotreviewBoardPosts?.data ? slotreviewBoardPosts?.data : []),
         ...(freeBoardPosts?.data ? freeBoardPosts?.data : []),
+        ...(tazzaEventPosts?.data ? tazzaEventPosts?.data : []),
+        ...(noticePosts?.data ? noticePosts?.data : []),
       ]
     }
   } catch (error) {

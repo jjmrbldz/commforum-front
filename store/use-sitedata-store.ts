@@ -8,6 +8,8 @@ export interface SiteDataState {
     categories?: CategoryRow[];
     config?: Config,
     recentPosts?: PostData[];
+    bestPosts?: PostData[];
+    noticePosts?: PostData[];
     recentComments?: UserCommentData[];
     topUserBalance?: TopUserPointsData[];
   };
@@ -15,6 +17,8 @@ export interface SiteDataState {
     categories?: CategoryRow[]; 
     config?: Config;
     recentPosts?: PostData[];
+    bestPosts?: PostData[];
+    noticePosts?: PostData[];
     recentComments?: UserCommentData[];
     topUserBalance?: TopUserPointsData[];
   }) => void;
