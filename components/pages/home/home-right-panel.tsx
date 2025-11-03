@@ -4,6 +4,7 @@ import AdBoxImage from "@/components/ads/adbox-img";
 import AuthBox from "@/components/auth/auth-box";
 import Widget from "@/components/widget/widget";
 import { articleWidget, freeBoard, noticeFreeBoard, pointsTab } from "@/lib/constants";
+import { formatDate, parseImage } from "@/lib/utils";
 import { useSiteDataStore } from "@/store/use-sitedata-store";
 
 
@@ -54,8 +55,15 @@ export default function HomeRightPanel() {
       <Widget {...{
         title: "갤러리 유튜브",
         layout: "article",
-        data: articleWidget,
-        path: '/board', 
+        data: siteData?.youtubePosts?.map(item => ({
+          id: item.id, 
+          category: item.category, 
+          title: item.title, 
+          img: parseImage(item.thumbnail!),
+          author: item.authorName,
+          date: formatDate(item.regDatetime!)
+        })) || [],
+        path: '/posts', 
         rootClassname: 'my-4',
         carouselSize: 1,
         hasItemPrefix: false,

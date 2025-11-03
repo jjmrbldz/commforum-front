@@ -51,6 +51,17 @@ export async function getSiteData() {
       limit: "20",
     });
 
+    const youtubePosts = await getAllPosts({
+      type: "content",
+      term: "youtube",
+      orderBy: "date",
+      sortBy: "desc",
+      page: "1",
+      limit: "20",
+    });
+
+    console.log("Youtube Posts:", youtubePosts);
+
     return { 
       categories, 
       config, 
@@ -65,6 +76,10 @@ export async function getSiteData() {
        [],
       noticePosts: noticePosts.ok ?
        noticePosts.data
+       .map((item, index) => ({...item, index})) : 
+       [],
+      youtubePosts: youtubePosts.ok ?
+       youtubePosts.data
        .map((item, index) => ({...item, index})) : 
        [],
       recentComments: recentComments.ok ?

@@ -10,6 +10,7 @@ export interface SiteDataState {
     recentPosts?: PostData[];
     bestPosts?: PostData[];
     noticePosts?: PostData[];
+    youtubePosts?: PostData[];
     recentComments?: UserCommentData[];
     topUserBalance?: TopUserPointsData[];
   };
@@ -19,6 +20,7 @@ export interface SiteDataState {
     recentPosts?: PostData[];
     bestPosts?: PostData[];
     noticePosts?: PostData[];
+    youtubePosts?: PostData[];
     recentComments?: UserCommentData[];
     topUserBalance?: TopUserPointsData[];
   }) => void;
