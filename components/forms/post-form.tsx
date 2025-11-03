@@ -101,6 +101,48 @@ export default function PostForm({data}:{data?: PostDataRes}) {
               </FormItem>
             ))}
           />
+          {form.watch("categoryId") === "12" && (
+            <div className="flex gap-2">
+              <FormField 
+                control={form.control}
+                name="startDate"
+                render={(({field}) => (
+                  <FormItem className="col-span-12">
+                    <FormLabel htmlFor="categoryId">Start Date</FormLabel>
+                    <FormControl>
+                      <DateTimePicker
+                        value={field.value}
+                        onChange={(d) => field.onChange(d)}
+                        minuteStep={1}
+                        use12Hour={false}
+                        minDate={dayjs().toDate()}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                ))}
+              />
+              <FormField 
+                control={form.control}
+                name="endDate"
+                render={(({field}) => (
+                  <FormItem className="col-span-12">
+                    <FormLabel htmlFor="categoryId">End Date</FormLabel>
+                    <FormControl>
+                      <DateTimePicker
+                        value={field.value}
+                        onChange={(d) => field.onChange(d)}
+                        minuteStep={1}
+                        use12Hour={false}
+                        minDate={dayjs().toDate()}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                ))}
+              />
+            </div>
+          )}
           {user?.isEditor === 1 && (
             <FormField 
               control={form.control}

@@ -1,5 +1,5 @@
 import { InferInsertModel, InferSelectModel, sql } from "drizzle-orm";
-import { datetime, index, int, longtext, mysqlTable } from "drizzle-orm/mysql-core";
+import { datetime, index, int, longtext, mysqlTable, varchar } from "drizzle-orm/mysql-core";
 import { Categories } from "./category";
 
 function createPostTable(name: `T_POST_${Categories}`) {
@@ -20,6 +20,11 @@ function createPostTable(name: `T_POST_${Categories}`) {
       updateDatetime: datetime("tp_update_datetime"),
       viewCount: int("tp_view_count").notNull().default(0),
       categoryId: int("tc_id").notNull().default(0),
+      field1: varchar("tp_field_01", { length: 100 }),
+      field2: varchar("tp_field_02", { length: 100 }),
+      field3: varchar("tp_field_03", { length: 100 }),
+      field4: varchar("tp_field_04", { length: 100 }),
+      field5: varchar("tp_field_05", { length: 100 }),
     },
     (t) => ([
       index(`${name}_IdxUser`).on(t.userId),

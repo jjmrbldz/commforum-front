@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { ArticleData } from "@/types";
 import { Clock } from "lucide-react";
 import Image from "next/image";
@@ -38,6 +38,9 @@ export default function Article({
           />
         </div>
         <div className="space-y-2">
+          {data.category === "eventtazza" && data.field1 && data.field2 && (
+            <div className="text-sm">기간: {formatDate(data.field1, "YYYY-MM-DD H시")} - {formatDate(data.field2, "YYYY-MM-DD H시")}</div>
+          )}
           <div className="flex gap-2 justify-between items-center">
             <h3 className={cn("font-bold text-base group-hover:underline line-clamp-1", titleClass)}>{data.title}</h3>
             <span className="text-sm text-red-500">{data.commentCount}</span>

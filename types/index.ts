@@ -135,6 +135,11 @@ export type ArticleData = {
   rating?: number;
   img?: string;
   commentCount?: number;
+  field1?: string | null;
+  field2?: string | null;
+  field3?: string | null;
+  field4?: string | null;
+  field5?: string | null;
 }
 
 export type MySQLError = Error & {
@@ -236,6 +241,11 @@ export type PostData = {
   status?: number | null;
   regDatetime: Date | null;
   updateDateTime: Date | null;
+  field1?: string | null;
+  field2?: string | null;
+  field3?: string | null;
+  field4?: string | null;
+  field5?: string | null;
 }
 
 export type UserCommentData = {

@@ -107,6 +107,11 @@ export default function PostGrid({data, totalItems = 0, totalPages = 0}: Props) 
               date: formatDate(item.regDatetime || ""),
               rating: 0,
               commentCount: item.commentCount || 0,
+              field1: item.field1,
+              field2: item.field2,
+              field3: item.field3,
+              field4: item.field4,
+              field5: item.field5,
             }}
           />
         ))}

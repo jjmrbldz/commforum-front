@@ -89,6 +89,11 @@ export async function getPostsByCategory({category, id, logView, type, term, use
       authorLevel: users.level,
       regDatetime: postTable.regDatetime,
       updateDateTime: postTable.updateDatetime,
+      field1: postTable.field1,
+      field2: postTable.field2,
+      field3: postTable.field3,
+      field4: postTable.field4,
+      field5: postTable.field5,
       ...(isLoggedIn && id ? { likeDislikeType: likeDislikeTable.type } : {})
     })
     .from(postTable)

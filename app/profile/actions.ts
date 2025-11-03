@@ -18,6 +18,7 @@ import { revalidatePath } from "next/cache";
 import path from "path";
 import z, { ZodError } from "zod";
 import bcrypt from "bcrypt";
+import dayjs from "dayjs";
 
 export async function updateInfoAction(payload: UserInfoData) {
   
@@ -187,6 +188,8 @@ export async function insertPost(payload: PostData) {
         media: data.media || null,
         categoryId: parseInt(data.categoryId),
         regDatetime: data.schedule || undefined,
+        field1: data.startDate ? dayjs(data.startDate).format("YYYY-MM-DD HH:mm:ss") : undefined,
+        field2: data.endDate ? dayjs(data.endDate).format("YYYY-MM-DD HH:mm:ss") : undefined,
       }).$returningId();
 
       const referenceTable = `T_POST_${categoryValue.toUpperCase()}`;

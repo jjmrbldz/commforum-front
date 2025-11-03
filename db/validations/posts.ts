@@ -12,6 +12,8 @@ const basePostSchema = createInsertSchema(postTables.freeboard, {
 export const postSchema = basePostSchema.extend({
   categoryId: z.string().min(1, "Category is required"),
   schedule: z.date().optional(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
 });
 
 export type PostData = z.infer<typeof postSchema>;

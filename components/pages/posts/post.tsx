@@ -16,6 +16,9 @@ export default async function Post({ data } : { data: PostData }) {
   return (
     <div className="space-y-4">
       <PostInfo data={data} />
+      {data.category === "eventtazza" && data.field1 && data.field2 && (
+        <div className="text-sm">기간: {formatDate(data.field1, "YYYY-MM-DD H시")} - {formatDate(data.field2, "YYYY-MM-DD H시")}</div>
+      )}
       {data.thumbnail && (  
         <div className="aspect-video">
           <Image 
