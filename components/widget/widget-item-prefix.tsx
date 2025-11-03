@@ -25,7 +25,7 @@ export default function WidgetItemPrefix({
             />
           </div>
           <div className="flex items-center justify-between mt-1">
-            <div className="whitespace-nowrap overflow-hidden text-ellipsis text-xs max-w-full">{item.title}</div>
+            <div className="whitespace-nowrap overflow-hidden text-ellipsis text-xs max-w-[148px]">{item.title}</div>
             {isReviews && <div className="text-red-500 font-bold">+{item.reviews}</div>}
           </div>
         </Link>
