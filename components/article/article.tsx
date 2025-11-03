@@ -3,6 +3,7 @@ import { ArticleData } from "@/types";
 import { Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { PeriodStatusBadge, PeriodStatusTag } from "../period-status-badge";
 
 
 export default function Article({
@@ -25,7 +26,7 @@ export default function Article({
   return (
     <Link href={href ? href : `/posts/${data.category || "freeboard"}/${data.id}`}>
       <article className={cn("flex gap-2 group", orientation === "portrait" ? "flex-col" : "flex-col md:flex-row")}>
-        <div className={orientation === "portrait" ? "" : "md:w-[40%]"}>
+        <div className={cn("relative", orientation === "portrait" ? "" : "md:w-[40%]")}>
           <Image 
             className={cn(
               "rounded w-full object-cover dark:opacity-50", 
@@ -36,13 +37,18 @@ export default function Article({
             src={data.img ? `${process.env.NEXT_PUBLIC_MEDIA_PATH}${data.img}` : '/images/placeholder.jpg'} 
             alt="Article 1"
           />
+          {data.category === "eventtazza" && <PeriodStatusTag startDate={data.field1} endDate={data.field2} />} 
+          {data.category === "casino" || data.category === "slot"  && <PeriodStatusTag isHot />} 
         </div>
         <div className="space-y-2">
           {data.category === "eventtazza" && data.field1 && data.field2 && (
             <div className="text-sm">기간: {formatDate(data.field1, "YYYY-MM-DD H시")} - {formatDate(data.field2, "YYYY-MM-DD H시")}</div>
           )}
           <div className="flex gap-2 justify-between items-center">
-            <h3 className={cn("font-bold text-base group-hover:underline line-clamp-1", titleClass)}>{data.title}</h3>
+            <h3 className={cn("font-bold text-base group-hover:underline line-clamp-1", titleClass)}>
+              {data.category === "eventtazza" && <PeriodStatusBadge className="mr-1" startDate={data.field1} endDate={data.field2} />} 
+              {data.title}
+            </h3>
             <span className="text-sm text-red-500">{data.commentCount}</span>
           </div>
           {!noDesc && (<div className="line-clamp-2 text-muted-foreground">{data.description}</div>)}

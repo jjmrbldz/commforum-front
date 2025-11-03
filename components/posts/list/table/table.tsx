@@ -34,7 +34,7 @@ export default function PostTable({data, totalItems = 0, totalPages = 0}: Props)
             ))}
           </TableBody>
           {data.length === 0 && (
-            <TableCaption>No posts found.</TableCaption>
+            <TableCaption>등록된 글이 없습니다.</TableCaption>
           )}
         </Table>
       </div>

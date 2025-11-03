@@ -146,7 +146,7 @@ export async function getPostsByCategory({category, id, logView, type, term, use
 
     const postTableRows = await basePostTableRows;
     
-    if (postTableRows.length === 0) return { ok: true, data: postTableRows, message: "No posts found." };
+    if (postTableRows.length === 0) return { ok: true, data: postTableRows, message: "등록된 글이 없습니다." };
 
     const isAllowed = isLoggedIn && ((user.level || 1) >= postTableRows[0].allowedViewLevel)
 

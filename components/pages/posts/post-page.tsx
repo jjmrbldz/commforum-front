@@ -36,7 +36,7 @@ export default function PostCategoryPage({title, data, prependData, category, to
       <PageHeader title={catProp.titleKr!} />
       <SearchForm defaultCategory={String(catProp.categoryId)} />
       {data.length === 0 ? (
-        <NotOkMessage variant={"warn"} title="" message={"No data found"} />
+        <NotOkMessage variant={"warn"} title="" message={"등록된 글이 없습니다."} />
         ) : 
         catProp.layout === "list" ? (
           <PostTable data={[...prependData, ...data]} totalItems={totalItems} totalPages={totalPages} />
