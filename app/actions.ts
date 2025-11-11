@@ -60,8 +60,6 @@ export async function getSiteData() {
       limit: "20",
     });
 
-    console.log("Youtube Posts:", youtubePosts);
-
     return { 
       categories, 
       config, 

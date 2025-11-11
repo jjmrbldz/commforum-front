@@ -7,7 +7,7 @@ import { SearchButton } from "@/components/search-button"
 import { menuList } from "@/lib/constants"
 import { MenuButton } from "@/components/menu-button"
 import Image from "next/image"
-import logo from "@/assets/images/eyoom-logo.png"
+import logo from "@/assets/images/tazza-logo-m.png"
 import { useSiteDataStore } from "@/store/use-sitedata-store"
 import HeaderMenu from "./header-menu"
 
@@ -16,7 +16,7 @@ export default function BotHeader() {
 
   return (
     <div className="sticky top-0 z-2 bg-header md:bg-white/70 dark:bg-header/70 backdrop-blur-md">
-      <div className="max-w-7xl py-4 px-2 md:px-0 m-auto">
+      <div className="max-w-7xl py-2 md:py-4 px-2 md:px-0 m-auto">
         <NavigationMenu viewport={false}>
           <NavigationMenuList className="flex-0 md:flex-1">
             <div className="text-center">
@@ -24,7 +24,7 @@ export default function BotHeader() {
             </div>
             <div className="md:hidden ml-3">
               <Link href={'/'}>
-                <Image width={78} height={40} src={logo} alt="Logo" />
+                <Image width={110} height={80} src={logo} alt="Logo" />
               </Link>
             </div>
             {menuList.map((item, index) => <HeaderMenu key={index} path={item.href} title={item.title || ""} sublinks={item.children} />)}

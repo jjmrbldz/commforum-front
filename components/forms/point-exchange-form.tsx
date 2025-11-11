@@ -38,7 +38,6 @@ export default function PointExchangeForm({affiliate,setAffilliate}: Props) {
   });
 
   function onSubmit(data: PointExchangeFormData) {
-    console.log(data)
     if (data.amount > (user?.point || 0)) {
       toast.error("포인트가 부족합니다.", {
         position: "top-right",

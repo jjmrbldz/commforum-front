@@ -13,7 +13,7 @@ export default function TopHeader() {
   const router = useRouter();
 
   return (
-    <div className="border-b border-gray-700">
+    <div className="relative z-1">
       <div className="flex items-center max-w-7xl m-auto text-xs py-4 px-4 md:px-0 gap-4 text-white font-light">
         <Link href={'/online-users'}>
           <div className="flex items-center gap-1">

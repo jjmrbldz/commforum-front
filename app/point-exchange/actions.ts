@@ -22,7 +22,6 @@ export async function exchangePoint(payload: PointExchangePayload) {
       return { ok: false, message: "You need to login first." } as const; 
     }
     const { id: userId } = user;
-    console.log("exchange point", payload);
     await db.transaction(async (tx) => {
       await tx.insert(withdrawalLogs)
         .values({
