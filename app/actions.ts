@@ -128,7 +128,11 @@ export async function loginAction(payload: LoginData): Promise<LoginFormState> {
       username: user[0].username,
       level: user[0].level ?? 1,
       expiresAt,
-      group
+      group,
+      minBet: user[0].minBetMinigame || -1,
+      maxBet: user[0].maxBetMinigame || -1,
+      minBetTournament: user[0].minBetTournament || -1,
+      maxBetTournament: user[0].minBetTournament || -1,
     });
 
     revalidatePath("/");

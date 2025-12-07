@@ -6,4 +6,8 @@ export type SessionPayload = {
   level: number;
   expiresAt: Date;
   group?: Groups;
+  minBet?: number;
+  maxBet?: number;
+  minBetTournament?: number;
+  maxBetTournament?: number;
 }

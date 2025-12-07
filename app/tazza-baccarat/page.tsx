@@ -15,7 +15,7 @@ export default async function TazzaBaccaratPage() {
     <div className="space-y-4">
       <PageHeader title={decodeURIComponent("타짜 바카라")} />
       {/* <GameIframe src={`http://192.168.68.113:5173/?authToken=${res.data}`} /> */}
-      <GameIframe src={`/game/mini-baccarat/index.html/?authToken=${res.data}`} />
+      <GameIframe src={`/game/mini-baccarat/index.html/?gameId=1&authToken=${res.data}`} />
     </div>
   )
 }

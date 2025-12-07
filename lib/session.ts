@@ -36,8 +36,8 @@ export async function decrypt(session: string | undefined = '') {
   }
 }
 
-export async function createSession({ id, username, level, expiresAt, group }: SessionPayload) {
-  const session = await encrypt({ id, username, level, group, expiresAt })
+export async function createSession({ id, username, level, expiresAt, group, minBet, minBetTournament, maxBet, maxBetTournament }: SessionPayload) {
+  const session = await encrypt({ id, username, level, group, expiresAt, minBet, minBetTournament, maxBet, maxBetTournament })
   // const ip = (await headers()).get("x-forwarded-for");
   const cookieStore = await cookies();
 
