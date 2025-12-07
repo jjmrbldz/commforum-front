@@ -257,7 +257,16 @@ export const menuList: {
   {
     "title": "타짜 바카라", // #4 (Tazza Baccarat)
     "href": "/tazza-baccarat",
-    // "children": []
+    "children": [
+      {
+        title: "타짜 바카라",
+        href: "/tazza-baccarat"
+      },
+      {
+        title: "타짜 바카라 [Tournament]",
+        href: "/tazza-baccarat-tour"
+      },
+    ]
   },
   {
     "title": "이벤트 게시판", // #5 (Event Board) ✅
