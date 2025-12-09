@@ -5,12 +5,13 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Send } from "lucide-react";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CommentData, commentSchema } from "@/db/validations/comment";
 import { PostData } from "@/types";
 import { Textarea } from "../ui/textarea";
 import { insertComment } from "@/db/query/comment";
+import PostEditor from "../pages/profile/posts/editor";
 
 interface Props {
   level: number;
@@ -34,6 +35,7 @@ export default function CommentForm({postId, level, commentId, categoryId, isRep
         categoryId,
       },
     });
+  const [editorKey, setEditorKey] = useState(0);
 
   function onSubmit(data: CommentData) {
     // return;
@@ -52,6 +54,7 @@ export default function CommentForm({postId, level, commentId, categoryId, isRep
         }
         return;
       }
+      setEditorKey((k) => k + 1);
       toast.success(res.message, {
         position: "bottom-right",
       });
@@ -73,12 +76,26 @@ export default function CommentForm({postId, level, commentId, categoryId, isRep
             render={(({field}) => (
               <FormItem className="">
                 <FormControl>
-                  <Textarea 
+                  {/* <Textarea 
                     placeholder="Write a comment"
                     id="content"
                     autoComplete="content"
                     rows={5}
                     {...field}
+                  /> */}
+                  <PostEditor 
+                    // initiaValue={isEditing && isValidJSON(data?.content || "") ? JSON.parse(data?.content || "") : undefined}
+                    key={editorKey}
+                    onChange={(val) => {
+                      //@ts-ignore
+                      const newIsEmpty = val?.toJSON()?.root?.children[0]?.children?.length === 0;
+                      field.onChange( !newIsEmpty ? JSON.stringify(val.toJSON()) : null);
+                      if (newIsEmpty) {
+                        form.setError("content", { message: "Content is required" });
+                      } else {
+                        form.clearErrors("content");
+                      }
+                    }} 
                   />
                 </FormControl>
                 <FormMessage />

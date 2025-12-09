@@ -1,10 +1,11 @@
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { formatDate } from "@/lib/utils";
+import { formatDate, isValidJSON } from "@/lib/utils";
 import { UserCommentData } from "@/types";
 import ReplyCommentButton from "./reply-button";
 import ReplyCommentForm from "./reply-comment-form";
 import CommentLikeDislike from "./comment-like-dislike";
+import ReadOnlyContent from "@/components/readonly-content";
 
 export default function CommentItem(item: UserCommentData & {categoryId: number; getReplyComments: () => void}) {
 
@@ -21,9 +22,17 @@ export default function CommentItem(item: UserCommentData & {categoryId: number;
           <div className="min-w-[220px]">
             <div className="px-3 py-2 bg-black/5 rounded-xs">
               <div className="font-bold text-sm mb-2">{item.name}</div>
-              <div className="text-xs pr-3 whitespace-pre-line">
-                {item.content}
-              </div>
+              {isValidJSON(item.content) ? (
+                <ReadOnlyContent 
+                  content={item.content} 
+                  rootClassname="bg-[unset]"
+                  className="min-h-[unset] p-0"
+                />
+              ) : (
+                <div className="text-xs pr-3 whitespace-pre-line">
+                  {item.content}
+                </div>
+              )}
             </div>
             <div className="flex item-center text-slate-500 mt-1">
               <div className="text-slate-500 text-xs">{formatDate(item.regDatetime || "")}</div>
