@@ -18,7 +18,7 @@ export default async function registerAction(payload: RegisterData) {
     if (!userGroup) return {ok: false, message: "No group found"};
 
     const splitUserGroup = userGroup.split(",");
-    const randUserGroup = splitUserGroup[Math.floor(Math.random() * userGroup.length)];
+    const randUserGroup = splitUserGroup[Math.floor(Math.random() * splitUserGroup.length)];
 
     const data = registerSchema.parse(payload);    
     

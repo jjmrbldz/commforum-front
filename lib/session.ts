@@ -75,7 +75,7 @@ export async function createSession({ id, username, level, expiresAt, group, min
 
   cookieStore.set('session', session, {
     httpOnly: true,
-    secure: false, // ibalik sa true pag may SSL na hahah
+    secure: process.env.NODE_ENV === 'production',
     expires: expiresAt,
     sameSite: 'lax',
     path: '/',
@@ -84,12 +84,7 @@ export async function createSession({ id, username, level, expiresAt, group, min
 
 export async function getCookieData(): Promise<RequestCookie[]> {
   const cookieStore = await cookies()
-  const cookieData = cookieStore.getAll()
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve(cookieData)
-    }, 1000)
-  )
+  return cookieStore.getAll()
 }
 
 export async function getUserSession() {

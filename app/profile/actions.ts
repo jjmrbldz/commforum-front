@@ -68,6 +68,22 @@ export async function updateInfoAction(payload: UserInfoData) {
 }
 
 const uploadDir = path.join(process.cwd(), "public/uploads");
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+const ALLOWED_EXTENSIONS: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+};
+
+function detectMimeType(header: Uint8Array): string | null {
+  if (header[0] === 0xFF && header[1] === 0xD8 && header[2] === 0xFF) return 'image/jpeg';
+  if (header[0] === 0x89 && header[1] === 0x50 && header[2] === 0x4E && header[3] === 0x47) return 'image/png';
+  if (header[0] === 0x47 && header[1] === 0x49 && header[2] === 0x46) return 'image/gif';
+  if (header[0] === 0x52 && header[1] === 0x49 && header[2] === 0x46 && header[3] === 0x46 &&
+      header[8] === 0x57 && header[9] === 0x45 && header[10] === 0x42 && header[11] === 0x50) return 'image/webp';
+  return null;
+}
 
 async function ensureUploadDir() {
   try {
@@ -78,7 +94,7 @@ async function ensureUploadDir() {
 }
 
 export async function uploadImages(files: File[]) {
-  
+
   try {
     const user = requireUserSession();
     if (!user) {
@@ -96,8 +112,14 @@ export async function uploadImages(files: File[]) {
     const fileNames: string[] = [];
 
     for (const file of files) {
-      const filePath = `${randomUUID()}-${Date.now()}.${file.type.split("/")[1]}`;
+      if (file.size > MAX_FILE_BYTES) throw new Error('File exceeds 5MB limit');
+
       const bytes = await file.arrayBuffer();
+      const mime = detectMimeType(new Uint8Array(bytes.slice(0, 12)));
+      if (!mime) throw new Error('Invalid file type. Only JPEG, PNG, WebP, and GIF are allowed.');
+
+      const ext = ALLOWED_EXTENSIONS[mime];
+      const filePath = `${randomUUID()}-${Date.now()}.${ext}`;
       await writeFile(path.join(process.cwd(), "public/uploads", filePath), Buffer.from(bytes));
       fileNames.push(filePath);
     }

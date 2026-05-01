@@ -1,5 +1,10 @@
 import { getHtml } from "@/app/posts/[category]/[id]/actions";
 import ReadOnlyContent from "@/components/readonly-content";
+import DOMPurify, { type WindowLike } from "dompurify";
+import { JSDOM } from "jsdom";
+
+const { window: jsdomWindow } = new JSDOM('');
+const purify = DOMPurify(jsdomWindow as unknown as WindowLike);
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import UserLevelBadge from "@/components/user-level-badge";
 import { formatDate, parseImage } from "@/lib/utils";
@@ -30,10 +35,10 @@ export default async function Post({ data } : { data: PostData }) {
           />
         </div>
       )}
-      <article 
+      <article
         // suppressHydrationWarning
         className="sr-only"
-        dangerouslySetInnerHTML={{__html: html}}
+        dangerouslySetInnerHTML={{__html: purify.sanitize(html)}}
       />
       <ReadOnlyContent content={data.content} />
       <div className="flex items-center justify-center flex-wrap gap-4">
