@@ -13,7 +13,6 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '2mb',
     },
   },
-  eslint: { ignoreDuringBuilds: process.env.NEXT_LITE_BUILD === "1" },
   typescript: { ignoreBuildErrors: process.env.NEXT_LITE_BUILD === "1" },
 };
 
